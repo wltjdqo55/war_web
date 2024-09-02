@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/css/common/body.css">
+    <link rel="stylesheet" href="/css/account/login.css">
+</head>
+<body>
+<div id="app" class="container">
+    <div class="login-container">
+        <h2 class="login-h2">로그인</h2>
+        <form>
+            <div class="input-group">
+                <label for="username">ID</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn-login">로그인</button>
+                <button type="button" class="btn-cancel">취소</button>
+            </div>
+            <div class="admin-register">
+                <button type="button" class="btn-admin">관리자 등록</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            user : {
+                userName : "",
+                userBirth : "",
+                userPhone : ""
+            }
+        },
+        methods : {
+            login : function () {
+                let vm = this;
+                console.log(vm.user.userName + " " + vm.user.userBirth + " " + vm.user.userPhone);
+                axios.get('/account/loginCheck', {
+                        params : {
+                            userName : vm.user.userName,
+                            userBirth : vm.user.userBirth,
+                            userPhone : vm.user.userPhone
+                        }
+                    })
+                    .then(response => {
+                      if(response.data) {
+                         location.href = '/main';
+                      } else {
+                        toastr.error("입력한 정보가 올바르지 않습니다.");
+                      }
+                  })
+                  .catch(error => {
+                      console.error("Error fetching data: ", error);
+                  })
+            },
+            join : function () {
+                location.href = "/account/adminAdd"
+            }
+        },
+       filters: $.extend({}, vueFilters, {}),
+       computed: {},
+       watch: {},
+       created() {},
+       mounted() {
+       }
+     })
+</script>
+
+
+</body>
+</html>
+
+
