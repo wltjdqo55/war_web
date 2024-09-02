@@ -1,0 +1,85 @@
+/* 로그인 컨테이너 스타일 */
+.login-container {
+    background-color: #2e2e2e;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 100px; /* 페이지 상단에서의 여백 */
+}
+.login-h2 {
+    text-align: center; /* 텍스트 가운데 정렬 */
+    color: #f5f5f5;
+    margin-bottom: 20px;
+}
+
+/* 입력 필드 그룹 스타일 */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #b3b3b3;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4a4a4a;
+    color: #f5f5f5;
+    font-size: 14px;
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: #5a5a5a;
+}
+
+/* 버튼 그룹 스타일 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-group .btn-login,
+.button-group .btn-cancel,
+.admin-register .btn-admin {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #f5f5f5;
+    background-color: #3e3e3e;
+    transition: background-color 0.3s;
+}
+
+.button-group .btn-login:hover {
+    background-color: #4caf50; /* 로그인 버튼 호버 색상 */
+}
+
+.button-group .btn-cancel:hover {
+    background-color: #f44336; /* 취소 버튼 호버 색상 */
+}
+
+/* 관리자 등록 버튼 스타일 */
+.admin-register {
+    margin-top: 10px;
+}
+
+.admin-register .btn-admin {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #5a5a5a;
+}
+
+.admin-register .btn-admin:hover {
+    background-color: #757575; /* 관리자 등록 버튼 호버 색상 */
+}
