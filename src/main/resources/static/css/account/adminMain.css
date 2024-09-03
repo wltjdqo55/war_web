@@ -1,0 +1,78 @@
+/* 네비게이션 바 스타일 */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* 로그아웃 버튼 스타일 */
+.logout a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logout a:hover {
+    text-decoration: underline;
+}
+
+/* 메인 컨텐츠 영역 스타일 */
+.content {
+    padding: 20px;
+    text-align: center;
+}
+
+.content h1 {
+    margin-top: 20px;
+    font-size: 2em;
+}
+
+.content p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+}
+
+.admin-name-span {
+    margin-right: 20px;
+}

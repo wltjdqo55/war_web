@@ -7,6 +7,7 @@ import kingdom.warPrj.entity.vo.AdminVO;
 import kingdom.warPrj.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -49,6 +50,22 @@ public class AdminController {
       return true;
     }
     return false;
+  }
 
+  @GetMapping("/account/getAdminInfo")
+  @ResponseBody
+  public AdminDTO getAdminInfo(Model model, HttpSession session){
+    if(session.getAttribute("adminInfo") != null) {
+      return (AdminDTO) session.getAttribute("adminInfo");
+    }
+    return null;
+  }
+
+  @GetMapping("/account/logout")
+  public String logout(HttpSession session){
+    if(session.getAttribute("adminInfo") != null){
+      AdminSession.closeSession(session);
+    }
+    return "redirect:/account/login";
   }
 }

@@ -3,8 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>관리자메인화면</title>
+    <link rel="stylesheet" href="/common/css/body.css">
+    <link rel="stylesheet" href="/css/account/adminMain.css">
 </head>
 <body>
-관리자메인화면
+<div id="app">
+    <div id="header-container"></div>
+    <!-- 메인 컨텐츠 영역 -->
+    <div class="content">
+        <h1>관리자 대시보드</h1>
+        <p>위의 탭을 통해 원하는 기능을 선택하세요.</p>
+    </div>
+</div>
+
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+<script>
+    $(function() {
+        $('#header-container').load('/common/html/adminHeader.html');
+    });
+</script>
+
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            adminInfo : {}
+        },
+        methods : {
+            getAdminInfo : function () {
+                let vm = this;
+                axios.get('/account/getAdminInfo')
+                    .then(res => {
+                        vm.adminInfo = res.data;
+                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            search_button : function () {
+
+            },
+            invalidate_button : function () {
+                let vm = this;
+                vm.search.searchOption = "all";
+                vm.search.whetherToRent = "all";
+                vm.search.searchKeyword = "";
+            }
+        },
+       filters: {},
+       computed: {},
+       watch: {},
+       created() {},
+       mounted() {
+            this.getAdminInfo();
+       }
+     })
+</script>
+
+
 </body>
 </html>

@@ -1,0 +1,40 @@
+<div id="headerApp">
+    <nav class="navbar">
+        <div class="logo">관리자 대시보드</div>
+        <ul class="nav-links">
+            <li><a href="#">용사 관리</a></li>
+            <li><a href="#">스킬 관리</a></li>
+            <li><a href="#">종족 관리</a></li>
+            <li><a href="#">아이템 관리</a></li>
+            <li><a href="#">마물군단 관리</a></li>
+            <li><a href="#">마물장군 관리</a></li>
+            <li><a href="#">관리자 관리</a></li> <!-- optional -->
+            <li><a href="#">전투 분석</a></li>
+            <li><a href="#">모의 전투</a></li>
+        </ul>
+        <div class="logout">
+            <span class="admin-name-span">{{adminInfo.adminName}} 님</span>
+            <a href="/account/logout">로그아웃</a>
+        </div>
+    </nav>
+</div>
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script>
+    new Vue({
+        el: '#headerApp',
+        data: {
+            adminInfo: {}
+        },
+        methods : {
+
+        },
+        created() {
+            let storedAdminInfo = localStorage.getItem('adminInfo');
+            console.log(storedAdminInfo);
+            if (storedAdminInfo) {
+                this.adminInfo = JSON.parse(storedAdminInfo);
+            }
+        }
+    });
+</script>
