@@ -1,0 +1,114 @@
+/* 관리자 등록 컨테이너 스타일 */
+.registration-container {
+    background-color: #2e2e2e;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 100px; /* 페이지 상단에서의 여백 */
+}
+
+/* 관리자 등록 제목 h2 스타일 */
+.registration-container h2 {
+    text-align: center; /* 텍스트 가운데 정렬 */
+    color: #f5f5f5;
+    margin-bottom: 20px;
+}
+
+/* 입력 필드 그룹 스타일 */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #b3b3b3;
+    font-weight: bold; /* 제목 글자 굵게 설정 */
+}
+
+/* ID 입력 필드와 중복 확인 버튼을 같은 행에 배치 */
+.id-input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 입력 필드와 버튼 사이의 간격 */
+}
+
+.id-input-container input {
+    flex: 1; /* 입력 필드가 가능한 최대 너비를 차지 */
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4a4a4a;
+    color: #f5f5f5;
+    font-size: 14px;
+}
+
+.id-input-container button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #f5f5f5;
+    background-color: #616161;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.id-input-container button:hover {
+    background-color: #757575; /* 중복 확인 버튼 호버 색상 */
+}
+
+/* 나머지 입력 필드 스타일 */
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4a4a4a;
+    color: #f5f5f5;
+    font-size: 14px;
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: #5a5a5a;
+}
+
+/* 버튼 그룹 스타일 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-group .btn-register,
+.button-group .btn-cancel {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #f5f5f5;
+    background-color: #3e3e3e;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.button-group .btn-register {
+    background-color: #4caf50; /* 등록 버튼 기본 색상 */
+}
+
+.button-group .btn-register:hover {
+    background-color: #45a049; /* 등록 버튼 호버 색상 */
+}
+
+.button-group .btn-cancel {
+    background-color: #f44336; /* 취소 버튼 기본 색상 */
+}
+
+.button-group .btn-cancel:hover {
+    background-color: #e53935; /* 취소 버튼 호버 색상 */
+}
