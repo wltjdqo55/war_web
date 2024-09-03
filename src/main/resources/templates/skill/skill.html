@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/common/css/body.css">
+    <link rel="stylesheet" href="/common/css/adminHeader.css">
+    <link rel="stylesheet" href="/css/skill.css">
+
+</head>
+<body>
+<div id="app">
+    <!-- 헤더영역-->
+    <div id="header-container"></div>
+    <!-- 메인 컨텐츠 영역 -->
+    <div class="content">
+        <h1>스킬 목록</h1>
+        <div class="skill-list">
+
+            <!-- 검색 및 스킬 등록 영역 -->
+            <div class="search-and-register-container">
+                <div class="search-container">
+                    <select id="status-select">
+                        <option value="all">전체</option>
+                        <option value="active">사용중</option>
+                        <option value="inactive">사용불가</option>
+                    </select>
+
+                    <input type="text" id="search-input" placeholder="스킬 이름 검색">
+                    <button id="search-btn">검색</button>
+                </div>
+
+                <!-- 스킬 등록 버튼 -->
+                <div class="skill-actions">
+                    <button class="register-skill-btn" @click="openAddView()">스킬 등록</button>
+                </div>
+            </div>
+
+            <!-- 스킬 목록 테이블 -->
+            <table class="skill-table">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>스킬 이름</th>
+                    <th>체력 증가</th>
+                    <th>마력 증가</th>
+                    <th>상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item, index) in skillInfo">
+                    <td>{{index + 1}}</td>
+                    <td>{{item.skillName}}</td>
+                    <td>{{item.strengthBonus}}</td>
+                    <td>{{item.spellBonus}}</td>
+                    <td>{{item.skillState}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+<script>
+    $(function() {
+        $('#header-container').load('/common/html/adminHeader.html');
+    });
+</script>
+
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            adminInfo : {},
+            skillInfo : {}
+        },
+        methods : {
+            loadData : function () {
+                let vm = this;
+                axios.get('/skill/getSkillList')
+                    .then(res => {
+                        vm.skillInfo = res.data;
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            getAdminInfo : function () {
+                let vm = this;
+                axios.get('/account/getAdminInfo')
+                    .then(res => {
+                        vm.adminInfo = res.data;
+                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            openAddView : function () {
+                location.href = "/account/adminMain/skill/add";
+            }
+        },
+       filters: {},
+       computed: {},
+       watch: {},
+       created() {},
+       mounted() {
+            this.getAdminInfo();
+            this.loadData();
+       }
+     })
+</script>
+
+
+</body>
+</html>
