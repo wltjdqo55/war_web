@@ -2,9 +2,191 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>관리자등록</title>
+    <link rel="stylesheet" href="/css/common/body.css">
+    <link rel="stylesheet" href="/css/account/adminAdd.css">
 </head>
 <body>
+<div id="app" class="registration-container">
+    <h2>관리자 등록</h2>
+        <div class="input-group">
+            <label for="id">ID</label>
+            <div class="id-input-container">
+                <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" maxlength="50" v-model="adminInfo.adminId">
+                <button type="button" class="btn-check-duplicate" @click="adminIdCheckButton()">중복 확인</button>
+            </div>
+        </div>
+        <div class="input-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" maxlength="50" v-model="adminInfo.adminPassword">
+        </div>
+        <div class="input-group">
+            <label for="confirm-password">비밀번호 확인</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="비밀번호를 다시 입력하세요" maxlength="50" v-model="adminInfo.adminPasswordCheck">
+        </div>
+        <div class="input-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" placeholder="이름을 입력하세요" maxlength="20" v-model="adminInfo.adminName">
+        </div>
+        <div class="input-group">
+            <label for="phone">핸드폰 번호</label>
+            <input type="text" id="phone" name="phone" placeholder="핸드폰 번호를 숫자만 입력하세요" maxlength="11" v-model="adminInfo.adminPhoneNumber">
+        </div>
+        <div class="button-group">
+            <button type="submit" class="btn-register" @click="adminAddButton()">등록</button>
+            <button type="button" class="btn-cancel" @click="cancelButton()">취소</button>
+        </div>
+</div>
 
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            adminInfo : {
+                adminId : "",
+                adminPassword : "",
+                adminPasswordCheck : "",
+                adminName : "",
+                adminPhoneNumber : ""
+            },
+            check : {
+                isIdCheck : false,
+                adminId : ""
+            }
+        },
+        methods : {
+            adminIdCheckButton : function () {
+                let vm = this;
+                axios.get('/account/adminIdCheck', {
+                        params : {
+                            adminId : vm.adminInfo.adminId
+                        }
+                    })
+                    .then(res => {
+                        if(res.data){
+                            alert("사용가능한 아이디입니다.");
+                            vm.check.adminId = vm.adminInfo.adminId;
+                            vm.check.isIdCheck = true;
+                        }
+                        else{
+                            alert("이미 사용중인 아이디입니다.");
+                            vm.check.isIdCheck = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data : ", error);
+                    })
+            },
+            adminAddButton : function () {
+                let vm = this;
+                if(!vm.adminIdCheck(vm.adminInfo.adminId)){
+                    return false;
+                }
+                else if(!vm.adminPasswordCheck(vm.adminInfo.adminPassword, vm.adminInfo.adminPasswordCheck)){
+                    return false;
+                }
+                else if(!vm.adminNameCheck(vm.adminInfo.adminName)){
+                    return false;
+                }
+                else if(!vm.adminPhoneCheck(vm.adminInfo.adminPhoneNumber)){
+                    return false;
+                }
+                else {
+                    let formData = new FormData();
+                    Object.keys(vm.adminInfo).forEach((key) => {
+                        if(vm.adminInfo[key]==null){
+                            formData.append(key, "");
+                        }
+                        else{
+                            formData.append(key, vm.adminInfo[key]);
+                        }
+                    })
+                    axios.post('/account/adminAddOK', formData)
+                        .then(res => {
+                            if(res.data != null){
+                                alert("관리자 등록이 완료되었습니다.");
+                                location.href = "/account/login";
+                            }
+                            else{
+                                alert("로그요청에 실패하였습니다.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching data : ", error);
+                        })
+                }
+            },
+            cancelButton : function () {
+                let vm = this;
+                location.href = "/account/login"
+            },
+            adminIdCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == "") {
+                    alert("아이디를 입력해주세요.");
+                    return false;
+                }
+                else if(keyword != vm.check.adminId || !vm.check.isIdCheck || vm.check.adminId == ""){
+                    alert("아이디를 중복체크 해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            adminPasswordCheck : function (keyword1, keyword2) {
+                let vm = this;
+                if(keyword1 == null || keyword1 == "" || keyword2 == null || keyword2 == ""){
+                    alert("비밀번호를 입력해주세요.");
+                    return false;
+                }
+                else if(keyword1 != keyword2) {
+                    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                    return false;
+                }
+                return true;
+            },
+            adminNameCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == ""){
+                    alert("이름을 입력해주세요.")
+                    return false;
+                }
+                return true;
+            },
+            adminPhoneCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == ""){
+                    alert("핸드폰 번호를 입력해주세요.");
+                    return false;
+                }
+                else if(vm.onlyNumberCheck(keyword) || keyword.length < 10) {
+                    alert("핸드폰번호는 10자리 또는 11자리 숫자만 입력해주세요.")
+                    return false;
+                }
+                return true;
+            },
+            onlyNumberCheck : function (keyword) {
+                let vm = this;
+                let check = /^[0-9]+$/;
+                if(check.test(keyword)) {
+                    return false;
+                }
+                return true;
+            }
+        },
+       filters: $.extend({}, vueFilters, {}),
+       computed: {},
+       watch: {},
+       created() {},
+       mounted() {
+       }
+     })
+</script>
 </body>
 </html>
