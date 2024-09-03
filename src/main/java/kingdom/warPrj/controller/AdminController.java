@@ -1,5 +1,7 @@
 package kingdom.warPrj.controller;
 
+import jakarta.servlet.http.HttpSession;
+import kingdom.warPrj.account.AdminSession;
 import kingdom.warPrj.entity.dto.AdminDTO;
 import kingdom.warPrj.entity.vo.AdminVO;
 import kingdom.warPrj.service.AdminService;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-public class AccountController {
+public class AdminController {
 
   private final AdminService adminService;
 
@@ -40,8 +42,13 @@ public class AccountController {
 
   @PostMapping("/account/loginCheck")
   @ResponseBody
-  public boolean loginCheck(AdminVO adminVO){
-    System.out.println(adminVO);
-    return adminService.loginCheck(adminVO);
+  public boolean loginCheck(AdminVO adminVO, HttpSession session){
+    AdminDTO adminDTO = adminService.loginCheck(adminVO);
+    if(adminDTO != null){
+      AdminSession.setSession(adminDTO, session, 3600);
+      return true;
+    }
+    return false;
+
   }
 }
