@@ -2,6 +2,7 @@ package kingdom.warPrj.entity.entity;
 
 import jakarta.persistence.*;
 import kingdom.warPrj.entity.vo.AdminVO;
+import kingdom.warPrj.entity.vo.SkillVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,6 @@ public class AdminEntity {
     this.adminName = adminVO.getAdminName();
     this.adminPhoneNumber = adminVO.getAdminPhoneNumber();
   }
+
+
 }

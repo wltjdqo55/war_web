@@ -30,3 +30,7 @@ a:hover {
     margin: 0 auto;
     padding: 20px;
 }
+
+.dp-none {
+    display : none;
+}

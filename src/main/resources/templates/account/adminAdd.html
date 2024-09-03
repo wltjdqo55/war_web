@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>관리자등록</title>
     <link rel="stylesheet" href="/common/css/body.css">
-    <link rel="stylesheet" href="/css/account/adminAdd.css">
+    <link rel="stylesheet" href="/css/adminAdd.css">
 </head>
 <body>
 <div id="app" class="registration-container">
     <h2>관리자 등록</h2>
+    <form>
         <div class="input-group">
             <label for="id">ID</label>
             <div class="id-input-container">
@@ -33,9 +34,10 @@
             <input type="text" id="phone" name="phone" placeholder="핸드폰 번호를 숫자만 입력하세요" maxlength="11" v-model="adminInfo.adminPhoneNumber">
         </div>
         <div class="button-group">
-            <button type="submit" class="btn-register" @click="adminAddButton()">등록</button>
+            <button type="button" class="btn-register" @click="adminAddButton()">등록</button>
             <button type="button" class="btn-cancel" @click="cancelButton()">취소</button>
         </div>
+    </form>
 </div>
 
 <script src="/plugins/vueJs/vue.js"></script>
