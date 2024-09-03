@@ -30,8 +30,12 @@ public class AdminService {
     return adminRepository.findOneByAdminId(adminId).isEmpty();
   }
 
-  public boolean loginCheck(AdminVO adminVO){
+  public AdminDTO loginCheck(AdminVO adminVO){
     AdminEntity adminEntity = adminRepository.findOneByAdminId(adminVO.getAdminId()).orElse(new AdminEntity());
-    return encoder.matches(adminVO.getAdminPassword(), adminEntity.getAdminPassword());
+    if(encoder.matches(adminVO.getAdminPassword(), adminEntity.getAdminPassword())){
+      return new AdminDTO(adminEntity);
+    }
+    return null;
+
   }
 }
