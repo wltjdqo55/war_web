@@ -90,6 +90,11 @@
             },
             skillNameDup : function () {
                 let vm = this;
+                if(vm.skillInfo.skillName == "" || vm.skillInfo.skillName == null) {
+                    alert("스킬을 입력해주세요.")
+                    return false;
+                }
+
                 axios.get('/skill/skillNameCheck', {
                         params : {
                             skillName : vm.skillInfo.skillName

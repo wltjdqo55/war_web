@@ -56,7 +56,7 @@ public class SkillController {
     return skillService.getSearchSkill(skillVO);
   }
 
-  @GetMapping("/account/adminMain/skill/{id}")
+  @GetMapping("/account/adminMain/skill/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
     return "/skill/skillDetailView.html";
