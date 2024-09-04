@@ -20,14 +20,14 @@
             <!-- 검색 및 스킬 등록 영역 -->
             <div class="search-and-register-container">
                 <div class="search-container">
-                    <select id="status-select">
+                    <select id="status-select" v-model="search.searchOption">
                         <option value="all">전체</option>
-                        <option value="active">사용중</option>
-                        <option value="inactive">사용불가</option>
+                        <option value="available">사용가능</option>
+                        <option value="notAvailable">사용불가</option>
                     </select>
 
-                    <input type="text" id="search-input" placeholder="스킬 이름 검색">
-                    <button id="search-btn">검색</button>
+                    <input type="text" id="search-input" placeholder="스킬 이름 검색" v-model="search.searchKeyword">
+                    <button id="search-btn" @click="searchButton()">검색</button>
                 </div>
 
                 <!-- 스킬 등록 버튼 -->
@@ -78,7 +78,11 @@
         el : "#app",
         data : {
             adminInfo : {},
-            skillInfo : {}
+            skillInfo : {},
+            search : {
+                searchOption : "all",
+                searchKeyword : ""
+            }
         },
         methods : {
             loadData : function () {
@@ -104,6 +108,21 @@
             },
             openAddView : function () {
                 location.href = "/account/adminMain/skill/add";
+            },
+            searchButton : function () {
+                let vm = this;
+                axios.get('/skill/getSearchSkill', {
+                    params : {
+                        searchOption : vm.search.searchOption,
+                        searchKeyword : vm.search.searchKeyword
+                    }
+                })
+                .then(res => {
+                    vm.skillInfo = res.data;
+                })
+                .catch(error => {
+                    console.error("Error fetching data: ", error);
+                })
             }
         },
        filters: {},

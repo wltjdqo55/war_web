@@ -23,6 +23,6 @@ public class SkillDTO {
       this.skillName = skillEntity.getSkillName();
       this.strengthBonus = skillEntity.getStrengthBonus();
       this.spellBonus = skillEntity.getSpellBonus();
-      this.skillState = skillEntity.getSkillState();
+      this.skillState = skillEntity.isSkillState() ? "사용가능" : "사용불가";
   }
 }
