@@ -13,46 +13,45 @@
     <div id="header-container"></div>
     <!-- 메인 컨텐츠 영역 -->
     <div class="content">
-        <h1>스킬 목록</h1>
+        <h1>종족 목록</h1>
         <div class="skill-list">
 
-            <!-- 검색 및 스킬 등록 영역 -->
             <div class="search-and-register-container">
                 <div class="search-container">
-                    <select id="status-select" v-model="search.searchOption">
-                        <option value="all">전체</option>
-                        <option value="available">사용가능</option>
-                        <option value="notAvailable">사용불가</option>
-                    </select>
-
-                    <input type="text" id="search-input" placeholder="스킬 이름 검색" v-model="search.searchKeyword">
+                    <input type="text" id="search-input" placeholder="종족 이름 검색" v-model="search.searchKeyword">
                     <button id="search-btn" @click="searchButton()">검색</button>
                 </div>
 
-                <!-- 스킬 등록 버튼 -->
                 <div class="skill-actions">
-                    <button class="register-skill-btn" @click="openAddView()">스킬 등록</button>
+                    <button class="register-skill-btn" @click="openAddView()">종족 등록</button>
                 </div>
             </div>
 
-            <!-- 스킬 목록 테이블 -->
             <table class="skill-table">
                 <thead>
                 <tr>
                     <th>번호</th>
-                    <th>스킬 이름</th>
-                    <th>체력 증가</th>
-                    <th>마력 증가</th>
-                    <th>상태</th>
+                    <th>종족명</th>
+                    <th>공격력보정</th>
+                    <th>방어력보정</th>
+                    <th>체력보정</th>
+                    <th>마력보정</th>
+                    <th>힘보정</th>
+                    <th>지능보정</th>
+                    <th>소속된용사수</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item, index) in skillInfo">
+                <tr v-for="(item, index) in speciesInfo">
                     <td>{{index + 1}}</td>
-                    <td><a :href="'/account/adminMain/skill/detail/' + item.id">{{item.skillName}}</a></td>
+                    <td><a :href="'/account/adminMain/species/detail/' + item.speciesId">{{item.speciesName}}</a></td>
+                    <td>{{item.attackBonus}}</td>
+                    <td>{{item.defenseBonus}}</td>
                     <td>{{item.strengthBonus}}</td>
                     <td>{{item.spellBonus}}</td>
-                    <td>{{item.skillState}}</td>
+                    <td>{{item.forceBonus}}</td>
+                    <td>{{item.intelligenceBonus}}</td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
@@ -77,18 +76,17 @@
         el : "#app",
         data : {
             adminInfo : {},
-            skillInfo : {},
+            speciesInfo : {},
             search : {
-                searchOption : "all",
                 searchKeyword : ""
             }
         },
         methods : {
             loadData : function () {
                 let vm = this;
-                axios.get('/skill/getSkillList')
+                axios.get('/species/getSpeciesList')
                     .then(res => {
-                        vm.skillInfo = res.data;
+                        vm.speciesInfo = res.data;
                     })
                     .catch(error => {
                       console.error("Error fetching data: ", error);
@@ -106,18 +104,17 @@
                     })
             },
             openAddView : function () {
-                location.href = "/account/adminMain/skill/add";
+                location.href = "/account/adminMain/species/add";
             },
             searchButton : function () {
                 let vm = this;
-                axios.get('/skill/getSearchSkill', {
+                axios.get('/species/getSearchSpecies', {
                     params : {
-                        searchOption : vm.search.searchOption,
                         searchKeyword : vm.search.searchKeyword
                     }
                 })
                 .then(res => {
-                    vm.skillInfo = res.data;
+                    vm.speciesInfo = res.data;
                 })
                 .catch(error => {
                     console.error("Error fetching data: ", error);
