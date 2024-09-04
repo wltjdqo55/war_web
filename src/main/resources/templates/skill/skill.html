@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/common/css/body.css">
     <link rel="stylesheet" href="/common/css/adminHeader.css">
     <link rel="stylesheet" href="/css/skill.css">
-
 </head>
 <body>
 <div id="app">
@@ -50,7 +49,7 @@
                 <tbody>
                 <tr v-for="(item, index) in skillInfo">
                     <td>{{index + 1}}</td>
-                    <td>{{item.skillName}}</td>
+                    <td><a :href="'/account/adminMain/skill/' + item.id">{{item.skillName}}</a></td>
                     <td>{{item.strengthBonus}}</td>
                     <td>{{item.spellBonus}}</td>
                     <td>{{item.skillState}}</td>
