@@ -10,7 +10,5 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequiredArgsConstructor
 public class AdminQueryDSL {
 
-  //private final JPAQueryFactory jpaQueryFactory;
-  private final BCryptPasswordEncoder encoder;
 
 }

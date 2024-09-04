@@ -6,6 +6,7 @@ import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.service.SkillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,5 +47,11 @@ public class SkillController {
     return skillService.getSkillList();
   }
 
+  @GetMapping("/skill/getSearchSkill")
+  @ResponseBody
+  public List<SkillDTO> getSearchSkill(SkillVO skillVO) {
+    return skillService.getSearchSkill(skillVO);
+
+  }
 
 }

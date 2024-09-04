@@ -15,5 +15,10 @@ public class SkillVO {
 
   private int spellBonus;
 
-  private String skillState;
+  private boolean skillState;
+
+  //검색조건
+  private String searchOption;
+
+  private String searchKeyword;
 }

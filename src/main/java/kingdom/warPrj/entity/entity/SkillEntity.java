@@ -21,13 +21,13 @@ public class SkillEntity {
 
   private int spellBonus;
 
-  private String skillState;
+  private boolean skillState;
 
   public SkillEntity(SkillVO skillVO){
     this.id = skillVO.getId();
     this.skillName = skillVO.getSkillName();
     this.strengthBonus = skillVO.getStrengthBonus();
     this.spellBonus = skillVO.getSpellBonus();
-    this.skillState = skillVO.getSkillState();
+    this.skillState = skillVO.isSkillState();
   }
 }
