@@ -6,6 +6,7 @@ import kingdom.warPrj.entity.entity.QSkillEntity;
 import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.SkillVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -40,4 +41,14 @@ public class SkillQueryDSL {
     return null;
   }
 
+  @Modifying
+  public boolean skillEdit(SkillVO skillVO){
+    long affectedRows = jpaQueryFactory.update(QSkillEntity.skillEntity)
+        .set(QSkillEntity.skillEntity.strengthBonus, skillVO.getStrengthBonus())
+        .set(QSkillEntity.skillEntity.spellBonus, skillVO.getSpellBonus())
+        .where(QSkillEntity.skillEntity.id.eq(skillVO.getId()))
+        .execute();
+
+    return affectedRows > 0;
+  }
 }

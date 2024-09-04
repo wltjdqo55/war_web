@@ -39,4 +39,17 @@ public class SkillService {
     List<SkillEntity> list = skillQueryDSL.getSearchSkill(skillVO);
     return list.stream().map(SkillDTO::new).collect(Collectors.toList());
   }
+
+  public SkillDTO getSkillDetail(long id){
+    return new SkillDTO(skillRepository.findById(id).orElse(new SkillEntity()));
+  }
+
+  @Transactional
+  public boolean skillEdit(SkillVO skillVO){
+    return skillQueryDSL.skillEdit(skillVO);
+  }
+
+  public void skillDelete(long id){
+     skillRepository.deleteById(id);
+  }
 }
