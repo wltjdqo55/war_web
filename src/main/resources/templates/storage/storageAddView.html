@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/common/css/body.css">
     <link rel="stylesheet" href="/common/css/adminHeader.css">
     <link rel="stylesheet" href="/common/css/addEdit.css">
+    <link rel="stylesheet" href="/css/storageAdd.css">
 </head>
 <body>
 <div id="app">
@@ -17,10 +18,22 @@
             <div class="form-container">
                 <!-- 입력 필드 -->
                 <h2 class="form-title">아이템 등록</h2>
+                <div class="select-container">
+                    <label for="itemType" class="select-label" v-model="itemInfo.item">아이템 종류</label>
+                    <select id="itemType" name="itemType">
+                        <option value="선택">선택</option>
+                        <option value="창">창</option>
+                        <option value="활">활</option>
+                        <option value="검">검</option>
+                        <option value="방패">방패</option>
+                        <option value="갑옷">갑옷</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="itemName" class="form-label">아이템명</label>
                     <div class="input-container">
-                        <input type="text" id="itemName" name="itemName" placeholder="아이템이름을 입력해주세요." maxlength="30" v-model="itemInfo.item">
+                        <input type="text" id="itemName" name="itemName" placeholder="아이템이름을 입력해주세요." maxlength="30" v-model="itemInfo.itemName">
                         <button type="button" class="btn-secondary" @click="itemNameDup()">중복 확인</button>
                     </div>
                 </div>
@@ -81,7 +94,8 @@
         data : {
             adminInfo : {},
             itemInfo : {
-                item : "",
+                item : "선택",
+                itemName : "",
                 attackBonus : 0,
                 defenseBonus : 0,
                 forceBonus : 0,
@@ -89,7 +103,7 @@
             },
             check : {
                 isNameCheck : false,
-                item : ""
+                itemName : ""
             }
         },
         methods : {
@@ -106,20 +120,20 @@
             },
             itemNameDup : function () {
                 let vm = this;
-                if(vm.itemInfo.item == "" || vm.itemInfo.item == null) {
+                if(vm.itemInfo.itemName == "" || vm.itemInfo.itemName == null) {
                     alert("아이템을 입력해주세요.")
                     return false;
                 }
 
                 axios.get('/storage/itemNameCheck', {
                         params : {
-                            item : vm.itemInfo.item
+                            itemName : vm.itemInfo.itemName
                         }
                     })
                     .then(res => {
                         if(res.data){
                             alert("등록가능한 아이템입니다.");
-                            vm.check.item = vm.itemInfo.item;
+                            vm.check.itemName = vm.itemInfo.itemName;
                             vm.check.isNameCheck = true;
                         }
                         else{
@@ -133,7 +147,10 @@
             },
             itemAddButton : function () {
                 let vm = this;
-                if(!vm.itemNameCheck(vm.itemInfo.item)){
+                if(!vm.itemCheck(vm.itemInfo.item)){
+                    return false;
+                }
+                else if(!vm.itemNameCheck(vm.itemInfo.itemName)){
                     return false;
                 }
                 else {
@@ -178,13 +195,21 @@
                 let vm = this;
                 location.href = "/account/adminMain/storage";
             },
+            itemCheck : function (keyword) {
+                let vm = this;
+                if(keyword == "선택") {
+                    alert("아이템종류를 선택해주세요.");
+                    return false;
+                }
+                return true;
+            },
             itemNameCheck : function (keyword) {
                 let vm = this;
                 if(keyword == null || keyword == "") {
                     alert("아이템명을 입력해주세요.");
                     return false;
                 }
-                else if(keyword != vm.check.item || !vm.check.isNameCheck || vm.check.item == ""){
+                else if(keyword != vm.check.itemName || !vm.check.isNameCheck || vm.check.itemName == ""){
                     alert("아이템을 중복체크 해주세요.");
                     return false;
                 }

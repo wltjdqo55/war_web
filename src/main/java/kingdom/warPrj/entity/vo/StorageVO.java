@@ -9,7 +9,11 @@ public class StorageVO {
 
   private long storageId;
 
+  private long soldierId;
+
   private String item;
+
+  private String itemName;
 
   private int attackBonus;
 

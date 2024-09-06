@@ -23,7 +23,6 @@ public class SkillService {
 
   @Transactional
   public SkillDTO skillAdd(SkillVO skillVO){
-    skillVO.setSkillState(true);
     return new SkillDTO(skillRepository.save(new SkillEntity(skillVO)));
   }
 
