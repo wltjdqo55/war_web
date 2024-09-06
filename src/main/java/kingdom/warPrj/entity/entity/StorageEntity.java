@@ -17,6 +17,8 @@ public class StorageEntity {
 
   private String item;
 
+  private String itemName;
+
   private int attackBonus;
 
   private int defenseBonus;
@@ -27,9 +29,15 @@ public class StorageEntity {
 
   private boolean itemState;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "soldier_id")
+  private SoldierEntity soldierEntity;  // 용사
+
   public StorageEntity(StorageVO storageVO){
+    this.soldierEntity = new SoldierEntity(storageVO.getSoldierId());
     this.storageId = storageVO.getStorageId();
     this.item = storageVO.getItem();
+    this.itemName = storageVO.getItemName();
     this.attackBonus = storageVO.getAttackBonus();
     this.defenseBonus = storageVO.getDefenseBonus();
     this.forceBonus = storageVO.getForceBonus();

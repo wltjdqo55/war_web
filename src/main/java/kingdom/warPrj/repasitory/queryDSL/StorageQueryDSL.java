@@ -29,13 +29,13 @@ public class StorageQueryDSL {
   private BooleanExpression checkSearchKeywordAndOption(StorageVO storageVO){
 
     if(storageVO.getSearchOption().equals("all")){
-      return QStorageEntity.storageEntity.item.contains(storageVO.getSearchKeyword());
+      return QStorageEntity.storageEntity.itemName.contains(storageVO.getSearchKeyword());
     }
     else if(storageVO.getSearchOption().equals("available")){
-      return QStorageEntity.storageEntity.itemState.eq(true).and(QStorageEntity.storageEntity.item.contains(storageVO.getSearchKeyword()));
+      return QStorageEntity.storageEntity.itemState.eq(true).and(QStorageEntity.storageEntity.itemName.contains(storageVO.getSearchKeyword()));
     }
     else if(storageVO.getSearchOption().equals("notAvailable")){
-      return QStorageEntity.storageEntity.itemState.eq(false).and(QStorageEntity.storageEntity.item.contains(storageVO.getSearchKeyword()));
+      return QStorageEntity.storageEntity.itemState.eq(false).and(QStorageEntity.storageEntity.itemName.contains(storageVO.getSearchKeyword()));
     }
     return null;
   }

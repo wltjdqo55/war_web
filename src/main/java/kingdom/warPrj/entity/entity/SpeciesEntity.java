@@ -6,6 +6,9 @@ import kingdom.warPrj.entity.vo.SpeciesVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -14,6 +17,7 @@ public class SpeciesEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JoinColumn(name = "species")
   private long speciesId;
 
   private String speciesName;
@@ -30,6 +34,9 @@ public class SpeciesEntity {
 
   private int intelligenceBonus;
 
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "species")
+  private List<SoldierEntity> soldier = new ArrayList<>();
+
   public SpeciesEntity(SpeciesVO speciesVO){
     this.speciesId = speciesVO.getSpeciesId();
     this.speciesName = speciesVO.getSpeciesName();
@@ -41,4 +48,7 @@ public class SpeciesEntity {
     this.intelligenceBonus = speciesVO.getIntelligenceBonus();
   }
 
+  public SpeciesEntity(long speciesId) {
+    this.speciesId = speciesId;
+  }
 }

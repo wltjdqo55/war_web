@@ -22,12 +22,11 @@ public class StorageService {
 
   @Transactional
   public StorageDTO itemAdd(StorageVO storageVO){
-    storageVO.setItemState(true);
     return new StorageDTO(storageRepository.save(new StorageEntity(storageVO)));
   }
 
   public boolean itemNameCheck(String itemName){
-    return storageRepository.findOneByItem(itemName).isEmpty();
+    return storageRepository.findOneByItemName(itemName).isEmpty();
   }
 
   public List<StorageDTO> getItemList(){

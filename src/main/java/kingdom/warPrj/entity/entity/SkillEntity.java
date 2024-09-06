@@ -13,6 +13,7 @@ public class SkillEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JoinColumn(name = "skill")
   long id;
 
   private String skillName;
@@ -30,4 +31,9 @@ public class SkillEntity {
     this.spellBonus = skillVO.getSpellBonus();
     this.skillState = skillVO.isSkillState();
   }
+
+  public SkillEntity(long id){
+    this.id = id;
+  }
+
 }
