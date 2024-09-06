@@ -86,4 +86,10 @@ public class SkillController {
      skillService.skillDelete(id);
      return "";
   }
+
+  @GetMapping("/skill/getSkillStateList")
+  @ResponseBody
+  public List<SkillDTO> getSkillStateList(){
+    return skillService.getSkillStateList();
+  }
 }

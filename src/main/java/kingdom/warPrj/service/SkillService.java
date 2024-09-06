@@ -51,4 +51,9 @@ public class SkillService {
   public void skillDelete(long id){
      skillRepository.deleteById(id);
   }
+
+  public List<SkillDTO> getSkillStateList() {
+    List<SkillEntity> list = skillQueryDSL.getSkillStateList();
+    return list.stream().map(SkillDTO::new).collect(Collectors.toList());
+  }
 }

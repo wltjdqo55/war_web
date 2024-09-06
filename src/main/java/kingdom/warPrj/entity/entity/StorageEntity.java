@@ -34,7 +34,9 @@ public class StorageEntity {
   private SoldierEntity soldierEntity;  // 용사
 
   public StorageEntity(StorageVO storageVO){
-    this.soldierEntity = new SoldierEntity(storageVO.getSoldierId());
+    if(storageVO.getSoldierId() != 0) {
+      this.soldierEntity = new SoldierEntity(storageVO.getSoldierId());
+    }
     this.storageId = storageVO.getStorageId();
     this.item = storageVO.getItem();
     this.itemName = storageVO.getItemName();

@@ -51,4 +51,17 @@ public class SkillQueryDSL {
 
     return affectedRows > 0;
   }
+
+  public List<SkillEntity> getSkillStateList() {
+    return jpaQueryFactory
+        .selectFrom(QSkillEntity.skillEntity)
+        .where(
+            skillStateCheck()
+        )
+        .fetch();
+  }
+
+  public BooleanExpression skillStateCheck() {
+      return QSkillEntity.skillEntity.skillState.eq(false);
+  }
 }

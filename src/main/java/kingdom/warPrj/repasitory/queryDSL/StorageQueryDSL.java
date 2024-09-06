@@ -2,7 +2,9 @@ package kingdom.warPrj.repasitory.queryDSL;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import kingdom.warPrj.entity.entity.QSkillEntity;
 import kingdom.warPrj.entity.entity.QStorageEntity;
+import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.entity.StorageEntity;
 import kingdom.warPrj.entity.vo.StorageVO;
 import lombok.RequiredArgsConstructor;
@@ -51,5 +53,18 @@ public class StorageQueryDSL {
         .execute();
 
     return affectedRows > 0;
+  }
+
+  public List<StorageEntity> getItemStateList() {
+    return jpaQueryFactory
+        .selectFrom(QStorageEntity.storageEntity)
+        .where(
+            ItemStateCheck()
+        )
+        .fetch();
+  }
+
+  public BooleanExpression ItemStateCheck() {
+    return QStorageEntity.storageEntity.itemState.eq(false);
   }
 }

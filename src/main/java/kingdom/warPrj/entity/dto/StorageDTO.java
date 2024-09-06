@@ -1,5 +1,6 @@
 package kingdom.warPrj.entity.dto;
 
+import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.entity.SoldierEntity;
 import kingdom.warPrj.entity.entity.StorageEntity;
 import lombok.Data;
@@ -25,7 +26,7 @@ public class StorageDTO {
 
   private String itemState;
 
-  private SoldierDTO soldierDTO;
+  private SoldierDTO soldier;
 
   public StorageDTO(StorageEntity storageEntity){
     this.storageId = storageEntity.getStorageId();
@@ -36,6 +37,8 @@ public class StorageDTO {
     this.forceBonus = storageEntity.getForceBonus();
     this.spellBonus = storageEntity.getSpellBonus();
     this.itemState = storageEntity.isItemState() ? "사용불가" : "사용가능";
-    this.soldierDTO = new SoldierDTO(storageEntity.getSoldierEntity());
+    if(storageEntity.getSoldierEntity() != null){
+      this.soldier = new SoldierDTO(storageEntity.getSoldierEntity());
+    }
   }
 }

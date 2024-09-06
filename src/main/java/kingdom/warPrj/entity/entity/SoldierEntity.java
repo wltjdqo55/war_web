@@ -55,7 +55,7 @@ public class SoldierEntity {
   @JoinColumn(name = "species_id")
   private SpeciesEntity species;
 
-  public SoldierEntity(SoldierVO soldierVO, long skillId, long speciesId){
+  public SoldierEntity(SoldierVO soldierVO, Long skillId, Long speciesId){
     this.id = soldierVO.getId();
     this.attack = soldierVO.getAttack();
     this.defense = soldierVO.getDefense();
@@ -73,7 +73,7 @@ public class SoldierEntity {
     this.species = new SpeciesEntity(speciesId);  // 종족 정보
   }
 
-  public SoldierEntity(long id){
+  public SoldierEntity(Long id){
     this.id = id;
   }
 }

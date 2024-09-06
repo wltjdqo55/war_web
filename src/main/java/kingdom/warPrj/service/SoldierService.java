@@ -27,10 +27,11 @@ public class SoldierService {
 //    return new StorageDTO(storageRepository.save(new StorageEntity(storageVO)));
 //  }
 //
-//  public boolean itemNameCheck(String itemName){
-//    return storageRepository.findOneByItem(itemName).isEmpty();
-//  }
-//
+  public boolean soldierIdCheck(String soldierId){
+    return true;  //임시
+    //return soldierRepository.findOneBySoldierId(soldierId).isEmpty();
+  }
+
 //  public List<StorageDTO> getItemList(){
 //    return storageRepository.findAll().stream().map(StorageDTO::new).collect(Collectors.toList());
 //  }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/common/css/adminHeader.css">
     <link rel="stylesheet" href="/common/css/addEdit.css">
     <link rel="stylesheet" href="/css/storageAdd.css">
+    <link rel="stylesheet" href="/css/soldierAddModal.css">
 </head>
 <body>
 <div id="app">
@@ -52,6 +53,37 @@
                     <label for="soldierBirthPlace" class="form-label">출생지</label>
                     <div class="input-container">
                         <input type="text" id="soldierBirthPlace" name="soldierBirthPlace" placeholder="용사의 출생자를 입력해주세요." maxlength="100" v-model="soldierInfo.soldierBirthPlace">
+                    </div>
+                </div>
+
+                <div class="select-container">
+                    <label for="species" class="select-label">종족(필수)</label>
+                    <select id="species" name="species" v-model="soldierInfo.speciesId">
+                        <option value="선택" disabled selected>선택</option>
+                        <option v-for="(item, index) in speciesInfo" :key="index" :value="item.speciesId">{{item.speciesName}}</option>
+                    </select>
+                </div>
+
+                <div class="select-container">
+                    <label for="skill" class="select-label">스킬</label>
+                    <select id="skill" name="skill" v-model="soldierInfo.skillId">
+                        <option value="선택" selected>선택</option>
+                        <option v-for="(item, index) in skillInfo" :key="index" :value="item.skillId">{{item.skillName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">아이템</label>
+                    <div class="input-container">
+                        <!-- 첫 번째 input-container: "아이템보기" 버튼 -->
+                        <div class="input-container" style="flex:0.3">
+                            <button type="button" class="btn-secondary" @click="viewItems()">아이템보기</button>
+                        </div>
+
+                        <!-- 두 번째 input-container: 선택된 아이템을 보여줄 텍스트 -->
+                        <div class="input-container" style="flex:0.7">
+                            <input type="text" id="selectedItem" name="selectedItem" placeholder="선택된 아이템이 여기에 표시됩니다." v-model="viewSelectedItems()" readonly>
+                        </div>
                     </div>
                 </div>
 
@@ -104,6 +136,43 @@
                 </div>
             </div>
         </form>
+
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <h3>아이템 선택</h3>
+                <!-- 테이블 -->
+                <table class="item-table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>종류</th>
+                        <th>아이템명</th>
+                        <th>공격력 보정</th>
+                        <th>방어력 보정</th>
+                        <th>힘 보정</th>
+                        <th>마력 보정</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item, index) in itemInfo" :key="index">
+                        <td><input type="checkbox" :value="item" v-model="soldierInfo.selectedItems"></td>
+                        <td>{{ item.item }}</td>
+                        <td>{{ item.itemName }}</td>
+                        <td>{{ item.attackBonus }}</td>
+                        <td>{{ item.defenseBonus }}</td>
+                        <td>{{ item.forceBonus }}</td>
+                        <td>{{ item.spellBonus }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- 버튼 -->
+                <div class="modal-buttons">
+                    <button type="button" class="btn-primary" @click="confirmSelection()">선택</button>
+                    <button type="button" class="btn-secondary" @click="closeModal()">닫기</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -128,16 +197,21 @@
                 soldierId : "",
                 soldierName : "",
                 soldierPassword : "",
-                soldierAge : 0,
+                soldierAge : "",
                 soldierBirthPlace : "",
                 attack : 0,
                 defense : 0,
                 strength : 0,
                 spell : 0,
                 force : 0,
-                intelligence : 0
+                intelligence : 0,
+                speciesId : "선택",
+                skillId : "선택",
+                selectedItems : []
             },
             speciesInfo : {},
+            skillInfo : {},
+            itemInfo : {},
             check : {
                 isIdCheck : false,
                 soldierId : ""
@@ -164,6 +238,49 @@
                     .catch(error => {
                       console.error("Error fetching data: ", error);
                     })
+            },
+            getSkillInfo : function () {
+                let vm = this;
+                axios.get('/skill/getSkillStateList')
+                    .then(res => {
+                        vm.skillInfo = res.data;
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            getItemInfo : function () {
+                let vm = this;
+                axios.get('/storage/getItemStateList')
+                    .then(res => {
+                        console.log(res);
+                        vm.itemInfo = res.data;
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            viewSelectedItems : function () {
+                let vm = this;
+                let items = "";
+                for(let i = 0 ; i < vm.soldierInfo.selectedItems.length ; i++){
+                    items += vm.soldierInfo.selectedItems[i].itemName;
+                    if(i+1 < vm.soldierInfo.selectedItems.length){
+                        items += ", ";
+                    }
+                }
+                return items;
+            },
+            viewItems: function () {
+                this.soldierInfo.selectedItems = [];
+                document.getElementsByClassName("modal-overlay")[0].style.display = "flex";
+            },
+            closeModal: function () {
+                document.getElementsByClassName("modal-overlay")[0].style.display = "none";
+            },
+            confirmSelection : function () {
+                let vm = this;
+                document.getElementsByClassName("modal-overlay")[0].style.display = "none";
             },
             soldierNameDup : function () {
                 let vm = this;
@@ -209,7 +326,13 @@
                 else if(!vm.soldierBirthPlaceCheck(vm.soldierInfo.soldierBirthPlace)){
                     return false;
                 }
+                else if(!vm.speciesCheck(vm.soldierInfo.speciesId)){
+                    return false;
+                }
                 else {
+                    if(vm.soldierInfo.soldierAge != 0){
+                        vm.soldierInfo.soldierAge = vm.trimNumber(vm.soldierInfo.soldierAge);
+                    }
                     if(vm.soldierInfo.attack != 0){
                         vm.soldierInfo.attack = vm.trimNumber(vm.soldierInfo.attack);
                     }
@@ -270,6 +393,45 @@
                 }
                 return true;
             },
+            soldierPasswordCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == "") {
+                    alert("비밀번호를 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            soldierNameCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == "") {
+                    alert("이름을 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            soldierAgeCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == 0) {
+                    alert("나이를 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            soldierBirthPlaceCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == 0) {
+                    alert("출생지를 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            speciesCheck : function (keyword) {
+                if(keyword == "선택"){
+                    alert("종족을 선택해주세요.");
+                    return false;
+                }
+                return true;
+            },
             trimNumber : function (keyword) {
                 let number = parseInt(keyword, 10);
                 return number;
@@ -282,6 +444,8 @@
        mounted() {
             this.getAdminInfo();
             this.getSpeciesInfo();
+            this.getSkillInfo();
+            this.getItemInfo();
        }
      })
 </script>

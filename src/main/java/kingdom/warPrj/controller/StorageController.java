@@ -85,4 +85,10 @@ public class StorageController {
     storageService.itemDelete(id);
     return "";
   }
+
+  @GetMapping("/storage/getItemStateList")
+  @ResponseBody
+  public List<StorageDTO> getItemStateList(){
+    return storageService.getItemStateList();
+  }
 }

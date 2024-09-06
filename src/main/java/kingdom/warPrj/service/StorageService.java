@@ -1,6 +1,8 @@
 package kingdom.warPrj.service;
 
+import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.dto.StorageDTO;
+import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.entity.StorageEntity;
 import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.entity.vo.StorageVO;
@@ -49,5 +51,10 @@ public class StorageService {
 
   public void itemDelete(long id){
     storageRepository.deleteById(id);
+  }
+
+  public List<StorageDTO> getItemStateList() {
+    List<StorageEntity> list = storageQueryDSL.getItemStateList();
+    return list.stream().map(StorageDTO::new).collect(Collectors.toList());
   }
 }

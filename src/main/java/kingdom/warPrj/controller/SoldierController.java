@@ -2,6 +2,7 @@ package kingdom.warPrj.controller;
 
 
 import kingdom.warPrj.entity.dto.StorageDTO;
+import kingdom.warPrj.entity.vo.SoldierVO;
 import kingdom.warPrj.entity.vo.StorageVO;
 import kingdom.warPrj.service.SoldierService;
 import kingdom.warPrj.service.StorageService;
@@ -38,12 +39,12 @@ public class SoldierController {
 //    return storageService.itemAdd(storageVO);
 //  }
 //
-//  @GetMapping("/storage/itemNameCheck")
-//  @ResponseBody
-//  public boolean itemNameCheck(StorageVO storageVO){
-//    return storageService.itemNameCheck(storageVO.getItem());
-//  }
-//
+  @GetMapping("/soldier/soldierIdCheck")
+  @ResponseBody
+  public boolean soldierIdCheck(SoldierVO soldierVO){
+    return soldierService.soldierIdCheck(soldierVO.getSoliderId());
+  }
+
 //  @GetMapping("/storage/getItemList")
 //  @ResponseBody
 //  public List<StorageDTO> getItemList() {
