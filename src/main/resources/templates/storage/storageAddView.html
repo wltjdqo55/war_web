@@ -19,8 +19,8 @@
                 <!-- 입력 필드 -->
                 <h2 class="form-title">아이템 등록</h2>
                 <div class="select-container">
-                    <label for="itemType" class="select-label" v-model="itemInfo.item">아이템 종류</label>
-                    <select id="itemType" name="itemType">
+                    <label for="itemType" class="select-label">아이템 종류</label>
+                    <select id="itemType" name="itemType" v-model="itemInfo.item">
                         <option value="선택">선택</option>
                         <option value="창">창</option>
                         <option value="활">활</option>
