@@ -20,7 +20,7 @@ public class SoldierEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  private String soliderId;
+  private String soldierId;
 
   private String soldierPassword;
 
@@ -30,7 +30,7 @@ public class SoldierEntity {
 
   private String soldierBirthPlace;
 
-  private String soldierState;
+  private boolean soldierState;
 
   private int attack;
 
@@ -63,10 +63,10 @@ public class SoldierEntity {
     this.soldierAge = soldierVO.getSoldierAge();
     this.soldierName = soldierVO.getSoldierName();
     this.intelligence = soldierVO.getIntelligence();
-    this.soliderId = soldierVO.getSoliderId();
+    this.soldierId = soldierVO.getSoldierId();
     this.soldierPassword = soldierVO.getSoldierPassword();
     this.soldierBirthPlace = soldierVO.getSoldierBirthPlace();
-    this.soldierState = soldierVO.getSoldierState();
+    this.soldierState = soldierVO.isSoldierState();
     this.strength = soldierVO.getStrength();
     this.spell = soldierVO.getSpell();
     this.skill = new SkillEntity(skillId);        // 스킬 정보
@@ -76,4 +76,5 @@ public class SoldierEntity {
   public SoldierEntity(Long id){
     this.id = id;
   }
+
 }

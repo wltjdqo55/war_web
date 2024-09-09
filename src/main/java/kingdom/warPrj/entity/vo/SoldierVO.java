@@ -1,9 +1,9 @@
 package kingdom.warPrj.entity.vo;
 
-import kingdom.warPrj.entity.entity.SkillEntity;
-import kingdom.warPrj.entity.entity.SpeciesEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -11,7 +11,7 @@ public class SoldierVO {
 
   private long id;
 
-  private String soliderId;
+  private String soldierId;
 
   private String soldierPassword;
 
@@ -21,7 +21,7 @@ public class SoldierVO {
 
   private String soldierBirthPlace;
 
-  private String soldierState;
+  private boolean soldierState;
 
   private int attack;
 
@@ -41,5 +41,6 @@ public class SoldierVO {
 
   private long speciesId;
 
+  private List<Long> selectedItemId;
 
 }

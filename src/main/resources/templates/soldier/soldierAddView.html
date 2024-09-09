@@ -68,7 +68,7 @@
                     <label for="skill" class="select-label">스킬</label>
                     <select id="skill" name="skill" v-model="soldierInfo.skillId">
                         <option value="선택" selected>선택</option>
-                        <option v-for="(item, index) in skillInfo" :key="index" :value="item.skillId">{{item.skillName}}</option>
+                        <option v-for="(item, index) in skillInfo" :key="index" :value="item.id">{{item.skillName}}</option>
                     </select>
                 </div>
 
@@ -155,7 +155,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="(item, index) in itemInfo" :key="index">
-                        <td><input type="checkbox" :value="item" v-model="soldierInfo.selectedItems"></td>
+                        <td><input type="checkbox" :value="item" v-model="selectedItems"></td>
                         <td>{{ item.item }}</td>
                         <td>{{ item.itemName }}</td>
                         <td>{{ item.attackBonus }}</td>
@@ -207,7 +207,7 @@
                 intelligence : 0,
                 speciesId : "선택",
                 skillId : "선택",
-                selectedItems : []
+                selectedItemId : []
             },
             speciesInfo : {},
             skillInfo : {},
@@ -215,7 +215,8 @@
             check : {
                 isIdCheck : false,
                 soldierId : ""
-            }
+            },
+            selectedItems : []
         },
         methods : {
             getAdminInfo : function () {
@@ -263,9 +264,9 @@
             viewSelectedItems : function () {
                 let vm = this;
                 let items = "";
-                for(let i = 0 ; i < vm.soldierInfo.selectedItems.length ; i++){
-                    items += vm.soldierInfo.selectedItems[i].itemName;
-                    if(i+1 < vm.soldierInfo.selectedItems.length){
+                for(let i = 0 ; i < vm.selectedItems.length ; i++){
+                    items += vm.selectedItems[i].itemName;
+                    if(i+1 < vm.selectedItems.length){
                         items += ", ";
                     }
                 }
@@ -310,22 +311,7 @@
             },
             soldierAddButton : function () {
                 let vm = this;
-                if(!vm.soldierIdCheck(vm.soldierInfo.soldierId)){
-                    return false;
-                }
-                else if(!vm.soldierPasswordCheck(vm.soldierInfo.soldierPassword)){
-                    return false;
-                }
-                else if(!vm.soldierNameCheck(vm.soldierInfo.soldierName)){
-                    return false;
-                }
-                else if(!vm.soldierAgeCheck(vm.soldierInfo.soldierAge)){
-                    return false;
-                }
-                else if(!vm.soldierBirthPlaceCheck(vm.soldierInfo.soldierBirthPlace)){
-                    return false;
-                }
-                else if(!vm.speciesCheck(vm.soldierInfo.speciesId)){
+                if(!vm.soldierIdCheck(vm.soldierInfo.soldierId) && !vm.soldierPasswordCheck(vm.soldierInfo.soldierPassword) && !vm.soldierNameCheck(vm.soldierInfo.soldierName) && !vm.soldierAgeCheck(vm.soldierInfo.soldierAge) && !vm.soldierBirthPlaceCheck(vm.soldierInfo.soldierBirthPlace) && !vm.speciesCheck(vm.soldierInfo.speciesId)){
                     return false;
                 }
                 else {
@@ -350,7 +336,14 @@
                     if(vm.soldierInfo.intelligence != 0){
                         vm.soldierInfo.intelligence = vm.trimNumber(vm.soldierInfo.intelligence);
                     }
+                    parseInt(vm.soldierInfo.skillId);
+                    parseInt(vm.soldierInfo.speciesId);
 
+                    for(let i = 0 ; i < vm.selectedItems.length ; i++){
+                        vm.soldierInfo.selectedItemId[i] = vm.selectedItems[i].storageId;
+                    }
+
+                    console.log(vm.soldierInfo);
 
                     let formData = new FormData();
                     Object.keys(vm.soldierInfo).forEach((key) => {

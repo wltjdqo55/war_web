@@ -53,7 +53,7 @@
                     <td>{{item.soldierId}}</td>
                     <td>{{item.soldierAge}}</td>
                     <td>{{item.soldierBirthPlace}}</td>
-                    <td></td>
+                    <td>{{item.speciesName}}</td>
                     <td>{{item.soldierState}}</td>
                 </tr>
                 </tbody>
@@ -90,6 +90,7 @@
                 let vm = this;
                 axios.get('/soldier/getSoldierList')
                     .then(res => {
+                        console.log(res);
                         vm.soldierInfo = res.data;
                     })
                     .catch(error => {

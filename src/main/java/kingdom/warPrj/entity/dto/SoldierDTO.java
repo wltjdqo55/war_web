@@ -10,7 +10,7 @@ public class SoldierDTO {
 
   private long id;
 
-  private String soliderId;
+  private String soldierId;
 
   private String soldierPassword;
 
@@ -38,6 +38,8 @@ public class SoldierDTO {
 
   private long speciesId; // 참조 아이디
 
+  private String speciesName;
+
   public SoldierDTO(SoldierEntity soldierEntity) {
     this.id = soldierEntity.getId();
     this.attack = soldierEntity.getAttack();
@@ -46,13 +48,14 @@ public class SoldierDTO {
     this.soldierAge = soldierEntity.getSoldierAge();
     this.soldierName = soldierEntity.getSoldierName();
     this.intelligence = soldierEntity.getIntelligence();
-    this.soliderId = soldierEntity.getSoliderId();
+    this.soldierId = soldierEntity.getSoldierId();
     this.soldierPassword = soldierEntity.getSoldierPassword();
     this.soldierBirthPlace = soldierEntity.getSoldierBirthPlace();
-    this.soldierState = soldierEntity.getSoldierState();
+    this.soldierState = soldierEntity.isSoldierState() ? "사망" : "생존";
     this.strength = soldierEntity.getStrength();
     this.spell = soldierEntity.getSpell();
     this.skillId = soldierEntity.getSkill().getId();  // 스킬 아이디
     this.speciesId = soldierEntity.getSpecies().getSpeciesId(); // 종족 아이디
+    this.speciesName = soldierEntity.getSpecies().getSpeciesName();
   }
 }

@@ -62,6 +62,13 @@ public class SkillQueryDSL {
   }
 
   public BooleanExpression skillStateCheck() {
-      return QSkillEntity.skillEntity.skillState.eq(false);
+      return QSkillEntity.skillEntity.skillState.isFalse();
+  }
+
+  public void updateSkillState(Long id) {
+    jpaQueryFactory.update(QSkillEntity.skillEntity)
+        .set(QSkillEntity.skillEntity.skillState, true)
+        .where(QSkillEntity.skillEntity.id.eq(id))
+        .execute();
   }
 }

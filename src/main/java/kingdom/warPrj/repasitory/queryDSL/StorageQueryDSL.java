@@ -65,6 +65,16 @@ public class StorageQueryDSL {
   }
 
   public BooleanExpression ItemStateCheck() {
-    return QStorageEntity.storageEntity.itemState.eq(false);
+    return QStorageEntity.storageEntity.itemState.isFalse();
+  }
+
+  public void updateSoldierId(Long storageId, Long soldierId){
+    jpaQueryFactory
+        .update(QStorageEntity.storageEntity)
+        .set(QStorageEntity.storageEntity.soldierEntity.id, soldierId)
+        .set(QStorageEntity.storageEntity.itemState, true)
+        .where(QStorageEntity.storageEntity.storageId.eq(storageId))
+        .execute();
+
   }
 }

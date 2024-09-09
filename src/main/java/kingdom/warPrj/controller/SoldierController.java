@@ -1,6 +1,7 @@
 package kingdom.warPrj.controller;
 
 
+import kingdom.warPrj.entity.dto.SoldierDTO;
 import kingdom.warPrj.entity.dto.StorageDTO;
 import kingdom.warPrj.entity.vo.SoldierVO;
 import kingdom.warPrj.entity.vo.StorageVO;
@@ -10,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,24 +31,24 @@ public class SoldierController {
     return "/soldier/soldierAddView";
   }
 
-//  @PostMapping("/storage/itemAddOK")
-//  @ResponseBody
-//  public StorageDTO itemAdd(StorageVO storageVO) {
-//    return storageService.itemAdd(storageVO);
-//  }
-//
+  @PostMapping("/soldier/soldierAddOK")
+  @ResponseBody
+  public SoldierDTO soldierAdd(SoldierVO soldierVO) {
+    return soldierService.soldierAdd(soldierVO);
+  }
+
   @GetMapping("/soldier/soldierIdCheck")
   @ResponseBody
   public boolean soldierIdCheck(SoldierVO soldierVO){
-    return soldierService.soldierIdCheck(soldierVO.getSoliderId());
+    return soldierService.soldierIdCheck(soldierVO.getSoldierId());
   }
 
-//  @GetMapping("/storage/getItemList")
-//  @ResponseBody
-//  public List<StorageDTO> getItemList() {
-//    return storageService.getItemList();
-//  }
-//
+  @GetMapping("/soldier/getSoldierList")
+  @ResponseBody
+  public List<SoldierDTO> getItemList() {
+    return soldierService.getSoldierList();
+  }
+
 //  @GetMapping("/storage/getSearchItem")
 //  @ResponseBody
 //  public List<StorageDTO> getSearchItem(StorageVO storageVO) {
