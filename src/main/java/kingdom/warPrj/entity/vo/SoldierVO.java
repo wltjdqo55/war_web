@@ -35,7 +35,11 @@ public class SoldierVO {
 
   private int intelligence;
 
+  //검색//
 
+  private String searchOption;
+
+  private String searchKeyword;
 
   //조인//
 

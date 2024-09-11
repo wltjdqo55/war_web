@@ -51,11 +51,11 @@ public class SoldierService {
     return soldierRepository.findAll().stream().map(SoldierDTO::new).collect(Collectors.toList());
   }
 
-//  public List<StorageDTO> getSearchItem(StorageVO storageVO){
-//    List<StorageEntity> list = storageQueryDSL.getSearchItem(storageVO);
-//    return list.stream().map(StorageDTO::new).collect(Collectors.toList());
-//  }
-//
+  public List<SoldierDTO> getSearchSoldier(SoldierVO soldierVO){
+    List<SoldierEntity> list = soldierQueryDSL.getSearchSoldier(soldierVO);
+    return list.stream().map(SoldierDTO::new).collect(Collectors.toList());
+  }
+
   public SoldierDTO getSoldierDetail(long id){
     SoldierEntity soldierEntity = soldierRepository.findById(id).orElse(new SoldierEntity());
 
