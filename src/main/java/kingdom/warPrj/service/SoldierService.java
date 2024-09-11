@@ -56,16 +56,51 @@ public class SoldierService {
 //    return list.stream().map(StorageDTO::new).collect(Collectors.toList());
 //  }
 //
-//  public StorageDTO getItemDetail(long id){
-//    return new StorageDTO(storageRepository.findById(id).orElse(new StorageEntity()));
-//  }
-//
-//  @Transactional
-//  public boolean itemEdit(StorageVO storageVO){
-//    return storageQueryDSL.itemEdit(storageVO);
-//  }
-//
-//  public void itemDelete(long id){
-//    storageRepository.deleteById(id);
-//  }
+  public SoldierDTO getSoldierDetail(long id){
+    SoldierEntity soldierEntity = soldierRepository.findById(id).orElse(new SoldierEntity());
+
+    SoldierDTO soldierDTO = new SoldierDTO(soldierEntity);
+    System.out.println(soldierDTO);
+    return soldierDTO;
+  }
+
+  @Transactional
+  public boolean soldierEdit(SoldierVO soldierVO){
+
+      boolean flag = soldierRepository
+          .findById(soldierVO.getId())
+          .map(t -> {
+            t.update(soldierVO);
+            return true;
+          })
+          .orElse(false);
+
+      for(int i = 0 ; i < soldierVO.getBeforeItemIds().size() ; i++){               //storage테이블 용사 아이디 null로 초기화
+        storageQueryDSL.initSoldierId(soldierVO.getBeforeItemIds().get(i));
+      }
+
+      for(int i = 0 ; i < soldierVO.getSelectedItemId().size() ; i++){              //storage테이블 용사 아이디 update
+        storageQueryDSL.updateSoldierId(soldierVO.getSelectedItemId().get(i), soldierVO.getId());
+      }
+      if(soldierVO.getBeforeSkillId()!=soldierVO.getSkillId() && flag){
+        skillQueryDSL.initSkillState(soldierVO.getBeforeSkillId());                 //스킬상태 초기화
+        skillQueryDSL.updateSkillState(soldierVO.getSkillId());                     //스킬상태 업데이트
+      }
+
+      return flag;
+  }
+
+  public void soldierDelete(SoldierVO soldierVO){
+    System.out.println("!!!!!!!!!!!!!!!!!");
+    skillQueryDSL.initSkillState(soldierVO.getSkillId());   //스킬 상태 초기화
+    System.out.println("!!!!!!!!!!!!!!!!!");
+    storageQueryDSL.initItemState(soldierVO.getId());       //아이템 상태 초기화
+    System.out.println("!!!!!!!!!!!!!!!!!");
+    soldierRepository.deleteById(soldierVO.getId());        //용사 삭제
+    System.out.println("!!!!!!!!!!!!!!!!!");
+
+
+
+
+  }
 }

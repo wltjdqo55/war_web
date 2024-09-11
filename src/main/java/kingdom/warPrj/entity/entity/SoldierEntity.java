@@ -66,7 +66,7 @@ public class SoldierEntity {
     this.soldierId = soldierVO.getSoldierId();
     this.soldierPassword = soldierVO.getSoldierPassword();
     this.soldierBirthPlace = soldierVO.getSoldierBirthPlace();
-    this.soldierState = soldierVO.isSoldierState();
+    this.soldierState = !soldierVO.getSoldierState().equals("생존");
     this.strength = soldierVO.getStrength();
     this.spell = soldierVO.getSpell();
     this.skill = new SkillEntity(skillId);        // 스킬 정보
@@ -75,6 +75,22 @@ public class SoldierEntity {
 
   public SoldierEntity(Long id){
     this.id = id;
+  }
+
+  public void update(SoldierVO soldierVO){
+    this.soldierPassword = soldierVO.getSoldierPassword();
+    this.soldierName = soldierVO.getSoldierName();
+    this.soldierAge = soldierVO.getSoldierAge();
+    this.soldierBirthPlace = soldierVO.getSoldierBirthPlace();
+    this.attack = soldierVO.getAttack();
+    this.defense = soldierVO.getDefense();
+    this.strength = soldierVO.getStrength();
+    this.spell = soldierVO.getSpell();
+    this.force = soldierVO.getForce();
+    this.intelligence = soldierVO.getIntelligence();
+    this.skill = new SkillEntity(soldierVO.getSkillId());           //스킬 수정
+    this.species = new SpeciesEntity(soldierVO.getSpeciesId());     //종족 수정
+
   }
 
 }

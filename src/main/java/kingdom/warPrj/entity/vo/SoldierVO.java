@@ -21,7 +21,7 @@ public class SoldierVO {
 
   private String soldierBirthPlace;
 
-  private boolean soldierState;
+  private String soldierState;
 
   private int attack;
 
@@ -35,12 +35,18 @@ public class SoldierVO {
 
   private int intelligence;
 
+
+
   //조인//
 
   private long skillId;
 
   private long speciesId;
 
-  private List<Long> selectedItemId;
+  private long beforeSkillId;
+
+  private List<Long> selectedItemId;    // 변경할 아이템 아이디
+
+  private List<Long> beforeItemIds;     // 이전 용사의 아이템 아이디
 
 }
