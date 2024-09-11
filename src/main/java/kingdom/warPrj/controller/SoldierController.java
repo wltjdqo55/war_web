@@ -49,12 +49,12 @@ public class SoldierController {
     return soldierService.getSoldierList();
   }
 
-//  @GetMapping("/storage/getSearchItem")
-//  @ResponseBody
-//  public List<StorageDTO> getSearchItem(StorageVO storageVO) {
-//    return storageService.getSearchItem(storageVO);
-//  }
-//
+  @GetMapping("/soldier/getSearchSoldier")
+  @ResponseBody
+  public List<SoldierDTO> getSearchSoldier(SoldierVO soldierVO) {
+    return soldierService.getSearchSoldier(soldierVO);
+  }
+
   @GetMapping("/account/adminMain/soldier/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
