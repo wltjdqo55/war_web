@@ -1,7 +1,12 @@
 package kingdom.warPrj.repasitory.queryDSL;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import kingdom.warPrj.entity.entity.QSoldierEntity;
+import kingdom.warPrj.entity.entity.QStorageEntity;
+import kingdom.warPrj.entity.vo.SoldierVO;
+import kingdom.warPrj.entity.vo.StorageVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -34,13 +39,18 @@ public class SoldierQueryDSL {
 //  }
 //
 //  @Modifying
-//  public boolean itemEdit(StorageVO storageVO){
-//    long affectedRows = jpaQueryFactory.update(QStorageEntity.storageEntity)
-//        .set(QStorageEntity.storageEntity.attackBonus, storageVO.getAttackBonus())
-//        .set(QStorageEntity.storageEntity.defenseBonus, storageVO.getDefenseBonus())
-//        .set(QStorageEntity.storageEntity.forceBonus, storageVO.getForceBonus())
-//        .set(QStorageEntity.storageEntity.spellBonus, storageVO.getSpellBonus())
-//        .where(QStorageEntity.storageEntity.storageId.eq(storageVO.getStorageId()))
+//  public boolean soldierEdit(SoldierVO soldierVO){
+//    long affectedRows = jpaQueryFactory.update(QSoldierEntity.soldierEntity)
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
+//        .set(QSoldierEntity.soldierEntity.soldierPassword, soldierVO.getSoldierPassword())
 //        .execute();
 //
 //    return affectedRows > 0;

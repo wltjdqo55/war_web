@@ -2,9 +2,343 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>아이템상세정보</title>
+    <link rel="stylesheet" href="/common/css/body.css">
+    <link rel="stylesheet" href="/common/css/adminHeader.css">
+    <link rel="stylesheet" href="/common/css/detailView.css">
+    <link rel="stylesheet" href="/css/soldierDetatilView.css">
 </head>
 <body>
+<div id="app">
+    <!-- 헤더영역-->
+    <div id="header-container"></div>
+    <!-- 메인 컨텐츠 영역 -->
+    <div class="content">
+        <div class="form-container">
+            <h2 class="form-title">용사 상세 정보</h2>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">용사 아이디</span>
+                    <span id="soldierId" class="form-second">{{soldierInfo.soldierId}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">용사 이름</span>
+                    <span id="soldierName" class="form-second">{{soldierInfo.soldierName}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">용사 나이</span>
+                    <span id="soldierAge" class="form-second">{{soldierInfo.soldierAge}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">용사 출생지</span>
+                    <span id="soldierBirthPlace" class="form-second">{{soldierInfo.soldierBirthPlace}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">용사 상태</span>
+                    <span id="soldierState" class="form-second">{{soldierInfo.soldierState}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">종족</span>
+                    <span id="species" class="form-second">{{soldierInfo.speciesName}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">스킬</span>
+                    <span id="skill" class="form-second">{{soldierInfo.skillName}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">아이템</span>
+                    <span id="item" class="form-second" v-html="viewSelectedItems()"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">공격력</span>
+                    <span id="attack" class="form-second" style="cursor:pointer" v-html="bonusValue('attack')" @click="viewStatus('attack')"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">방어력</span>
+                    <span id="defense" class="form-second" style="cursor:pointer" v-html="bonusValue('defense')" @click="viewStatus('defense')"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">체력</span>
+                    <span id="strength" class="form-second" style="cursor:pointer" v-html="bonusValue('strength')" @click="viewStatus('strength')"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">마력</span>
+                    <span id="spell" class="form-second" style="cursor:pointer" v-html="bonusValue('spell')" @click="viewStatus('spell')"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">힘</span>
+                    <span id="force" class="form-second" style="cursor:pointer" v-html="bonusValue('force')" @click="viewStatus('force')"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">지능</span>
+                    <span id="intelligence" class="form-second" style="cursor:pointer" v-html="bonusValue('intelligence')" @click="viewStatus('intelligence')"></span>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="button" class="btn-primary" @click="editButton()">수정</button>
+                <button type="button" class="btn-primary" @click="listButton()">목록</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" @click="closeModal">
+        <div class="modal-container" @click.stop>
+            <div class="modal-header">
+                <h3>{{ modalContentName }}</h3>
+                <span class="modal-close" @click="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>{{ modalContent }}</p><br>
+                <hr>
+                <div class="modal-content-section">
+                    <div class="modal-content-label">종족</div>
+                    <div class="modal-content-value">{{ soldierInfo.speciesName }}</div>
+                </div>
+                <div class="modal-content-section">
+                    <div class="modal-content-label">종족{{modalContentName}}</div>
+                    <div class="modal-content-value">{{modalSpeciesValue}}</div>
+                </div>
+                <hr>
+                <div class="modal-content-section">
+                    <div class="modal-content-label">스킬</div>
+                    <div class="modal-content-value">{{soldierInfo.skillName}}</div>
+                </div>
+                <div class="modal-content-section">
+                    <div class="modal-content-label">스킬{{modalContentName}}</div>
+                    <div class="modal-content-value">{{modalSkillValue}}</div>
+                </div>
+                <hr>
+                <div class="modal-content-section">
+                    <div class="modal-content-label">아이템</div>
+                    <table class="modal-table">
+                        <thead>
+                        <tr>
+                            <th>아이템명</th>
+                            <th>{{modalContentName}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in soldierInfo.items" :key="item.itemId">
+                            <td>{{ item.itemName }}</td>
+                            <td v-if="modalContentName=='공격력'">{{ item.attackBonus }}</td>
+                            <td v-if="modalContentName=='방어력'">{{ item.defenseBonus }}</td>
+                            <td v-if="modalContentName=='체력'">0</td>
+                            <td v-if="modalContentName=='마력'">{{ item.spellBonus }}</td>
+                            <td v-if="modalContentName=='힘'">{{ item.forceBonus }}</td>
+                            <td v-if="modalContentName=='지능'">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+<script>
+    $(function() {
+        $('#header-container').load('/common/html/adminHeader.html');
+    });
+</script>
+
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            adminInfo : {},
+            soldierInfo : {
+                items:[]
+            },
+            id : 0,
+            modalContent: "",        // Content to display in modal
+            modalContentName: "",
+            modalSpeciesValue : 0,
+            modalSkillValue : 0
+        },
+        methods : {
+            getAdminInfo : function () {
+                let vm = this;
+                axios.get('/account/getAdminInfo')
+                    .then(res => {
+                        vm.adminInfo = res.data;
+                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            loadData : function () {
+                let vm = this;
+                vm.id = [[${id}]];
+
+                axios.get('/soldier/getSoldierInfo/' + vm.id)
+                    .then(res => {
+                        vm.soldierInfo = res.data;
+                      })
+                      .catch(error => {
+                        console.error('Error fetching data:', error);
+                      });
+            },
+            listButton : function () {
+                let vm = this;
+                location.href = "/account/adminMain/soldier";
+            },
+            editButton : function () {
+                let vm = this;
+                location.href = '/account/adminMain/soldier/edit/' + vm.id;
+            },
+            viewSelectedItems : function () {               // 사용중인 아이템
+                let vm = this;
+                let items = "";
+                for(let i = 0 ; i < vm.soldierInfo.items.length ; i++){
+                    items += vm.soldierInfo.items[i].itemName;
+                    if(i+1 < vm.soldierInfo.items.length){
+                        items += ", ";
+                    }
+                }
+                return items;
+            },
+            bonusValue : function (value) {                // 보정 값
+                let vm = this;
+                let base = 0;
+                let correctionValue = 0;
+                let total = 0;
+                let length = vm.soldierInfo.items.length;
+
+                if(value == 'attack') {                  // 공격력
+                    base = vm.soldierInfo.attack;
+                    correctionValue += vm.soldierInfo.speciesAttack;
+                    if(length > 0) {
+                        for(let i = 0 ; i < vm.soldierInfo.items.length ; i++) {
+                            correctionValue += vm.soldierInfo.items[i].attackBonus;
+                        }
+                    }
+                }
+                else if(value == 'defense') {           // 방어력
+                    base = vm.soldierInfo.defense;
+                    correctionValue += vm.soldierInfo.speciesDefense;
+                    if(length > 0) {
+                        for(let i = 0 ; i < vm.soldierInfo.items.length ; i++) {
+                            correctionValue += vm.soldierInfo.items[i].defenseBonus;
+                        }
+                    }
+                }
+                else if(value == 'strength') {          // 체력
+                    base = vm.soldierInfo.strength;
+                    correctionValue += (vm.soldierInfo.speciesStrength + vm.soldierInfo.skillStrength);
+                }
+                else if(value == 'spell') {             // 마력
+                    base = vm.soldierInfo.spell;
+                    correctionValue += (vm.soldierInfo.speciesSpell + vm.soldierInfo.skillSpell);
+                    if(length > 0) {
+                        for(let i = 0 ; i < vm.soldierInfo.items.length ; i++) {
+                            correctionValue += vm.soldierInfo.items[i].spellBonus;
+                        }
+                    }
+                }
+                else if(value == 'force') {             // 힘
+                    base = vm.soldierInfo.force;
+                    correctionValue += vm.soldierInfo.speciesForce;
+                    if(length > 0) {
+                        for(let i = 0 ; i < vm.soldierInfo.items.length ; i++) {
+                            correctionValue += vm.soldierInfo.items[i].forceBonus;
+                        }
+                    }
+                }
+                else if(value == 'intelligence') {      // 지능
+                    base = vm.soldierInfo.intelligence;
+                    correctionValue += vm.soldierInfo.speciesIntelligence;
+                }
+
+                total = base+correctionValue;
+
+                return "총 " + total + " ( 기본값 : " + base + " | 보정값 : " + correctionValue + " )";
+            },
+            viewStatus : function(value) {
+                // Modal content based on clicked status
+                let vm = this;
+                document.getElementsByClassName("modal-overlay")[0].style.display = "flex";
+                if(value == 'attack'){
+                    vm.modalContentName = "공격력";
+                    vm.modalSpeciesValue = vm.soldierInfo.speciesAttack;
+                }
+                else if(value == 'defense'){
+                    vm.modalContentName = "방어력";
+                    vm.modalSpeciesValue = vm.soldierInfo.speciesDefense;
+                }
+                else if(value == 'strength'){
+                    vm.modalContentName = "체력";
+                    vm.modalSpeciesValue = vm.soldierInfo.speciesStrength;
+                    vm.modalSkillValue = vm.soldierInfo.skillStrength;
+                }
+                else if(value == 'spell'){
+                    vm.modalContentName = "마력";
+                    vm.modalSpeciesValue = vm.soldierInfo.speciesSpell;
+                    vm.modalSkillValue = vm.soldierInfo.skillSpell;
+                }
+                else if(value == 'force'){
+                    vm.modalContentName = "힘";
+                    vm.modalSpeciesValue = vm.soldierInfo.speciesForce;
+                }
+                else if(value == 'intelligence'){
+                    vm.modalContentName = "지능";
+                    vm.modalSpeciesValue = vm.soldierInfo.speciesIntelligence;
+                }
+                vm.modalContent = vm.bonusValue(value);
+                vm.isModalVisible = true;
+            },
+            closeModal: function() {
+                let vm = this;
+                document.getElementsByClassName("modal-overlay")[0].style.display = "none";
+                vm.modalContentName = "";
+                vm.modalSkillValue = 0;
+                vm.modalSpeciesValue = 0;
+            }
+       },
+       filters: {},
+       computed: {},
+       watch: {},
+       created() {},
+       mounted() {
+            this.getAdminInfo();
+            this.loadData();
+       }
+     })
+</script>
 
 </body>
 </html>

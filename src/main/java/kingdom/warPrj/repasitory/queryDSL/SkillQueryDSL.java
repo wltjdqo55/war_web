@@ -8,6 +8,7 @@ import kingdom.warPrj.entity.vo.SkillVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -65,9 +66,18 @@ public class SkillQueryDSL {
       return QSkillEntity.skillEntity.skillState.isFalse();
   }
 
+  @Transactional
   public void updateSkillState(Long id) {
     jpaQueryFactory.update(QSkillEntity.skillEntity)
         .set(QSkillEntity.skillEntity.skillState, true)
+        .where(QSkillEntity.skillEntity.id.eq(id))
+        .execute();
+  }
+
+  @Transactional
+  public void initSkillState(Long id) {
+    jpaQueryFactory.update(QSkillEntity.skillEntity)
+        .set(QSkillEntity.skillEntity.skillState, false)
         .where(QSkillEntity.skillEntity.id.eq(id))
         .execute();
   }

@@ -55,34 +55,35 @@ public class SoldierController {
 //    return storageService.getSearchItem(storageVO);
 //  }
 //
-//  @GetMapping("/account/adminMain/storage/detail/{id}")
-//  public String detailView(@PathVariable("id") long id, Model model){
-//    model.addAttribute("id", id);
-//    return "/storage/storageDetailView.html";
-//  }
-//
-//  @GetMapping("/storage/getItemInfo/{id}")
-//  @ResponseBody
-//  public StorageDTO getItemInfo(@PathVariable long id){
-//    return storageService.getItemDetail(id);
-//  }
-//
-//  @GetMapping("/account/adminMain/storage/edit/{id}")
-//  public String editView(@PathVariable long id, Model model){
-//    model.addAttribute("id", id);
-//    return "/storage/storageEditView.html";
-//  }
-//
-//  @PostMapping("/storage/itemEditOK")
-//  @ResponseBody
-//  public boolean itemEdit(StorageVO storageVO) {
-//    return storageService.itemEdit(storageVO);
-//  }
-//
-//  @GetMapping("/storage/itemDelete/{id}")
-//  @ResponseBody
-//  public String itemDelete(@PathVariable long id){
-//    storageService.itemDelete(id);
-//    return "";
-//  }
+  @GetMapping("/account/adminMain/soldier/detail/{id}")
+  public String detailView(@PathVariable("id") long id, Model model){
+    model.addAttribute("id", id);
+    return "/soldier/soldierDetailView.html";
+  }
+
+  @GetMapping("/soldier/getSoldierInfo/{id}")
+  @ResponseBody
+  public SoldierDTO getSoldierInfo(@PathVariable long id){
+    return soldierService.getSoldierDetail(id);
+  }
+
+  @GetMapping("/account/adminMain/soldier/edit/{id}")
+  public String editView(@PathVariable long id, Model model){
+    model.addAttribute("id", id);
+    return "/soldier/soldierEditView.html";
+  }
+
+  @PostMapping("/soldier/soldierEditOK")
+  @ResponseBody
+  public boolean soldierEdit(SoldierVO soldierVO) {
+    System.out.println(soldierVO);
+    return soldierService.soldierEdit(soldierVO);
+  }
+
+  @PostMapping("/soldier/soldierDelete")
+  @ResponseBody
+  public String soldierDelete(SoldierVO soldierVO){
+    soldierService.soldierDelete(soldierVO);
+    return "";
+  }
 }

@@ -1,10 +1,469 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>아이템수정</title>
+    <link rel="stylesheet" href="/common/css/body.css">
+    <link rel="stylesheet" href="/common/css/adminHeader.css">
+    <link rel="stylesheet" href="/common/css/addEdit.css">
+    <link rel="stylesheet" href="/css/storageAdd.css">
+    <link rel="stylesheet" href="/css/soldierAddModal.css">
 </head>
 <body>
+<div id="app">
+    <!-- 헤더영역-->
+    <div id="header-container"></div>
+    <!-- 메인 컨텐츠 영역 -->
+    <div class="content">
+        <form>
+            <div class="form-container">
+                <!-- 입력 필드 -->
+                <h2 class="form-title">용사 수정</h2>
 
+                <div class="form-group">
+                    <label for="soldierId" class="form-label">용사아이디</label>
+                    <div class="input-container">
+                        <input type="text" id="soldierId" name="soldierId" placeholder="용사아이디를 입력해주세요." maxlength="30" v-model="soldierInfo.soldierId" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="soldierPassword" class="form-label">비밀번호</label>
+                    <div class="input-container">
+                        <input type="password" id="soldierPassword" name="soldierPassword" placeholder="비밀번호를 입력해주세요." maxlength="30" v-model="soldierInfo.soldierPassword">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="soldierName" class="form-label">용사 이름</label>
+                    <div class="input-container">
+                        <input type="text" id="soldierName" name="soldierName" placeholder="용사이름을 입력해주세요." maxlength="30" v-model="soldierInfo.soldierName">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="soldierAge" class="form-label">나이</label>
+                    <div class="input-container">
+                        <input type="number" id="soldierAge" name="soldierAge" placeholder="용사의 나이를 입력해주세요." maxlength="30" v-model="soldierInfo.soldierAge">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="soldierBirthPlace" class="form-label">출생지</label>
+                    <div class="input-container">
+                        <input type="text" id="soldierBirthPlace" name="soldierBirthPlace" placeholder="용사의 출생자를 입력해주세요." maxlength="100" v-model="soldierInfo.soldierBirthPlace">
+                    </div>
+                </div>
+
+                <div class="select-container">
+                    <label for="species" class="select-label">종족(필수)</label>
+                    <select id="species" name="species" v-model="soldierInfo.speciesId">
+                        <option value="선택" disabled selected>선택</option>
+                        <option v-for="(item, index) in speciesInfo" :key="index" :value="item.speciesId">{{item.speciesName}}</option>
+                    </select>
+                </div>
+
+                <div class="select-container">
+                    <label for="skill" class="select-label">스킬</label>
+                    <div class="input-container" style="flex:0.2">
+                        <input type="text" id="skillName" name="skillName" maxlength="100" v-model="soldierInfo.skillName" readonly>
+                    </div>
+
+                    <!-- 두 번째 input-container: 선택된 아이템을 보여줄 텍스트 -->
+                    <div class="input-container" style="flex:0.8">
+                        <select id="skill" name="skill" v-model="soldierInfo.skillId">
+                            <option value="교체할 스킬 선택" selected>교체할 스킬 선택</option>
+                            <option v-for="(item, index) in skillInfo" :key="index" :value="item.id">{{item.skillName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">아이템</label>
+                    <div class="input-container">
+                        <!-- 첫 번째 input-container: "아이템보기" 버튼 -->
+                        <div class="input-container" style="flex:0.3">
+                            <button type="button" class="btn-secondary" @click="viewItems()">아이템보기</button>
+                        </div>
+
+                        <!-- 두 번째 input-container: 선택된 아이템을 보여줄 텍스트 -->
+                        <div class="input-container" style="flex:0.7">
+                            <input type="text" id="selectedItem" name="selectedItem" placeholder="선택된 아이템이 여기에 표시됩니다." v-model="viewSelectedItems()" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="attack" class="form-label">공격력</label>
+                    <div class="input-container">
+                        <input type="number" id="attack" name="attack" placeholder="공격력을 입력해주세요." maxlength="30" v-model="soldierInfo.attack">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="defense" class="form-label">방어력</label>
+                    <div class="input-container">
+                        <input type="number" id="defense" name="defense" placeholder="방어력을 입력해주세요." maxlength="30" v-model="soldierInfo.defense">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="strength" class="form-label">체력</label>
+                    <div class="input-container">
+                        <input type="number" id="strength" name="strength" placeholder="체력을 입력해주세요." maxlength="30" v-model="soldierInfo.strength">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="spell" class="form-label">마력</label>
+                    <div class="input-container">
+                        <input type="number" id="spell" name="spell" placeholder="마력을 입력해주세요." maxlength="30" v-model="soldierInfo.spell">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="force" class="form-label">힘</label>
+                    <div class="input-container">
+                        <input type="number" id="force" name="force" placeholder="힘을 입력해주세요." maxlength="30" v-model="soldierInfo.force">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="intelligence" class="form-label">지능</label>
+                    <div class="input-container">
+                        <input type="number" id="intelligence" name="intelligence" placeholder="지능을 입력해주세요." maxlength="30" v-model="soldierInfo.intelligence">
+                    </div>
+                </div>
+
+                <!-- 버튼 그룹 -->
+                <div class="button-group">
+                    <button type="button" class="btn-primary" @click="soldierEditButton()">수정</button>
+                    <button type="button" class="btn-cancel" @click="cancelButton()">취소</button>
+                    <button type="button" class="btn-cancel" @click="deleteButton()">삭제</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <h3>아이템 선택</h3>
+                <!-- 테이블 -->
+                <table class="item-table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>종류</th>
+                        <th>아이템명</th>
+                        <th>공격력 보정</th>
+                        <th>방어력 보정</th>
+                        <th>힘 보정</th>
+                        <th>마력 보정</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item, index) in itemInfo" :key="index" v-if="checkItem(item)">
+                        <td><input type="checkbox" :value="{itemName: item.itemName, storageId: item.storageId}" v-model="selectedItems"></td>
+                        <td>{{ item.item }}</td>
+                        <td>{{ item.itemName }}</td>
+                        <td>{{ item.attackBonus }}</td>
+                        <td>{{ item.defenseBonus }}</td>
+                        <td>{{ item.forceBonus }}</td>
+                        <td>{{ item.spellBonus }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- 버튼 -->
+                <div class="modal-buttons">
+                    <button type="button" class="btn-primary" @click="confirmSelection()">선택</button>
+                    <button type="button" class="btn-secondary" @click="closeModal()">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+<script>
+    $(function() {
+        $('#header-container').load('/common/html/adminHeader.html');
+    });
+</script>
+
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            adminInfo : {},
+            soldierInfo : {
+                id : 0,
+                soldierId : "",
+                soldierName : "",
+                soldierPassword : "",
+                soldierAge : "",
+                soldierBirthPlace : "",
+                attack : 0,
+                defense : 0,
+                strength : 0,
+                spell : 0,
+                force : 0,
+                intelligence : 0,
+                speciesId : "",
+                skillId : "",
+                selectedItemId : [],
+                skillName : "",
+                beforeItemIds : [],
+                beforeSkillId : 0
+            },
+            speciesInfo : {},
+            skillInfo : {},
+            itemInfo : {},
+            check : {
+                isIdCheck : false,
+                soldierId : ""
+            },
+            beforeItemIds : [],
+            selectedItems : [{storageId:0, itemName:""}],
+        },
+        methods : {
+            getAdminInfo : function () {
+                let vm = this;
+                axios.get('/account/getAdminInfo')
+                    .then(res => {
+                        vm.adminInfo = res.data;
+                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            loadData : function () {
+                let vm = this;
+                vm.id = [[${id}]];
+                axios.get('/soldier/getSoldierInfo/' + vm.id)
+                    .then(res => {
+                        vm.soldierInfo = res.data;
+                        console.log(res.data);
+                        vm.soldierInfo.beforeSkillId = res.data.skillId;
+                        vm.selectedItems = res.data.items.map(item => ({
+                            itemName: item.itemName,
+                            storageId: item.storageId
+                        }));
+                        vm.beforeItemIds = res.data.items.map(item => item.storageId);
+                        vm.soldierInfo.skillId = "교체할 스킬 선택";
+                      })
+                      .catch(error => {
+                        console.error('Error fetching data:', error);
+                      });
+
+            },
+            getSpeciesInfo : function () {
+                let vm = this;
+                axios.get('/species/getSpeciesList')
+                    .then(res => {
+                        vm.speciesInfo = res.data;
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            getSkillInfo : function () {
+                let vm = this;
+                axios.get('/skill/getSkillStateList')
+                    .then(res => {
+                        vm.skillInfo = res.data;
+                        this.soldierInfo.skillId = "교체할 스킬 선택";
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            getItemInfo : function () {
+                let vm = this;
+                axios.get('/storage/getItemList')
+                    .then(res => {
+                        vm.itemInfo = res.data;
+                        console.log(res.data);
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            viewSelectedItems : function () {
+                let vm = this;
+                let items = "";
+                for(let i = 0 ; i < vm.selectedItems.length ; i++){
+                    items += vm.selectedItems[i].itemName;
+                    if(i+1 < vm.selectedItems.length){
+                        items += ", ";
+                    }
+                }
+                return items;
+            },
+            checkItem : function (item) {
+                let vm = this;
+                if(item.soldier==null){
+                    return true;
+                }
+                else if(item.soldier.id == vm.soldierInfo.id){
+                    return true;
+                }
+                return false;
+            },
+            viewItems: function () {
+                document.getElementsByClassName("modal-overlay")[0].style.display = "flex";
+            },
+            closeModal: function () {
+                document.getElementsByClassName("modal-overlay")[0].style.display = "none";
+            },
+            confirmSelection : function () {
+                document.getElementsByClassName("modal-overlay")[0].style.display = "none";
+            },
+            soldierEditButton : function () {
+                let vm = this;
+                if(!vm.soldierIdCheck(vm.soldierInfo.soldierId) && !vm.soldierPasswordCheck(vm.soldierInfo.soldierPassword) && !vm.soldierNameCheck(vm.soldierInfo.soldierName) && !vm.soldierAgeCheck(vm.soldierInfo.soldierAge) && !vm.soldierBirthPlaceCheck(vm.soldierInfo.soldierBirthPlace)){
+                    return false;
+                }
+                else {
+                    if(vm.soldierInfo.soldierAge != 0){
+                        vm.soldierInfo.soldierAge = vm.trimNumber(vm.soldierInfo.soldierAge);
+                    }
+                    if(vm.soldierInfo.attack != 0){
+                        vm.soldierInfo.attack = vm.trimNumber(vm.soldierInfo.attack);
+                    }
+                    if(vm.soldierInfo.defense != 0){
+                        vm.soldierInfo.defense = vm.trimNumber(vm.soldierInfo.defense);
+                    }
+                    if(vm.soldierInfo.strength != 0){
+                        vm.soldierInfo.strength = vm.trimNumber(vm.soldierInfo.strength);
+                    }
+                    if(vm.soldierInfo.spell != 0){
+                        vm.soldierInfo.spell = vm.trimNumber(vm.soldierInfo.spell);
+                    }
+                    if(vm.soldierInfo.force != 0){
+                        vm.soldierInfo.force = vm.trimNumber(vm.soldierInfo.force);
+                    }
+                    if(vm.soldierInfo.intelligence != 0){
+                        vm.soldierInfo.intelligence = vm.trimNumber(vm.soldierInfo.intelligence);
+                    }
+                    parseInt(vm.soldierInfo.skillId);
+                    parseInt(vm.soldierInfo.speciesId);
+
+                    vm.soldierInfo.selectedItemId = vm.selectedItems.map(item => item.storageId);
+                    vm.soldierInfo.beforeItemIds = vm.beforeItemIds;
+
+                    if(vm.soldierInfo.skillId == "교체할 스킬 선택"){
+                        vm.soldierInfo.skillId = vm.soldierInfo.beforeSkillId;
+                    }
+
+                    let formData = new FormData();
+                    Object.keys(vm.soldierInfo).forEach((key) => {
+                        if(vm.soldierInfo[key]==null){
+                            formData.append(key, "");
+                        }
+                        else{
+                            formData.append(key, vm.soldierInfo[key]);
+                        }
+                    })
+                    axios.post('/soldier/soldierEditOK', formData)
+                        .then(res => {
+                            if(res.data != null){
+                                alert("용사가 수정되었습니다.");
+                                location.href = "/account/adminMain/soldier";
+                            }
+                            else{
+                                alert("로그요청에 실패하였습니다.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching data : ", error);
+                        })
+                }
+            },
+            cancelButton : function () {
+                let vm = this;
+                location.href = "/account/adminMain/soldier/detail/" + vm.soldierInfo.id;
+            },
+            soldierIdCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == "") {
+                    alert("용사의 아이디를 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            soldierPasswordCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == "") {
+                    alert("비밀번호를 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            soldierNameCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == "") {
+                    alert("이름을 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            soldierAgeCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == 0) {
+                    alert("나이를 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            soldierBirthPlaceCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == 0) {
+                    alert("출생지를 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            trimNumber : function (keyword) {
+                let number = parseInt(keyword, 10);
+                return number;
+            },
+            deleteButton : function () {
+                let vm = this;
+                axios.post('/soldier/soldierDelete', null, {
+                        params: {
+                            id : vm.soldierInfo.id,
+                            skillId : vm.soldierInfo.beforeSkillId
+                        }
+                    })
+                    .then(res => {
+                        alert("용사가 삭제되었습니다.");
+                        location.href = "/account/adminMain/soldier";
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data : ", error);
+                    })
+            }
+        },
+       filters: {},
+       computed: {
+       },
+       watch: {},
+       created() {
+       },
+       mounted() {
+            this.getItemInfo();
+            this.loadData();
+            this.getAdminInfo();
+            this.getSpeciesInfo();
+            this.getSkillInfo();
+       }
+     })
+</script>
 </body>
 </html>

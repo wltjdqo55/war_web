@@ -1,15 +1,18 @@
 package kingdom.warPrj.repasitory.queryDSL;
 
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kingdom.warPrj.entity.entity.QSkillEntity;
 import kingdom.warPrj.entity.entity.QStorageEntity;
 import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.entity.StorageEntity;
+import kingdom.warPrj.entity.vo.SoldierVO;
 import kingdom.warPrj.entity.vo.StorageVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -68,6 +71,7 @@ public class StorageQueryDSL {
     return QStorageEntity.storageEntity.itemState.isFalse();
   }
 
+  @Transactional
   public void updateSoldierId(Long storageId, Long soldierId){
     jpaQueryFactory
         .update(QStorageEntity.storageEntity)
@@ -76,5 +80,25 @@ public class StorageQueryDSL {
         .where(QStorageEntity.storageEntity.storageId.eq(storageId))
         .execute();
 
+  }
+
+  @Transactional
+  public void initSoldierId(Long id){
+    jpaQueryFactory
+        .update(QStorageEntity.storageEntity)
+        .set(QStorageEntity.storageEntity.soldierEntity.id, (Long) null)
+        .set(QStorageEntity.storageEntity.itemState, false)
+        .where(QStorageEntity.storageEntity.storageId.eq(id))
+        .execute();
+  }
+
+  @Transactional
+  public void initItemState(Long id){
+    jpaQueryFactory
+        .update(QStorageEntity.storageEntity)
+        .set(QStorageEntity.storageEntity.itemState, false)
+        .set(QStorageEntity.storageEntity.soldierEntity.id, (Long) null)
+        .where(QStorageEntity.storageEntity.soldierEntity.id.eq(id))
+        .execute();
   }
 }

@@ -41,4 +41,16 @@ public class StorageDTO {
       this.soldier = new SoldierDTO(storageEntity.getSoldierEntity());
     }
   }
+
+  public StorageDTO(StorageEntity storageEntity, Object o){
+    this.storageId = storageEntity.getStorageId();
+    this.item = storageEntity.getItem();
+    this.itemName = storageEntity.getItemName();
+    this.attackBonus = storageEntity.getAttackBonus();
+    this.defenseBonus = storageEntity.getDefenseBonus();
+    this.forceBonus = storageEntity.getForceBonus();
+    this.spellBonus = storageEntity.getSpellBonus();
+    this.itemState = storageEntity.isItemState() ? "사용불가" : "사용가능";
+  }
+
 }
