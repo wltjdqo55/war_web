@@ -3,6 +3,7 @@ package kingdom.warPrj.controller;
 import kingdom.warPrj.entity.dto.LegionDTO;
 import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.vo.LegionVO;
+import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.service.LegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -48,12 +49,12 @@ public class LegionController {
     return legionService.getLegionList();
   }
 
-//  @GetMapping("/skill/getSearchSkill")
-//  @ResponseBody
-//  public List<SkillDTO> getSearchSkill(SkillVO skillVO) {
-//    return skillService.getSearchSkill(skillVO);
-//  }
-//
+  @GetMapping("/legion/getSearchLegion")
+  @ResponseBody
+  public List<LegionDTO> getSearchLegion(LegionVO legionVO) {
+    return legionService.getSearchLegion(legionVO);
+  }
+
   @GetMapping("/account/adminMain/legion/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);

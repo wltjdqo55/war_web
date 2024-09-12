@@ -2,9 +2,12 @@ package kingdom.warPrj.service;
 
 import kingdom.warPrj.entity.dto.GeneralDTO;
 import kingdom.warPrj.entity.dto.LegionDTO;
+import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.entity.General;
 import kingdom.warPrj.entity.entity.Legion;
+import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.GeneralVO;
+import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.repasitory.jpa.GeneralRepository;
 import kingdom.warPrj.repasitory.queryDSL.GeneralQueryDSL;
 import lombok.RequiredArgsConstructor;
@@ -42,11 +45,11 @@ public class GeneralService {
     return generalRepository.findAll().stream().map(GeneralDTO::new).collect(Collectors.toList());
   }
 
-  //  public List<SkillDTO> getSearchSkill(SkillVO skillVO){
-//    List<SkillEntity> list = skillQueryDSL.getSearchSkill(skillVO);
-//    return list.stream().map(SkillDTO::new).collect(Collectors.toList());
-//  }
-//
+    public List<GeneralDTO> getSearchGeneral(GeneralVO generalVO){
+    List<General> list = generalQueryDSL.getSearchGeneral(generalVO);
+    return list.stream().map(GeneralDTO::new).collect(Collectors.toList());
+  }
+
   public GeneralDTO getGeneralDetail(long id){
     return new GeneralDTO(generalRepository.findById(id).orElse(new General()));
   }

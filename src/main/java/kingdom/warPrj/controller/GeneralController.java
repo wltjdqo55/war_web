@@ -1,7 +1,9 @@
 package kingdom.warPrj.controller;
 
 import kingdom.warPrj.entity.dto.GeneralDTO;
+import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.vo.GeneralVO;
+import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.service.GeneralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -47,12 +49,12 @@ public class GeneralController {
     return generalService.getGeneralList();
   }
 
-  //  @GetMapping("/skill/getSearchSkill")
-//  @ResponseBody
-//  public List<SkillDTO> getSearchSkill(SkillVO skillVO) {
-//    return skillService.getSearchSkill(skillVO);
-//  }
-//
+  @GetMapping("/general/getSearchGeneral")
+  @ResponseBody
+  public List<GeneralDTO> getSearchGeneral(GeneralVO generalVO) {
+    return generalService.getSearchGeneral(generalVO);
+  }
+
   @GetMapping("/account/adminMain/general/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
