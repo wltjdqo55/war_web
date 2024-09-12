@@ -13,46 +13,50 @@
     <div id="header-container"></div>
     <!-- 메인 컨텐츠 영역 -->
     <div class="content">
-        <h1>스킬 목록</h1>
+        <h1>마물장군 목록</h1>
         <div class="skill-list">
 
-            <!-- 검색 및 스킬 등록 영역 -->
+            <!-- 검색 및 마물 등록 영역 -->
             <div class="search-and-register-container">
                 <div class="search-container">
                     <select id="status-select" v-model="search.searchOption">
-                        <option value="all">전체</option>
-                        <option value="available">사용가능</option>
-                        <option value="notAvailable">사용중</option>
+                        <option value="all">마물군단선택</option>
                     </select>
 
-                    <input type="text" id="search-input" placeholder="스킬 이름 검색" v-model="search.searchKeyword">
+                    <input type="text" id="search-input" placeholder="마물장군 검색" v-model="search.searchKeyword">
                     <button id="search-btn" @click="searchButton()">검색</button>
                 </div>
 
-                <!-- 스킬 등록 버튼 -->
+                <!-- 마물 등록 버튼 -->
                 <div class="skill-actions">
-                    <button class="register-skill-btn" @click="openAddView()">스킬 등록</button>
+                    <button class="register-skill-btn" @click="openAddView()">마물장군 등록</button>
                 </div>
             </div>
 
-            <!-- 스킬 목록 테이블 -->
+            <!-- 마물 목록 테이블 -->
             <table class="skill-table">
                 <thead>
                 <tr>
                     <th>번호</th>
-                    <th>스킬 이름</th>
-                    <th>체력 증가</th>
-                    <th>마력 증가</th>
-                    <th>상태</th>
+                    <th>마물장군 이름</th>
+                    <th>마물장군 나이</th>
+                    <th>군단 공격력 보정</th>
+                    <th>군단 방어력 보정</th>
+                    <th>군단 이동력 보정</th>
+                    <th>군단 사기 보정</th>
+                    <th>천적 종족</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item, index) in skillInfo">
+                <tr v-for="(item, index) in generalInfo">
                     <td>{{index + 1}}</td>
-                    <td><a :href="'/account/adminMain/skill/detail/' + item.id">{{item.skillName}}</a></td>
-                    <td>{{item.strengthBonus}}</td>
-                    <td>{{item.spellBonus}}</td>
-                    <td>{{item.skillState}}</td>
+                    <td><a :href="'/account/adminMain/general/detail/' + item.id">{{item.generalName}}</a></td>
+                    <td>{{item.generalAge}}</td>
+                    <td>{{item.attackBonus}}</td>
+                    <td>{{item.defenseBonus}}</td>
+                    <td>{{item.movementSpeed}}</td>
+                    <td>{{item.moraleBonus}}</td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
@@ -77,7 +81,7 @@
         el : "#app",
         data : {
             adminInfo : {},
-            skillInfo : {},
+            generalInfo : {},
             search : {
                 searchOption : "all",
                 searchKeyword : ""
@@ -86,9 +90,9 @@
         methods : {
             loadData : function () {
                 let vm = this;
-                axios.get('/skill/getSkillList')
+                axios.get('/general/getGeneralList')
                     .then(res => {
-                        vm.skillInfo = res.data;
+                        vm.generalInfo = res.data;
                     })
                     .catch(error => {
                       console.error("Error fetching data: ", error);
@@ -106,18 +110,18 @@
                     })
             },
             openAddView : function () {
-                location.href = "/account/adminMain/skill/add";
+                location.href = "/account/adminMain/general/add";
             },
             searchButton : function () {
                 let vm = this;
-                axios.get('/skill/getSearchSkill', {
+                axios.get('/general/getSearchGeneral', {
                     params : {
                         searchOption : vm.search.searchOption,
                         searchKeyword : vm.search.searchKeyword
                     }
                 })
                 .then(res => {
-                    vm.skillInfo = res.data;
+                    vm.generalInfo = res.data;
                 })
                 .catch(error => {
                     console.error("Error fetching data: ", error);

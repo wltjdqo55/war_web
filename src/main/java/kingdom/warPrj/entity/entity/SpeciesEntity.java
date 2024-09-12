@@ -17,7 +17,7 @@ public class SpeciesEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @JoinColumn(name = "species")
+  @JoinColumn(name = "species_id")
   private long speciesId;
 
   private String speciesName;
@@ -36,6 +36,9 @@ public class SpeciesEntity {
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "species")
   private List<SoldierEntity> soldier = new ArrayList<>();
+
+  @OneToMany(mappedBy = "species", fetch = FetchType.LAZY)
+  private List<General> generals = new ArrayList<>();
 
   public SpeciesEntity(SpeciesVO speciesVO){
     this.speciesId = speciesVO.getSpeciesId();
