@@ -5,9 +5,13 @@ import kingdom.warPrj.entity.vo.GeneralVO;
 import kingdom.warPrj.service.GeneralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,11 +41,11 @@ public class GeneralController {
     return generalService.generalNameCheck(generalVO.getGeneralName());
   }
 
-//  @GetMapping("/general/getgeneralList")
-//  @ResponseBody
-//  public List<generalDTO> getgeneralList() {
-//    return generalService.getgeneralList();
-//  }
+  @GetMapping("/general/getGeneralList")
+  @ResponseBody
+  public List<GeneralDTO> getGeneralList() {
+    return generalService.getGeneralList();
+  }
 
   //  @GetMapping("/skill/getSearchSkill")
 //  @ResponseBody
@@ -49,17 +53,17 @@ public class GeneralController {
 //    return skillService.getSearchSkill(skillVO);
 //  }
 //
-//  @GetMapping("/account/adminMain/general/detail/{id}")
-//  public String detailView(@PathVariable("id") long id, Model model){
-//    model.addAttribute("id", id);
-//    return "/monster/general/generalDetailView.html";
-//  }
-//
-//  @GetMapping("/general/getgeneralInfo/{id}")
-//  @ResponseBody
-//  public generalDTO getgeneralInfo(@PathVariable long id){
-//    return generalService.getgeneralDetail(id);
-//  }
+  @GetMapping("/account/adminMain/general/detail/{id}")
+  public String detailView(@PathVariable("id") long id, Model model){
+    model.addAttribute("id", id);
+    return "/monster/general/generalDetailView.html";
+  }
+
+  @GetMapping("/general/getGeneralInfo/{id}")
+  @ResponseBody
+  public GeneralDTO getGeneralInfo(@PathVariable long id){
+    return generalService.getGeneralDetail(id);
+  }
 
 //  @GetMapping("/account/adminMain/skill/edit/{id}")
 //  public String editView(@PathVariable long id, Model model){

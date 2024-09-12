@@ -1,6 +1,7 @@
 package kingdom.warPrj.entity.dto;
 
 import kingdom.warPrj.entity.entity.General;
+import kingdom.warPrj.entity.entity.SpeciesEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,9 @@ public class GeneralDTO {
 
   private int moraleBonus;
 
-//  private int speciesId;    // 종족ID
+  private String speciesName;    // 종족
+
+  private SpeciesEntity species;
 
   public GeneralDTO(General general){
     this.id = general.getId();
@@ -32,5 +35,6 @@ public class GeneralDTO {
     this.defenseBonus = general.getDefenseBonus();
     this.movementSpeed = general.getMovementSpeed();
     this.moraleBonus = general.getMoraleBonus();
+    this.speciesName = general.getSpecies().getSpeciesName();
   }
 }
