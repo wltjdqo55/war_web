@@ -5,6 +5,9 @@ import kingdom.warPrj.entity.vo.GeneralVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -27,6 +30,14 @@ public class General {
 
   private int moraleBonus;
 
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+      name="monster_legion_general",
+      joinColumns = @JoinColumn(name = "monster_general_id"),
+      inverseJoinColumns = @JoinColumn(name = "monster_legion_id")
+  )
+  private List<Legion> legions = new ArrayList<>();
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "species_id")
   private SpeciesEntity species; // 천적종족
@@ -40,5 +51,9 @@ public class General {
     this.movementSpeed = generalVO.getMovementSpeed();
     this.moraleBonus = generalVO.getMoraleBonus();
     this.species = new SpeciesEntity(generalVO.getSpeciesId());
+  }
+
+  public General(long id){
+    this.id = id;
   }
 }

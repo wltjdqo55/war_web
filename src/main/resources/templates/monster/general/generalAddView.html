@@ -109,6 +109,7 @@
                     <tbody>
                     <tr v-for="(item, index) in legionInfo" :key="index">
                         <td><input type="checkbox" :value="item" v-model="selectedLegions"></td>
+                        <td>{{ item.legionName }}</td>
                         <td>{{ item.troopCount }}</td>
                         <td>{{ item.totalAttack }}</td>
                         <td>{{ item.totalDefense }}</td>
@@ -156,6 +157,7 @@
                 speciesId : "선택",
                 selectedLegionIds : []
             },
+            legionInfo : {},
             check : {
                 isNameCheck : false,
                 generalName : ""
@@ -169,6 +171,16 @@
                     .then(res => {
                         vm.adminInfo = res.data;
                         localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            getLegionInfo : function () {
+                let vm = this;
+                axios.get('/legion/getLegionList')
+                    .then(res => {
+                        vm.legionInfo = res.data;
                     })
                     .catch(error => {
                       console.error("Error fetching data: ", error);
@@ -234,6 +246,12 @@
                     }
                     if(vm.generalInfo.moraleBonus != 0){
                         vm.generalInfo.moraleBonus = vm.trimNumber(vm.generalInfo.moraleBonus);
+                    }
+
+                    parseInt(vm.generalInfo.speciesId);
+
+                    for(let i = 0 ; i < vm.selectedLegions.length ; i++){
+                        vm.generalInfo.selectedLegionIds[i] = vm.selectedLegions[i].id;
                     }
 
                     let formData = new FormData();
@@ -316,6 +334,7 @@
        mounted() {
             this.getAdminInfo();
             this.getSpeciesInfo();
+            this.getLegionInfo();
        }
      })
 </script>

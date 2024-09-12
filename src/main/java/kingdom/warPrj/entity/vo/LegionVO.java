@@ -3,6 +3,8 @@ package kingdom.warPrj.entity.vo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class LegionVO {
@@ -20,4 +22,6 @@ public class LegionVO {
   private int movementSpeed;
 
   private int morale;
+
+  private List<Long> selectedGeneralIds;
 }

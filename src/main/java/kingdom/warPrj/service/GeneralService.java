@@ -1,7 +1,9 @@
 package kingdom.warPrj.service;
 
 import kingdom.warPrj.entity.dto.GeneralDTO;
+import kingdom.warPrj.entity.dto.LegionDTO;
 import kingdom.warPrj.entity.entity.General;
+import kingdom.warPrj.entity.entity.Legion;
 import kingdom.warPrj.entity.vo.GeneralVO;
 import kingdom.warPrj.repasitory.jpa.GeneralRepository;
 import kingdom.warPrj.repasitory.queryDSL.GeneralQueryDSL;
@@ -21,7 +23,15 @@ public class GeneralService {
 
   @Transactional
   public GeneralDTO generalAdd(GeneralVO generalVO){
-    return new GeneralDTO(generalRepository.save(new General(generalVO)));
+    General saveGeneral = generalRepository.save(new General(generalVO));
+
+    if(!generalVO.getSelectedLegionIds().isEmpty()){
+      generalVO.getSelectedLegionIds().stream().forEach(legion -> {
+        saveGeneral.getLegions().add(new Legion(legion));
+      });
+    }
+
+    return new GeneralDTO(saveGeneral);
   }
 
   public boolean generalNameCheck(String generalName){
