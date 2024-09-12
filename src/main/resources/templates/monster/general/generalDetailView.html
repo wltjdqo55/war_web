@@ -89,7 +89,7 @@
         el : "#app",
         data : {
             adminInfo : {},
-            generalInfo : {},
+            generalInfo : {legions:[]},
             id : 0
         },
         methods : {
@@ -111,7 +111,6 @@
                 axios.get('/general/getGeneralInfo/' + vm.id)
                     .then(res => {
                         vm.generalInfo = res.data;
-                        console.log(vm.generalInfo);
                       })
                       .catch(error => {
                         console.error('Error fetching data:', error);
@@ -127,7 +126,14 @@
             },
             viewLegions : function () {
                 let vm = this;
-                return "";
+                let names = "";
+                for(let i = 0 ; i < vm.generalInfo.legions.length ; i++){
+                    names += vm.generalInfo.legions[i].legionName;
+                    if(i+1 < vm.generalInfo.legions.length){
+                        names += ", ";
+                    }
+                }
+                return names;
             }
        },
        filters: {},

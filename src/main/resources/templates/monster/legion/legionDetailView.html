@@ -83,7 +83,7 @@
         el : "#app",
         data : {
             adminInfo : {},
-            legionInfo : {},
+            legionInfo : {generals:[]},
             id : 0
         },
         methods : {
@@ -120,7 +120,14 @@
             },
             viewGenerals : function () {
                 let vm = this;
-                return "";
+                let names = "";
+                for(let i = 0 ; i < vm.legionInfo.generals.length ; i++){
+                    names += vm.legionInfo.generals[i].generalName;
+                    if(i+1 < vm.legionInfo.generals.length){
+                        names += ", ";
+                    }
+                }
+                return names;
             }
        },
        filters: {},

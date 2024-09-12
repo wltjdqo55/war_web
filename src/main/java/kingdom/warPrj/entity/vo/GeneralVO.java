@@ -3,6 +3,8 @@ package kingdom.warPrj.entity.vo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class GeneralVO {
@@ -22,4 +24,6 @@ public class GeneralVO {
   private int moraleBonus;
 
   private int speciesId;    // 종족ID
+
+  private List<Long> selectedLegionIds; //선택된 마물군단 id
 }

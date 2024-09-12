@@ -2,6 +2,7 @@ package kingdom.warPrj.service;
 
 import kingdom.warPrj.entity.dto.LegionDTO;
 import kingdom.warPrj.entity.dto.SkillDTO;
+import kingdom.warPrj.entity.entity.General;
 import kingdom.warPrj.entity.entity.Legion;
 import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.LegionVO;
@@ -23,7 +24,15 @@ public class LegionService {
 
   @Transactional
   public LegionDTO legionAdd(LegionVO legionVO){
-    return new LegionDTO(legionRepository.save(new Legion(legionVO)));
+    Legion saveLegion = legionRepository.save(new Legion(legionVO));
+
+    if(!legionVO.getSelectedGeneralIds().isEmpty()){
+        legionVO.getSelectedGeneralIds().stream().forEach(generalId -> {
+          saveLegion.getGenerals().add(new General(generalId));
+        });
+    }
+
+    return new LegionDTO(saveLegion);
   }
 
   public boolean legionNameCheck(String legionName){

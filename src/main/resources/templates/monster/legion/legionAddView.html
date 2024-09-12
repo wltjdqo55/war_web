@@ -108,7 +108,7 @@
                         <td>{{ item.defenseBonus }}</td>
                         <td>{{ item.movementSpeed }}</td>
                         <td>{{ item.moraleBonus }}</td>
-                        <td></td>
+                        <td>{{ item.speciesName}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -140,6 +140,7 @@
         el : "#app",
         data : {
             adminInfo : {},
+            generalInfo : {},
             legionInfo : {
                 legionName : "",
                 troopCount : 0,
@@ -147,7 +148,7 @@
                 totalDefense : 0,
                 movementSpeed : 0,
                 morale : 0,
-                selectedGeneralId : []
+                selectedGeneralIds : []
             },
             check : {
                 isNameCheck : false,
@@ -162,6 +163,16 @@
                     .then(res => {
                         vm.adminInfo = res.data;
                         localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            getGeneralInfo : function () {
+                let vm = this;
+                axios.get('/general/getGeneralList')
+                    .then(res => {
+                        vm.generalInfo = res.data;
                     })
                     .catch(error => {
                       console.error("Error fetching data: ", error);
@@ -214,6 +225,10 @@
                     }
                     if(vm.legionInfo.morale != 0){
                         vm.legionInfo.morale = vm.trimNumber(vm.legionInfo.morale);
+                    }
+
+                    for(let i = 0 ; i < vm.selectedGenerals.length ; i++){
+                        vm.legionInfo.selectedGeneralIds[i] = vm.selectedGenerals[i].id;
                     }
 
                     let formData = new FormData();
@@ -287,6 +302,7 @@
        created() {},
        mounted() {
             this.getAdminInfo();
+            this.getGeneralInfo();
        }
      })
 </script>
