@@ -21,6 +21,7 @@
                 <div class="search-container">
                     <select id="status-select" v-model="search.searchOption">
                         <option value="all">마물군단선택</option>
+                        <option v-for="(item, index) in legionInfo" :key="index" :value="item.id">{{item.legionName}}</option>
                     </select>
 
                     <input type="text" id="search-input" placeholder="마물장군 검색" v-model="search.searchKeyword">
@@ -85,7 +86,8 @@
             search : {
                 searchOption : "all",
                 searchKeyword : ""
-            }
+            },
+            legionInfo : {}
         },
         methods : {
             loadData : function () {
@@ -104,6 +106,16 @@
                     .then(res => {
                         vm.adminInfo = res.data;
                         localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            getLegionInfo : function () {
+                let vm = this;
+                axios.get('/legion/getLegionList')
+                    .then(res => {
+                        vm.legionInfo = res.data;
                     })
                     .catch(error => {
                       console.error("Error fetching data: ", error);
@@ -135,6 +147,7 @@
        mounted() {
             this.getAdminInfo();
             this.loadData();
+            this.getLegionInfo();
        }
      })
 </script>

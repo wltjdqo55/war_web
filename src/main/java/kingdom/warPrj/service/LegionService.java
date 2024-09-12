@@ -43,11 +43,11 @@ public class LegionService {
     return legionRepository.findAll().stream().map(LegionDTO::new).collect(Collectors.toList());
   }
 
-//  public List<SkillDTO> getSearchSkill(SkillVO skillVO){
-//    List<SkillEntity> list = skillQueryDSL.getSearchSkill(skillVO);
-//    return list.stream().map(SkillDTO::new).collect(Collectors.toList());
-//  }
-//
+  public List<LegionDTO> getSearchLegion(LegionVO legionVO){
+    List<Legion> list = legionQueryDSL.getSearchLegion(legionVO);
+    return list.stream().map(LegionDTO::new).collect(Collectors.toList());
+  }
+
   public LegionDTO getLegionDetail(long id){
     return new LegionDTO(legionRepository.findById(id).orElse(new Legion()));
   }

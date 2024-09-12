@@ -24,4 +24,8 @@ public class LegionVO {
   private int morale;
 
   private List<Long> selectedGeneralIds;
+  
+  private String searchOption; // 검색옵션
+  
+  private String searchKeyword; // 검색키워드
 }
