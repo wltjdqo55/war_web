@@ -86,4 +86,10 @@ public class SoldierController {
     soldierService.soldierDelete(soldierVO);
     return "";
   }
+
+  @GetMapping("/soldier/getActiveSoldier/{id}")
+  @ResponseBody
+  public SoldierDTO getActiveSoldier(@PathVariable long id){
+    return soldierService.getActiveSoldier(id);
+  }
 }
