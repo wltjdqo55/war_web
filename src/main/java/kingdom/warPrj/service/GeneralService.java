@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class GeneralService {
@@ -25,18 +28,18 @@ public class GeneralService {
     return generalRepository.findOneByGeneralName(generalName).isEmpty();
   }
 
-//  public List<generalDTO> getgeneralList(){
-//    return generalRepository.findAll().stream().map(generalDTO::new).collect(Collectors.toList());
-//  }
+  public List<GeneralDTO> getGeneralList(){
+    return generalRepository.findAll().stream().map(GeneralDTO::new).collect(Collectors.toList());
+  }
 
   //  public List<SkillDTO> getSearchSkill(SkillVO skillVO){
 //    List<SkillEntity> list = skillQueryDSL.getSearchSkill(skillVO);
 //    return list.stream().map(SkillDTO::new).collect(Collectors.toList());
 //  }
 //
-//  public generalDTO getgeneralDetail(long id){
-//    return new generalDTO(generalRepository.findById(id).orElse(new general()));
-//  }
+  public GeneralDTO getGeneralDetail(long id){
+    return new GeneralDTO(generalRepository.findById(id).orElse(new General()));
+  }
 
 //  @Transactional
 //  public boolean skillEdit(SkillVO skillVO){
