@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>스킬상세정보</title>
+    <title>마물군단상세정보</title>
     <link rel="stylesheet" href="/common/css/body.css">
     <link rel="stylesheet" href="/common/css/adminHeader.css">
     <link rel="stylesheet" href="/common/css/detailView.css">
@@ -14,37 +14,50 @@
     <!-- 메인 컨텐츠 영역 -->
     <div class="content">
         <div class="form-container">
-            <h2 class="form-title">스킬 상세 정보</h2>
+            <h2 class="form-title">마물군단 상세 정보</h2>
             <div class="form-group">
                 <div class="info-container">
-                    <span class="form-label">스킬 이름</span>
-                    <span id="skillName" class="form-second">{{skillInfo.skillName}}</span>
+                    <span class="form-label">마물군단 이름</span>
+                    <span id="legionName" class="form-second">{{legionInfo.legionName}}</span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="info-container">
-                    <span class="form-label">공격력 증가량</span>
-                    <span id="attackBonus" class="form-second">{{skillInfo.strengthBonus}}</span>
+                    <span class="form-label">마물장군</span>
+                    <span id="generals" class="form-second" v-html="viewGenerals()"></span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="info-container">
-                    <span class="form-label">마력 증가량</span>
-                    <span id="spellBonus" class="form-second">{{skillInfo.spellBonus}}</span>
+                    <span class="form-label">총 병력수</span>
+                    <span id="troopCount" class="form-second">{{legionInfo.troopCount}}</span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="info-container">
-                    <span class="form-label">상태</span>
-                    <span id="skillState" class="form-second">{{skillInfo.skillState}}</span>
+                    <span class="form-label">총 공격력</span>
+                    <span id="totalAttack" class="form-second">{{legionInfo.totalAttack}}</span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="info-container">
-                    <span class="form-label">사용중인 용사</span>
-                    <span id="activeHero" class="form-second">{{soldierInfo.soldierName}}</span>
+                    <span class="form-label">총 방어력</span>
+                    <span id="totalDefense" class="form-second">{{legionInfo.totalDefense}}</span>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">이동력</span>
+                    <span id="movementSpeed" class="form-second">{{legionInfo.movementSpeed}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="info-container">
+                    <span class="form-label">사기</span>
+                    <span id="morale" class="form-second">{{legionInfo.morale}}</span>
+                </div>
+            </div>
+
             <div class="button-group">
                 <button type="button" class="btn-primary" @click="editButton()">수정</button>
                 <button type="button" class="btn-primary" @click="listButton()">목록</button>
@@ -70,8 +83,7 @@
         el : "#app",
         data : {
             adminInfo : {},
-            skillInfo : {},
-            soldierInfo : {},
+            legionInfo : {},
             id : 0
         },
         methods : {
@@ -90,12 +102,9 @@
                 let vm = this;
                 vm.id = [[${id}]];
 
-                vm.getActiveSoldier();
-
-                axios.get('/skill/getSkillInfo/' + vm.id)
+                axios.get('/legion/getLegionInfo/' + vm.id)
                     .then(res => {
-                        vm.skillInfo = res.data;
-
+                        vm.legionInfo = res.data;
                       })
                       .catch(error => {
                         console.error('Error fetching data:', error);
@@ -103,21 +112,15 @@
             },
             listButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/skill";
+                location.href = "/account/adminMain/legion";
             },
             editButton : function () {
                 let vm = this;
-                location.href = '/account/adminMain/skill/edit/' + vm.id;
+                location.href = '/account/adminMain/legion/edit/' + vm.id;
             },
-            getActiveSoldier : function () {
+            viewGenerals : function () {
                 let vm = this;
-                axios.get('/soldier/getActiveSoldier/' + vm.id)
-                    .then(res => {
-                        vm.soldierInfo = res.data;
-                      })
-                      .catch(error => {
-                        console.error('Error fetching data:', error);
-                      });
+                return "";
             }
        },
        filters: {},

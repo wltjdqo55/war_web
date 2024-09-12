@@ -91,16 +91,15 @@ public class SoldierService {
   }
 
   public void soldierDelete(SoldierVO soldierVO){
-    System.out.println("!!!!!!!!!!!!!!!!!");
     skillQueryDSL.initSkillState(soldierVO.getSkillId());   //스킬 상태 초기화
-    System.out.println("!!!!!!!!!!!!!!!!!");
     storageQueryDSL.initItemState(soldierVO.getId());       //아이템 상태 초기화
-    System.out.println("!!!!!!!!!!!!!!!!!");
     soldierRepository.deleteById(soldierVO.getId());        //용사 삭제
-    System.out.println("!!!!!!!!!!!!!!!!!");
+  }
 
-
-
-
+  public SoldierDTO getActiveSoldier(long id){
+    if((soldierQueryDSL.getActiveSoldier(id))!=null){
+      return new SoldierDTO((soldierQueryDSL.getActiveSoldier(id)));
+    }
+    return null;
   }
 }

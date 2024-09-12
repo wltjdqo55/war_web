@@ -44,4 +44,21 @@ public class SoldierQueryDSL {
     return null;
   }
 
+  public SoldierEntity getActiveSoldier(long id){
+    return jpaQueryFactory.selectFrom(QSoldierEntity.soldierEntity)
+        .where(
+            checkSkillId(id)
+        )
+        .fetchOne();
+  }
+
+  public BooleanExpression checkSkillId(long id){
+      if(QSoldierEntity.soldierEntity.skill == null){
+        return null;
+      }
+      else{
+        return QSoldierEntity.soldierEntity.skill.id.eq(id);
+      }
+  }
+
 }
