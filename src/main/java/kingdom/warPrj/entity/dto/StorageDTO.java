@@ -36,7 +36,7 @@ public class StorageDTO {
     this.defenseBonus = storageEntity.getDefenseBonus();
     this.forceBonus = storageEntity.getForceBonus();
     this.spellBonus = storageEntity.getSpellBonus();
-    this.itemState = storageEntity.isItemState() ? "사용불가" : "사용가능";
+    this.itemState = storageEntity.isItemState() ? "사용중" : "사용가능";
     if(storageEntity.getSoldierEntity() != null){
       this.soldier = new SoldierDTO(storageEntity.getSoldierEntity());
     }
@@ -50,7 +50,7 @@ public class StorageDTO {
     this.defenseBonus = storageEntity.getDefenseBonus();
     this.forceBonus = storageEntity.getForceBonus();
     this.spellBonus = storageEntity.getSpellBonus();
-    this.itemState = storageEntity.isItemState() ? "사용불가" : "사용가능";
+    this.itemState = storageEntity.isItemState() ? "사용중" : "사용가능";
   }
 
 }
