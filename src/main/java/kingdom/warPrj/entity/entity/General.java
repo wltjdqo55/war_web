@@ -56,4 +56,13 @@ public class General {
   public General(long id){
     this.id = id;
   }
+
+  public void update(GeneralVO generalVO){
+    this.generalAge = generalVO.getGeneralAge();
+    this.attackBonus = generalVO.getAttackBonus();
+    this.defenseBonus = generalVO.getDefenseBonus();
+    this.movementSpeed = generalVO.getMovementSpeed();
+    this.moraleBonus = generalVO.getMoraleBonus();
+    this.species = new SpeciesEntity(generalVO.getSpeciesId());
+  }
 }

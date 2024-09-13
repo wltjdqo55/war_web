@@ -67,18 +67,18 @@ public class GeneralController {
     return generalService.getGeneralDetail(id);
   }
 
-//  @GetMapping("/account/adminMain/skill/edit/{id}")
-//  public String editView(@PathVariable long id, Model model){
-//    model.addAttribute("id", id);
-//    return "/skill/skillEditView.html";
-//  }
-//
-//  @PostMapping("/skill/skillEditOK")
-//  @ResponseBody
-//  public boolean skillEdit(SkillVO skillVO) {
-//    return skillService.skillEdit(skillVO);
-//  }
-//
+  @GetMapping("/account/adminMain/general/edit/{id}")
+  public String editView(@PathVariable long id, Model model){
+    model.addAttribute("id", id);
+    return "/monster/general/generalEditView.html";
+  }
+
+  @PostMapping("/general/generalEditOK")
+  @ResponseBody
+  public boolean generalEdit(GeneralVO generalVO) {
+    return generalService.generalEdit(generalVO);
+  }
+
 //  @GetMapping("/skill/skillDelete/{id}")
 //  @ResponseBody
 //  public String skillDelete(@PathVariable long id){

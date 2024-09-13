@@ -86,9 +86,9 @@ public class StorageController {
     return "";
   }
 
-  @GetMapping("/storage/getItemStateList")
+  @GetMapping("/storage/getItemStateList/{id}")
   @ResponseBody
-  public List<StorageDTO> getItemStateList(){
-    return storageService.getItemStateList();
+  public List<StorageDTO> getItemStateList(@PathVariable long id){
+    return storageService.getItemStateList(id);
   }
 }

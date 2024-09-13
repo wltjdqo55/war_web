@@ -2,9 +2,329 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>스킬수정</title>
+    <link rel="stylesheet" href="/common/css/body.css">
+    <link rel="stylesheet" href="/common/css/adminHeader.css">
+    <link rel="stylesheet" href="/common/css/addEdit.css">
+    <link rel="stylesheet" href="/common/css/addModal.css">
 </head>
 <body>
+<div id="app">
+    <!-- 헤더영역-->
+    <div id="header-container"></div>
+    <!-- 메인 컨텐츠 영역 -->
+    <div class="content">
+        <form>
+            <div class="form-container">
+                <!-- 입력 필드 -->
+                <h2 class="form-title">마물장군 수정</h2>
+                <div class="form-group">
+                    <label for="generalName" class="form-label">장군 이름</label>
+                    <div class="input-container">
+                        <input type="text" id="generalName" name="generalName" placeholder="장군이름을 입력해주세요." maxlength="30" v-model="generalInfo.generalName" readonly>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label for="generalAge" class="form-label">장군 나이</label>
+                    <div class="input-container">
+                        <input type="number" id="generalAge" name="generalAge" placeholder="장군의 나이를 입력해주세요." maxlength="30" v-model="generalInfo.generalAge">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="attackBonus" class="form-label">공격력 보정</label>
+                    <div class="input-container">
+                        <input type="number" id="attackBonus" name="attackBonus" placeholder="공격력 보정값을 입력해주세요." maxlength="30" v-model="generalInfo.attackBonus">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="defenseBonus" class="form-label">방어력 보정</label>
+                    <div class="input-container">
+                        <input type="number" id="defenseBonus" name="defenseBonus" placeholder="방어력 보정값을 입력해주세요." maxlength="30" v-model="generalInfo.defenseBonus">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="movementSpeed" class="form-label">이동력 보정</label>
+                    <div class="input-container">
+                        <input type="number" id="movementSpeed" name="movementSpeed" placeholder="이동력 보정값을 입력해주세요." maxlength="30" v-model="generalInfo.movementSpeed">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="moraleBonus" class="form-label">사기 보정</label>
+                    <div class="input-container">
+                        <input type="number" id="moraleBonus" name="moraleBonus" placeholder="사기 보정값을 입력해주세요." maxlength="30" v-model="generalInfo.moraleBonus">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">마물군단</label>
+                    <div class="input-container">
+                        <div class="input-container" style="flex:0.3">
+                            <button type="button" class="btn-secondary" @click="viewLegions()">마물군단선택</button>
+                        </div>
+
+                        <div class="input-container" style="flex:0.7">
+                            <input type="text" id="selectedLegion" name="selectedLegion" placeholder="선택된 마물군단이 여기에 표시됩니다." v-model="viewSelectedLegions()" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="select-container">
+                    <label for="species" class="select-label">천적종족</label>
+                    <select id="species" name="species" v-model="generalInfo.speciesId">
+                        <option value="선택" disabled selected>선택</option>
+                        <option v-for="(item, index) in speciesInfo" :key="index" :value="item.speciesId">{{item.speciesName}}</option>
+                    </select>
+                </div>
+
+                <!-- 버튼 그룹 -->
+                <div class="button-group">
+                    <button type="button" class="btn-primary" @click="generalEditButton()">수정</button>
+                    <button type="button" class="btn-cancel" @click="cancelButton()">취소</button>
+                    <button type="button" class="btn-cancel" @click="deleteButton()">삭제</button>
+                </div>
+            </div>
+        </form>
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <h3>마물군단 선택</h3>
+                <!-- 테이블 -->
+                <table class="item-table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>군단 이름</th>
+                        <th>총 병력수</th>
+                        <th>총 공격력</th>
+                        <th>총 방어력</th>
+                        <th>이동력</th>
+                        <th>사기</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item, index) in legionInfo" :key="index">
+                        <td><input type="checkbox" :value="{id: item.id, legionName: item.legionName}" v-model="selectedLegions"></td>
+                        <td>{{ item.legionName }}</td>
+                        <td>{{ item.troopCount }}</td>
+                        <td>{{ item.totalAttack }}</td>
+                        <td>{{ item.totalDefense }}</td>
+                        <td>{{ item.movementSpeed }}</td>
+                        <td>{{ item.morale }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- 버튼 -->
+                <div class="modal-buttons">
+                    <button type="button" class="btn-primary" @click="confirmSelection()">선택</button>
+                    <button type="button" class="btn-secondary" @click="closeModal()">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/plugins/vueJs/vue.js"></script>
+<script type="text/javascript" src="/plugins/axios/axios.min.js"></script>
+<script src="/dist/jquery/jquery.js"></script>
+<script src="/dist/jquery/jquery.min.js"></script>
+<script src="/dist/js/toggles-list-filter.js"></script>
+<script src="/dist/js/vueCommon.js"></script>
+<script>
+    $(function() {
+        $('#header-container').load('/common/html/adminHeader.html');
+    });
+</script>
+
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            adminInfo : {},
+            generalInfo : {
+                generalName : "",
+                generalAge : "",
+                attackBonus : 0,
+                defenseBonus : 0,
+                movementSpeed : 0,
+                moraleBonus : 0,
+                speciesId : "",
+                selectedLegionIds : [],
+                beforeLegionIds : []
+            },
+            legionInfo : {},
+            speciesInfo : {},
+            selectedLegions : [{id:0, legionName:""}],
+            beforeLegionIds : [],
+            id : 0
+        },
+        methods : {
+            getAdminInfo : function () {
+                let vm = this;
+                axios.get('/account/getAdminInfo')
+                    .then(res => {
+                        vm.adminInfo = res.data;
+                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            loadData : function () {
+                let vm = this;
+                vm.id = [[${id}]];
+                axios.get('/general/getGeneralInfo/' + vm.id)
+                    .then(res => {
+                        vm.generalInfo = res.data;
+                        vm.beforeLegionIds = res.data.legions.map(legion => legion.id);
+                        vm.selectedLegions = res.data.legions.map(legion => ({
+                            id : legion.id,
+                            legionName : legion.legionName
+                        }));
+                      })
+                      .catch(error => {
+                        console.error('Error fetching data:', error);
+                      });
+            },
+            getLegionInfo : function () {
+                let vm = this;
+                axios.get('/legion/getLegionList')
+                    .then(res => {
+                        vm.legionInfo = res.data;
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            getSpeciesInfo : function () {
+                let vm = this;
+                axios.get('/species/getSpeciesList')
+                    .then(res => {
+                        vm.speciesInfo = res.data;
+                    })
+                    .catch(error => {
+                      console.error("Error fetching data: ", error);
+                    })
+            },
+            cancelButton : function () {
+                let vm = this;
+                location.href = "/account/adminMain/general/detail/" + vm.id;
+            },
+            generalEditButton : function () {
+                let vm = this;
+
+                if(!vm.generalAgeCheck(vm.generalInfo.generalAge)){
+                    return false;
+                }
+                else {
+                    if(vm.generalInfo.generalAge != 0){
+                        vm.generalInfo.generalAge = vm.trimNumber(vm.generalInfo.generalAge);
+                    }
+                    if(vm.generalInfo.attackBonus != 0){
+                        vm.generalInfo.attackBonus = vm.trimNumber(vm.generalInfo.attackBonus);
+                    }
+                    if(vm.generalInfo.defenseBonus != 0){
+                        vm.generalInfo.defenseBonus = vm.trimNumber(vm.generalInfo.defenseBonus);
+                    }
+                    if(vm.generalInfo.movementSpeed != 0){
+                        vm.generalInfo.movementSpeed = vm.trimNumber(vm.generalInfo.movementSpeed);
+                    }
+                    if(vm.generalInfo.moraleBonus != 0){
+                        vm.generalInfo.moraleBonus = vm.trimNumber(vm.generalInfo.moraleBonus);
+                    }
+
+                    parseInt(vm.generalInfo.speciesId);
+
+                    vm.generalInfo.selectedLegionIds = vm.selectedLegions.map(legion => legion.id);
+                    vm.generalInfo.beforeLegionIds = vm.beforeLegionIds;
+
+                    for(let i = 0 ; i < vm.selectedLegions.length ; i++){
+                        vm.generalInfo.selectedLegionIds[i] = vm.selectedLegions[i].id;
+                    }
+
+                    let formData = new FormData();
+                    Object.keys(vm.generalInfo).forEach((key) => {
+                        if(vm.generalInfo[key]==null){
+                            formData.append(key, "");
+                        }
+                        else{
+                            formData.append(key, vm.generalInfo[key]);
+                        }
+                    })
+                    axios.post('/general/generalEditOK', formData)
+                        .then(res => {
+                            if(res.data != null){
+                                alert("마물장군이 수정되었습니다.");
+                                location.href = "/account/adminMain/general";
+                            }
+                            else{
+                                alert("로그요청에 실패하였습니다.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching data : ", error);
+                        })
+                }
+            },
+            trimNumber : function (keyword) {
+                let number = parseInt(keyword, 10);
+                return number;
+            },
+            deleteButton : function () {
+                let vm = this;
+                axios.get('/general/generalDelete/' + vm.id)
+                    .then(res => {
+                        alert("마물장군이 삭제되었습니다.");
+                        location.href = "/account/adminMain/general";
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data : ", error);
+                    })
+            },
+            generalAgeCheck : function (keyword) {
+                let vm = this;
+                if(keyword == null || keyword == ""){
+                    alert("마물장군 나이를 입력해주세요.");
+                    return false;
+                }
+                return true;
+            },
+            viewSelectedLegions : function () {
+                let vm = this;
+                let names = "";
+                for(let i = 0 ; i < vm.selectedLegions.length ; i++){
+                    names += vm.selectedLegions[i].legionName;
+                    if(i+1 < vm.selectedLegions.length){
+                        names += ", ";
+                    }
+                }
+                return names;
+            },
+            viewLegions: function () {
+                document.getElementsByClassName("modal-overlay")[0].style.display = "flex";
+            },
+            closeModal: function () {
+                document.getElementsByClassName("modal-overlay")[0].style.display = "none";
+            },
+            confirmSelection : function () {
+                document.getElementsByClassName("modal-overlay")[0].style.display = "none";
+            },
+        },
+       filters: {},
+       computed: {},
+       watch: {},
+       created() {},
+       mounted() {
+            this.getAdminInfo();
+            this.loadData();
+            this.getSpeciesInfo();
+            this.getLegionInfo();
+       }
+     })
+</script>
 </body>
 </html>

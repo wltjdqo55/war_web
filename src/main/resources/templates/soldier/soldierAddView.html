@@ -252,7 +252,7 @@
             },
             getItemInfo : function () {
                 let vm = this;
-                axios.get('/storage/getItemStateList')
+                axios.get('/storage/getItemStateList/' + 0)
                     .then(res => {
                         console.log(res);
                         vm.itemInfo = res.data;

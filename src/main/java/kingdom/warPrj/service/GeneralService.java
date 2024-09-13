@@ -14,7 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,11 +57,27 @@ public class GeneralService {
     return new GeneralDTO(generalRepository.findById(id).orElse(new General()));
   }
 
-//  @Transactional
-//  public boolean skillEdit(SkillVO skillVO){
-//    return skillQueryDSL.skillEdit(skillVO);
-//  }
-//
+  @Transactional
+  public boolean generalEdit(GeneralVO generalVO){
+    boolean flag = generalRepository
+        .findById(generalVO.getId())
+        .map(t -> {
+          t.update(generalVO);
+          return true;
+        })
+        .orElse(false);
+
+    Set<Long> set1 = new HashSet<>(generalVO.getBeforeLegionIds());
+    Set<Long> set2 = new HashSet<>(generalVO.getSelectedLegionIds());
+
+    if(!set1.equals(set2)){     // 두 배열이 동일하지 않으면 실행
+      System.out.println(set1);
+      System.out.println(set2);
+
+    }
+    return flag;
+  }
+
 //  public void skillDelete(long id){
 //    skillRepository.deleteById(id);
 //  }

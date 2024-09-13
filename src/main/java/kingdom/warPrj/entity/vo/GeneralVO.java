@@ -27,6 +27,8 @@ public class GeneralVO {
 
   private List<Long> selectedLegionIds; //선택된 마물군단 id
 
+  private List<Long> beforeLegionIds;   //기존 마물군단 아이디
+
   private String searchOption;          //검새 - 셀렉트박스
 
   private String searchKeyword;         //검색 - 키워드
