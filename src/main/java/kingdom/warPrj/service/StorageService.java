@@ -53,8 +53,8 @@ public class StorageService {
     storageRepository.deleteById(id);
   }
 
-  public List<StorageDTO> getItemStateList() {
-    List<StorageEntity> list = storageQueryDSL.getItemStateList();
+  public List<StorageDTO> getItemStateList(long id) {
+    List<StorageEntity> list = storageQueryDSL.getItemStateList(id);
     return list.stream().map(StorageDTO::new).collect(Collectors.toList());
   }
 }

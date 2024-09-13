@@ -66,7 +66,7 @@ public class SoldierEntity {
     this.soldierId = soldierVO.getSoldierId();
     this.soldierPassword = soldierVO.getSoldierPassword();
     this.soldierBirthPlace = soldierVO.getSoldierBirthPlace();
-    this.soldierState = !soldierVO.getSoldierState().equals("생존");
+    this.soldierState = false;
     this.strength = soldierVO.getStrength();
     this.spell = soldierVO.getSpell();
     this.skill = new SkillEntity(skillId);        // 스킬 정보

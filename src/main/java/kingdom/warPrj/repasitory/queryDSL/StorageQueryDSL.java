@@ -58,17 +58,18 @@ public class StorageQueryDSL {
     return affectedRows > 0;
   }
 
-  public List<StorageEntity> getItemStateList() {
+  public List<StorageEntity> getItemStateList(long id) {
     return jpaQueryFactory
         .selectFrom(QStorageEntity.storageEntity)
         .where(
-            ItemStateCheck()
+            ItemStateCheck(id)
         )
         .fetch();
   }
 
-  public BooleanExpression ItemStateCheck() {
-    return QStorageEntity.storageEntity.itemState.isFalse();
+  public BooleanExpression ItemStateCheck(long id) {
+    System.out.println(id);
+    return QStorageEntity.storageEntity.itemState.isFalse().or(QStorageEntity.storageEntity.soldierEntity.id.eq(id));
   }
 
   @Transactional
