@@ -23,9 +23,6 @@
                 <button type="button" class="btn-login" @click="loginButton()">로그인</button>
                 <button type="button" class="btn-cancel" @click="cancelButton()">취소</button>
             </div>
-            <div class="admin-register">
-                <button type="button" class="btn-admin" @click="addAdminButton()">관리자 등록</button>
-            </div>
         </form>
     </div>
 </div>
@@ -47,10 +44,6 @@
             }
         },
         methods : {
-            addAdminButton : function () {
-                let vm = this;
-                location.href = "/account/adminAdd";
-            },
             loginButton : function () {
                 let vm = this;
                 let formData = new FormData();

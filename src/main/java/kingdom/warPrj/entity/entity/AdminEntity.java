@@ -32,5 +32,11 @@ public class AdminEntity {
     this.adminPhoneNumber = adminVO.getAdminPhoneNumber();
   }
 
+  public void update(AdminVO adminVO){
+    this.id = adminVO.getId();
+    this.adminName = adminVO.getAdminName();
+    this.adminPhoneNumber = adminVO.getAdminPhoneNumber();
+  }
+
 
 }

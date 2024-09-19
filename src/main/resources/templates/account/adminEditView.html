@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>관리자등록</title>
+    <title>관리자수정</title>
     <link rel="stylesheet" href="/common/css/body.css">
     <link rel="stylesheet" href="/common/css/adminHeader.css">
     <link rel="stylesheet" href="/common/css/addEdit.css">
@@ -16,26 +16,11 @@
         <form>
             <div class="form-container">
                 <!-- 입력 필드 -->
-                <h2 class="form-title">관리자 등록</h2>
+                <h2 class="form-title">관리자 수정</h2>
                 <div class="form-group">
                     <label for="adminId" class="form-label">아이디</label>
                     <div class="input-container">
-                        <input type="text" id="adminId" name="adminId" placeholder="관리자 아이디를 입력해주세요." maxlength="30" v-model="accountInfo.adminId">
-                        <button type="button" class="btn-secondary" @click="adminIdCheckButton()">중복 확인</button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password" class="form-label">비밀번호</label>
-                    <div class="input-container">
-                        <input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." maxlength="30" v-model="accountInfo.adminPassword">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="passwordCheck" class="form-label">비밀번호확인</label>
-                    <div class="input-container">
-                        <input type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호를 확인해주세요." maxlength="30" v-model="accountInfo.adminPasswordCheck">
+                        <input type="text" id="adminId" name="adminId" placeholder="관리자 아이디를 입력해주세요." maxlength="30" v-model="accountInfo.adminId" readonly>
                     </div>
                 </div>
 
@@ -55,8 +40,9 @@
 
                 <!-- 버튼 그룹 -->
                 <div class="button-group">
-                    <button type="button" class="btn-primary" @click="adminAddButton()">등록</button>
+                    <button type="button" class="btn-primary" @click="adminEditButton()">수정</button>
                     <button type="button" class="btn-cancel" @click="cancelButton()">취소</button>
+                    <button type="button" class="btn-cancel" @click="deleteButton()">삭제</button>
                 </div>
             </div>
         </form>
@@ -79,9 +65,8 @@
         el : "#app",
         data : {
             accountInfo : {
+                id : "",
                 adminId : "",
-                adminPassword : "",
-                adminPasswordCheck : "",
                 adminName : "",
                 adminPhoneNumber : ""
             },
@@ -103,37 +88,20 @@
                       console.error("Error fetching data: ", error);
                     })
             },
-            adminIdCheckButton : function () {
+            loadData : function () {
                 let vm = this;
-                axios.get('/account/adminIdCheck', {
-                        params : {
-                            adminId : vm.accountInfo.adminId
-                        }
-                    })
+                vm.id = [[${id}]];
+                axios.get('/account/getAccountInfo/' + vm.id)
                     .then(res => {
-                        if(res.data){
-                            alert("사용가능한 아이디입니다.");
-                            vm.check.adminId = vm.accountInfo.adminId;
-                            vm.check.isIdCheck = true;
-                        }
-                        else{
-                            alert("이미 사용중인 아이디입니다.");
-                            vm.check.isIdCheck = false;
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error fetching data : ", error);
-                    })
+                        vm.accountInfo = res.data;
+                      })
+                      .catch(error => {
+                        console.error('Error fetching data:', error);
+                      });
             },
-            adminAddButton : function () {
+            adminEditButton : function () {
                 let vm = this;
-                if(!vm.adminIdCheck(vm.accountInfo.adminId)){
-                    return false;
-                }
-                else if(!vm.adminPasswordCheck(vm.accountInfo.adminPassword, vm.accountInfo.adminPasswordCheck)){
-                    return false;
-                }
-                else if(!vm.adminNameCheck(vm.accountInfo.adminName)){
+                if(!vm.adminNameCheck(vm.accountInfo.adminName)){
                     return false;
                 }
                 else if(!vm.adminPhoneCheck(vm.accountInfo.adminPhoneNumber)){
@@ -149,10 +117,10 @@
                             formData.append(key, vm.accountInfo[key]);
                         }
                     })
-                    axios.post('/account/adminAddOK', formData)
+                    axios.post('/account/adminEditOK', formData)
                         .then(res => {
                             if(res.data != null){
-                                alert("관리자 등록이 완료되었습니다.");
+                                alert("관리자 수정이 완료되었습니다.");
                                 location.href = "/account/adminMain/admin";
                             }
                             else{
@@ -166,28 +134,12 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/admin"
+                location.href = "/account/adminMain/admin/detail/" + vm.id;
             },
             adminIdCheck : function (keyword) {
                 let vm = this;
                 if(keyword == null || keyword == "") {
                     alert("아이디를 입력해주세요.");
-                    return false;
-                }
-                else if(keyword != vm.check.adminId || !vm.check.isIdCheck || vm.check.adminId == ""){
-                    alert("아이디를 중복체크 해주세요.");
-                    return false;
-                }
-                return true;
-            },
-            adminPasswordCheck : function (keyword1, keyword2) {
-                let vm = this;
-                if(keyword1 == null || keyword1 == "" || keyword2 == null || keyword2 == ""){
-                    alert("비밀번호를 입력해주세요.");
-                    return false;
-                }
-                else if(keyword1 != keyword2) {
-                    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
                     return false;
                 }
                 return true;
@@ -219,6 +171,17 @@
                     return false;
                 }
                 return true;
+            },
+            deleteButton : function () {
+                let vm = this;
+                axios.get('/account/adminDelete/' + vm.id)
+                    .then(res => {
+                        alert("관리자가 삭제되었습니다.");
+                        location.href = "/account/adminMain/admin";
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data : ", error);
+                    })
             }
         },
        filters: $.extend({}, vueFilters, {}),
@@ -227,6 +190,7 @@
        created() {},
        mounted() {
             this.getAdminInfo();
+            this.loadData();
        }
      })
 </script>
