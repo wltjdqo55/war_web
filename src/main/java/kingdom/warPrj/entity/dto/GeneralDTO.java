@@ -59,6 +59,9 @@ public class GeneralDTO {
     this.defenseBonus = general.getDefenseBonus();
     this.movementSpeed = general.getMovementSpeed();
     this.moraleBonus = general.getMoraleBonus();
-    this.speciesName = general.getSpecies().getSpeciesName();
+
+    if(general.getSpecies()!=null){
+      this.speciesName = general.getSpecies().getSpeciesName();
+    }
   }
 }

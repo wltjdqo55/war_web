@@ -67,29 +67,22 @@ public class LegionController {
     return legionService.getLegionDetail(id);
   }
 
-//  @GetMapping("/account/adminMain/skill/edit/{id}")
-//  public String editView(@PathVariable long id, Model model){
-//    model.addAttribute("id", id);
-//    return "/skill/skillEditView.html";
-//  }
-//
-//  @PostMapping("/skill/skillEditOK")
-//  @ResponseBody
-//  public boolean skillEdit(SkillVO skillVO) {
-//    return skillService.skillEdit(skillVO);
-//  }
-//
-//  @GetMapping("/skill/skillDelete/{id}")
-//  @ResponseBody
-//  public String skillDelete(@PathVariable long id){
-//    skillService.skillDelete(id);
-//    return "";
-//  }
-//
-//  @GetMapping("/skill/getSkillStateList")
-//  @ResponseBody
-//  public List<SkillDTO> getSkillStateList(){
-//    return skillService.getSkillStateList();
-//  }
+  @GetMapping("/account/adminMain/legion/edit/{id}")
+  public String editView(@PathVariable long id, Model model){
+    model.addAttribute("id", id);
+    return "/monster/legion/legionEditView.html";
+  }
 
+  @PostMapping("/legion/legionEditOK")
+  @ResponseBody
+  public boolean legionEdit(LegionVO legionVO) {
+    return legionService.legionEdit(legionVO);
+  }
+
+  @GetMapping("/legion/legionDelete/{id}")
+  @ResponseBody
+  public String legionDelete(@PathVariable long id){
+    legionService.legionDelete(id);
+    return "";
+  }
 }

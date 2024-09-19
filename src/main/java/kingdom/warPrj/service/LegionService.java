@@ -7,13 +7,14 @@ import kingdom.warPrj.entity.entity.Legion;
 import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.LegionVO;
 import kingdom.warPrj.entity.vo.SkillVO;
+import kingdom.warPrj.repasitory.jpa.GeneralRepository;
 import kingdom.warPrj.repasitory.jpa.LegionRepository;
 import kingdom.warPrj.repasitory.queryDSL.LegionQueryDSL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class LegionService {
   private final LegionRepository legionRepository;
   private final LegionQueryDSL legionQueryDSL;
+  private final GeneralRepository generalRepository;
 
   @Transactional
   public LegionDTO legionAdd(LegionVO legionVO){
@@ -40,29 +42,67 @@ public class LegionService {
   }
 
   public List<LegionDTO> getLegionList(){
-    return legionRepository.findAll().stream().map(LegionDTO::new).collect(Collectors.toList());
+    return legionRepository.findAll().stream().
+        sorted(Comparator.comparingLong(Legion::getId))
+        .map(LegionDTO::new).collect(Collectors.toList());
   }
 
   public List<LegionDTO> getSearchLegion(LegionVO legionVO){
     List<Legion> list = legionQueryDSL.getSearchLegion(legionVO);
-    return list.stream().map(LegionDTO::new).collect(Collectors.toList());
+    return list.stream().sorted(Comparator.comparingLong(Legion::getId)).
+        map(LegionDTO::new).collect(Collectors.toList());
   }
 
   public LegionDTO getLegionDetail(long id){
     return new LegionDTO(legionRepository.findById(id).orElse(new Legion()));
   }
 
-//  @Transactional
-//  public boolean skillEdit(SkillVO skillVO){
-//    return skillQueryDSL.skillEdit(skillVO);
-//  }
-//
-//  public void skillDelete(long id){
-//    skillRepository.deleteById(id);
-//  }
-//
-//  public List<SkillDTO> getSkillStateList() {
-//    List<SkillEntity> list = skillQueryDSL.getSkillStateList();
-//    return list.stream().map(SkillDTO::new).collect(Collectors.toList());
-//  }
+  @Transactional
+  public boolean legionEdit(LegionVO legionVO){
+    Optional<Legion> optionalLegion = legionRepository.findById(legionVO.getId());
+
+    if (optionalLegion.isPresent()) {
+      Legion legion = optionalLegion.get();
+      legion.update(legionVO); // 일반 정보 업데이트
+
+      Set<Long> existingGeneralIds = legion.getGenerals().stream()
+          .map(General::getId) // General에서 ID 가져오기
+          .collect(Collectors.toSet());
+
+      Set<Long> newGeneralIds = new HashSet<>(legionVO.getSelectedGeneralIds());
+
+      // 삭제할 ID 리스트
+      Set<Long> toDelete = existingGeneralIds.stream()
+          .filter(id -> !newGeneralIds.contains(id))
+          .collect(Collectors.toSet());
+
+      // 추가할 ID 리스트
+      Set<Long> toAdd = newGeneralIds.stream()
+          .filter(id -> !existingGeneralIds.contains(id))
+          .collect(Collectors.toSet());
+
+      // 삭제할 ID 처리
+      for (Long id : toDelete) {
+        General general = generalRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("General not found: " + id));
+        legion.getGenerals().remove(general);
+      }
+
+      // 추가할 ID 처리
+      for (Long id : toAdd) {
+        General general = generalRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("General not found: " + id));
+        legion.getGenerals().add(general);
+      }
+
+      // 변경된 엔티티 저장
+      legionRepository.save(legion);
+      return true;
+    }
+    return false;
+  }
+
+  public void legionDelete(long id){
+    legionRepository.deleteById(id);
+  }
 }

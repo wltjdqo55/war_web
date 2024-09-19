@@ -31,7 +31,6 @@
         },
         created() {
             let storedAdminInfo = localStorage.getItem('adminInfo');
-            console.log(storedAdminInfo);
             if (storedAdminInfo) {
                 this.adminInfo = JSON.parse(storedAdminInfo);
             }

@@ -1,6 +1,7 @@
 package kingdom.warPrj.entity.entity;
 
 import jakarta.persistence.*;
+import kingdom.warPrj.entity.vo.GeneralVO;
 import kingdom.warPrj.entity.vo.LegionVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,15 @@ public class Legion {
 
   public Legion(LegionVO legionVO){
     this.id = legionVO.getId();
+    this.legionName = legionVO.getLegionName();
+    this.troopCount = legionVO.getTroopCount();
+    this.totalAttack = legionVO.getTotalAttack();
+    this.totalDefense = legionVO.getTotalDefense();
+    this.morale = legionVO.getMorale();
+    this.movementSpeed = legionVO.getMovementSpeed();
+  }
+
+  public void update(LegionVO legionVO){
     this.legionName = legionVO.getLegionName();
     this.troopCount = legionVO.getTroopCount();
     this.totalAttack = legionVO.getTotalAttack();

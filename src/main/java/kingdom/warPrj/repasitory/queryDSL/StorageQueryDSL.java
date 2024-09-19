@@ -68,7 +68,6 @@ public class StorageQueryDSL {
   }
 
   public BooleanExpression ItemStateCheck(long id) {
-    System.out.println(id);
     return QStorageEntity.storageEntity.itemState.isFalse().or(QStorageEntity.storageEntity.soldierEntity.id.eq(id));
   }
 

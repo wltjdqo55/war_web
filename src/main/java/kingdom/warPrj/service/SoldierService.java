@@ -43,8 +43,7 @@ public class SoldierService {
   }
 
   public boolean soldierIdCheck(String soldierId){
-    return true;  //임시
-    //return soldierRepository.findOneBySoldierId(soldierId).isEmpty();
+    return soldierRepository.findOneBySoldierId(soldierId).isEmpty();
   }
 
   public List<SoldierDTO> getSoldierList(){
