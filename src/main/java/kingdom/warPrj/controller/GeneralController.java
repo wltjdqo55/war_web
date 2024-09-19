@@ -79,17 +79,10 @@ public class GeneralController {
     return generalService.generalEdit(generalVO);
   }
 
-//  @GetMapping("/skill/skillDelete/{id}")
-//  @ResponseBody
-//  public String skillDelete(@PathVariable long id){
-//    skillService.skillDelete(id);
-//    return "";
-//  }
-//
-//  @GetMapping("/skill/getSkillStateList")
-//  @ResponseBody
-//  public List<SkillDTO> getSkillStateList(){
-//    return skillService.getSkillStateList();
-//  }
-
+  @GetMapping("/general/generalDelete/{id}")
+  @ResponseBody
+  public String generalDelete(@PathVariable long id){
+    generalService.generalDelete(id);
+    return "";
+  }
 }

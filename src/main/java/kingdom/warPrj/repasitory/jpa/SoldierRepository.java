@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface SoldierRepository extends JpaRepository<SoldierEntity, Long> {
 
-//  Optional<SoldierEntity> findOneBySoldierId(String soldierId);
+  Optional<SoldierEntity> findOneBySoldierId(String soldierId);
 }

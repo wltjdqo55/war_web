@@ -9,15 +9,13 @@ import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.GeneralVO;
 import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.repasitory.jpa.GeneralRepository;
+import kingdom.warPrj.repasitory.jpa.LegionRepository;
 import kingdom.warPrj.repasitory.queryDSL.GeneralQueryDSL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +24,7 @@ public class GeneralService {
 
   private final GeneralRepository generalRepository;
   private final GeneralQueryDSL generalQueryDSL;
+  private final LegionRepository legionRepository;
 
   @Transactional
   public GeneralDTO generalAdd(GeneralVO generalVO){
@@ -36,7 +35,6 @@ public class GeneralService {
         saveGeneral.getLegions().add(new Legion(legion));
       });
     }
-
     return new GeneralDTO(saveGeneral);
   }
 
@@ -45,12 +43,16 @@ public class GeneralService {
   }
 
   public List<GeneralDTO> getGeneralList(){
-    return generalRepository.findAll().stream().map(GeneralDTO::new).collect(Collectors.toList());
+    return generalRepository.findAll().stream()
+        .sorted(Comparator.comparingLong(General::getId))
+        .map(GeneralDTO::new)
+        .collect(Collectors.toList());
   }
 
     public List<GeneralDTO> getSearchGeneral(GeneralVO generalVO){
     List<General> list = generalQueryDSL.getSearchGeneral(generalVO);
-    return list.stream().map(GeneralDTO::new).collect(Collectors.toList());
+    return list.stream().sorted(Comparator.comparingLong(General::getId)).
+        map(GeneralDTO::new).collect(Collectors.toList());
   }
 
   public GeneralDTO getGeneralDetail(long id){
@@ -58,32 +60,51 @@ public class GeneralService {
   }
 
   @Transactional
-  public boolean generalEdit(GeneralVO generalVO){
-    boolean flag = generalRepository
-        .findById(generalVO.getId())
-        .map(t -> {
-          t.update(generalVO);
-          return true;
-        })
-        .orElse(false);
+  public boolean generalEdit(GeneralVO generalVO) {
+    Optional<General> optionalGeneral = generalRepository.findById(generalVO.getId());
 
-    Set<Long> set1 = new HashSet<>(generalVO.getBeforeLegionIds());
-    Set<Long> set2 = new HashSet<>(generalVO.getSelectedLegionIds());
+    if (optionalGeneral.isPresent()) {
+      General general = optionalGeneral.get();
+      general.update(generalVO); // 일반 정보 업데이트
 
-    if(!set1.equals(set2)){     // 두 배열이 동일하지 않으면 실행
-      System.out.println(set1);
-      System.out.println(set2);
+      Set<Long> existingLegionIds = general.getLegions().stream()
+          .map(Legion::getId) // Legion에서 ID 가져오기
+          .collect(Collectors.toSet());
 
+      Set<Long> newLegionIds = new HashSet<>(generalVO.getSelectedLegionIds());
+
+      // 삭제할 ID 리스트
+      Set<Long> toDelete = existingLegionIds.stream()
+          .filter(id -> !newLegionIds.contains(id))
+          .collect(Collectors.toSet());
+
+      // 추가할 ID 리스트
+      Set<Long> toAdd = newLegionIds.stream()
+          .filter(id -> !existingLegionIds.contains(id))
+          .collect(Collectors.toSet());
+
+      // 삭제할 ID 처리
+      for (Long id : toDelete) {
+        Legion legion = legionRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Legion not found: " + id));
+        general.getLegions().remove(legion);
+      }
+
+      // 추가할 ID 처리
+      for (Long id : toAdd) {
+        Legion legion = legionRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Legion not found: " + id));
+        general.getLegions().add(legion);
+      }
+
+      // 변경된 엔티티 저장
+      generalRepository.save(general);
+      return true;
     }
-    return flag;
+    return false;
   }
 
-//  public void skillDelete(long id){
-//    skillRepository.deleteById(id);
-//  }
-//
-//  public List<SkillDTO> getSkillStateList() {
-//    List<SkillEntity> list = skillQueryDSL.getSkillStateList();
-//    return list.stream().map(SkillDTO::new).collect(Collectors.toList());
-//  }
+  public void generalDelete(long id){
+    generalRepository.deleteById(id);
+  }
 }
