@@ -16,4 +16,6 @@ public class AdminVO {
   private String adminName;
 
   private String adminPhoneNumber;
+
+  private String searchKeyword;
 }

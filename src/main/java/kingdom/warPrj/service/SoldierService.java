@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,19 +48,20 @@ public class SoldierService {
   }
 
   public List<SoldierDTO> getSoldierList(){
-    return soldierRepository.findAll().stream().map(SoldierDTO::new).collect(Collectors.toList());
+    return soldierRepository.findAll().stream().sorted(Comparator.comparingLong(SoldierEntity::getId))
+        .map(SoldierDTO::new).collect(Collectors.toList());
   }
 
   public List<SoldierDTO> getSearchSoldier(SoldierVO soldierVO){
     List<SoldierEntity> list = soldierQueryDSL.getSearchSoldier(soldierVO);
-    return list.stream().map(SoldierDTO::new).collect(Collectors.toList());
+    return list.stream().sorted(Comparator.comparingLong(SoldierEntity::getId))
+        .map(SoldierDTO::new).collect(Collectors.toList());
   }
 
   public SoldierDTO getSoldierDetail(long id){
     SoldierEntity soldierEntity = soldierRepository.findById(id).orElse(new SoldierEntity());
 
     SoldierDTO soldierDTO = new SoldierDTO(soldierEntity);
-    System.out.println(soldierDTO);
     return soldierDTO;
   }
 

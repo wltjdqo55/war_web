@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,12 +32,15 @@ public class SkillService {
   }
 
   public List<SkillDTO> getSkillList(){
-    return skillRepository.findAll().stream().map(SkillDTO::new).collect(Collectors.toList());
+    return skillRepository.findAll().stream().
+        sorted(Comparator.comparingLong(SkillEntity::getId)).
+        map(SkillDTO::new).collect(Collectors.toList());
   }
 
   public List<SkillDTO> getSearchSkill(SkillVO skillVO){
     List<SkillEntity> list = skillQueryDSL.getSearchSkill(skillVO);
-    return list.stream().map(SkillDTO::new).collect(Collectors.toList());
+    return list.stream().sorted(Comparator.comparingLong(SkillEntity::getId))
+        .map(SkillDTO::new).collect(Collectors.toList());
   }
 
   public SkillDTO getSkillDetail(long id){
@@ -54,6 +58,7 @@ public class SkillService {
 
   public List<SkillDTO> getSkillStateList() {
     List<SkillEntity> list = skillQueryDSL.getSkillStateList();
-    return list.stream().map(SkillDTO::new).collect(Collectors.toList());
+    return list.stream().sorted(Comparator.comparingLong(SkillEntity::getId))
+        .map(SkillDTO::new).collect(Collectors.toList());
   }
 }

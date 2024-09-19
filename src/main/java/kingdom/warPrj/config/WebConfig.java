@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(sessionCheckInterceptor)
-        .addPathPatterns("/account/**") // 필요한 경로에만 인터셉터 적용
+        .addPathPatterns("/account/**", "/admin/**") // 필요한 경로에만 인터셉터 적용
         .excludePathPatterns("/account/login", "/account/error", "/account/loginCheck"); // 로그인 및 에러 페이지는 제외
   }
 }

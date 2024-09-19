@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,12 +33,14 @@ public class SpeciesService {
   }
 
   public List<SpeciesDTO> getSpeciesList(){
-    return speciesRepository.findAll().stream().map(SpeciesDTO::new).collect(Collectors.toList());
+    return speciesRepository.findAll().stream().sorted(Comparator.comparingLong(SpeciesEntity::getSpeciesId))
+        .map(SpeciesDTO::new).collect(Collectors.toList());
   }
 
   public List<SpeciesDTO> getSearchSpecies(SpeciesVO speciesVO){
     List<SpeciesEntity> list = speciesQueryDSL.getSearchSpecies(speciesVO);
-    return list.stream().map(SpeciesDTO::new).collect(Collectors.toList());
+    return list.stream().sorted(Comparator.comparingLong(SpeciesEntity::getSpeciesId))
+        .map(SpeciesDTO::new).collect(Collectors.toList());
   }
 
   public SpeciesDTO getSpeciesDetail(long id){

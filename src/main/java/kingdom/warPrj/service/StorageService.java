@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,12 +33,14 @@ public class StorageService {
   }
 
   public List<StorageDTO> getItemList(){
-    return storageRepository.findAll().stream().map(StorageDTO::new).collect(Collectors.toList());
+    return storageRepository.findAll().stream().sorted(Comparator.comparingLong(StorageEntity::getStorageId))
+        .map(StorageDTO::new).collect(Collectors.toList());
   }
 
   public List<StorageDTO> getSearchItem(StorageVO storageVO){
     List<StorageEntity> list = storageQueryDSL.getSearchItem(storageVO);
-    return list.stream().map(StorageDTO::new).collect(Collectors.toList());
+    return list.stream().sorted(Comparator.comparingLong(StorageEntity::getStorageId))
+        .map(StorageDTO::new).collect(Collectors.toList());
   }
 
   public StorageDTO getItemDetail(long id){
@@ -55,6 +58,7 @@ public class StorageService {
 
   public List<StorageDTO> getItemStateList(long id) {
     List<StorageEntity> list = storageQueryDSL.getItemStateList(id);
-    return list.stream().map(StorageDTO::new).collect(Collectors.toList());
+    return list.stream().sorted(Comparator.comparingLong(StorageEntity::getStorageId))
+        .map(StorageDTO::new).collect(Collectors.toList());
   }
 }

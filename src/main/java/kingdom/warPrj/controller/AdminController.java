@@ -3,12 +3,16 @@ package kingdom.warPrj.controller;
 import jakarta.servlet.http.HttpSession;
 import kingdom.warPrj.account.AdminSession;
 import kingdom.warPrj.entity.dto.AdminDTO;
+import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.vo.AdminVO;
+import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,7 +23,12 @@ public class AdminController {
   @GetMapping("/account/login")
   public String loginPage() {return "/account/login.html";}
 
-  @GetMapping("/account/adminAdd")
+  @GetMapping("/account/adminMain/admin")
+  public String adminPage() {
+    return "/account/admin.html";
+  }
+
+  @GetMapping("/account/adminMain/admin/add")
   public String adminAddPage() {
     return "/account/adminAdd.html";
   }
@@ -68,4 +77,42 @@ public class AdminController {
     }
     return "redirect:/account/login";
   }
+
+  @GetMapping("/admin/getAccountList")
+  @ResponseBody
+  public List<AdminDTO> getAccountList() {
+    return adminService.getAccountList();
+  }
+
+  @GetMapping("/account/adminMain/admin/detail/{id}")
+  public String detailView(@PathVariable("id") long id, Model model){
+    model.addAttribute("id", id);
+    return "/account/adminDetailView.html";
+  }
+
+  @GetMapping("/account/getAccountInfo/{id}")
+  @ResponseBody
+  public AdminDTO getAccountInfo(@PathVariable long id){
+    return adminService.getAccountDetail(id);
+  }
+
+  @GetMapping("/account/adminMain/admin/edit/{id}")
+  public String editView(@PathVariable long id, Model model){
+    model.addAttribute("id", id);
+    return "/account/adminEditView.html";
+  }
+
+  @PostMapping("/account/adminEditOK")
+  @ResponseBody
+  public boolean adminEdit(AdminVO adminVO) {
+    return adminService.adminEdit(adminVO);
+  }
+
+  @GetMapping("/account/adminDelete/{id}")
+  @ResponseBody
+  public String adminDelete(@PathVariable long id){
+    adminService.adminDelete(id);
+    return "";
+  }
+
 }
