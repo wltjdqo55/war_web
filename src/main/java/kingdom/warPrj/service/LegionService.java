@@ -1,5 +1,6 @@
 package kingdom.warPrj.service;
 
+import kingdom.warPrj.entity.dto.GeneralDTO;
 import kingdom.warPrj.entity.dto.LegionDTO;
 import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.entity.General;
@@ -9,6 +10,7 @@ import kingdom.warPrj.entity.vo.LegionVO;
 import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.repasitory.jpa.GeneralRepository;
 import kingdom.warPrj.repasitory.jpa.LegionRepository;
+import kingdom.warPrj.repasitory.queryDSL.GeneralQueryDSL;
 import kingdom.warPrj.repasitory.queryDSL.LegionQueryDSL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class LegionService {
   private final LegionRepository legionRepository;
   private final LegionQueryDSL legionQueryDSL;
   private final GeneralRepository generalRepository;
+  private final GeneralQueryDSL generalQueryDSL;
 
   @Transactional
   public LegionDTO legionAdd(LegionVO legionVO){
@@ -104,5 +107,18 @@ public class LegionService {
 
   public void legionDelete(long id){
     legionRepository.deleteById(id);
+  }
+
+  public LegionDTO getTotalLegion(){
+    LegionDTO legionDTO = legionQueryDSL.getTotalLegion();
+    GeneralDTO generalDTO = generalQueryDSL.getTotalGeneral();
+
+    legionDTO.setTotalAttackValue(legionDTO.getTotalAttackValue()+generalDTO.getTotalAttackValue());
+    legionDTO.setTotalDefenseValue(legionDTO.getTotalDefenseValue()+generalDTO.getTotalDefenseValue());
+    legionDTO.setTotalMovementSpeedValue(legionDTO.getTotalMovementSpeedValue()+generalDTO.getTotalMovementSpeedValue());
+    legionDTO.setTotalMoraleValue(legionDTO.getTotalMoraleValue()+generalDTO.getTotalMoraleBonusValue());
+    legionDTO.setGeneralCountValue(generalDTO.getTotalGeneralCount());
+
+    return legionDTO;
   }
 }

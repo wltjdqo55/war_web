@@ -55,4 +55,9 @@ public class SpeciesService {
   public void speciesDelete(long id){
     speciesRepository.deleteById(id);
   }
+
+  public List<SpeciesDTO> getTotalSpecies() {
+    System.out.println(speciesQueryDSL.getTotalSpecies());
+    return speciesQueryDSL.getTotalSpecies();
+  }
 }

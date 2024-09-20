@@ -28,6 +28,14 @@ public class StorageDTO {
 
   private SoldierDTO soldier;
 
+  private Integer totalAttack;
+
+  private Integer totalDefense;
+
+  private Integer totalForce;
+
+  private Integer totalSpell;
+
   public StorageDTO(StorageEntity storageEntity){
     this.storageId = storageEntity.getStorageId();
     this.item = storageEntity.getItem();
@@ -51,6 +59,13 @@ public class StorageDTO {
     this.forceBonus = storageEntity.getForceBonus();
     this.spellBonus = storageEntity.getSpellBonus();
     this.itemState = storageEntity.isItemState() ? "사용중" : "사용가능";
+  }
+
+  public StorageDTO(Integer totalAttack, Integer totalDefense, Integer totalForce, Integer totalSpell){
+    this.totalAttack = totalAttack;
+    this.totalDefense = totalDefense;
+    this.totalForce = totalForce;
+    this.totalSpell = totalSpell;
   }
 
 }

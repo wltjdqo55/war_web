@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class errorController {
+public class ErrorController {
 
   @GetMapping("/account/error")
   public String errorPage(){

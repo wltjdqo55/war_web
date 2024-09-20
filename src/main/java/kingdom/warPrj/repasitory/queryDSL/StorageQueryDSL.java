@@ -1,8 +1,10 @@
 package kingdom.warPrj.repasitory.queryDSL;
 
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import kingdom.warPrj.entity.dto.StorageDTO;
 import kingdom.warPrj.entity.entity.QSkillEntity;
 import kingdom.warPrj.entity.entity.QStorageEntity;
 import kingdom.warPrj.entity.entity.SkillEntity;
@@ -100,5 +102,20 @@ public class StorageQueryDSL {
         .set(QStorageEntity.storageEntity.soldierEntity.id, (Long) null)
         .where(QStorageEntity.storageEntity.soldierEntity.id.eq(id))
         .execute();
+  }
+
+  public StorageDTO getTotalStorage(){
+    return jpaQueryFactory
+        .select(Projections.constructor(StorageDTO.class,
+            QStorageEntity.storageEntity.attackBonus.sum(),
+            QStorageEntity.storageEntity.defenseBonus.sum(),
+            QStorageEntity.storageEntity.forceBonus.sum(),
+            QStorageEntity.storageEntity.spellBonus.sum()
+            ))
+        .from(QStorageEntity.storageEntity)
+        .where(
+            QStorageEntity.storageEntity.itemState.eq(true)
+        )
+        .fetchOne();
   }
 }

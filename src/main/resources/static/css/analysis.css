@@ -1,0 +1,55 @@
+.stats-wrapper {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    margin-bottom: 20px;
+}
+
+.stats-container {
+    width: 20%; /* 각 통계 카드의 폭을 45%로 설정 */
+    padding: 10px;
+    margin: 0 10px; /* 카드 사이에 여백 추가 */
+}
+
+.stat-card {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 10px; /* 패딩 줄임 */
+    margin: 5px 0; /* 카드 사이 간격 유지 */
+    text-align: center;
+    font-size: 16px; /* 글씨 크기 조정 */
+    color: #e0e0e0; /* 텍스트 색상 */
+}
+
+.stat-card div {
+    display: flex;
+    justify-content: space-between; /* 항목과 숫자 사이에 공간을 둡니다. */
+    margin: 5px 0; /* 항목 사이 간격 줄임 */
+}
+
+.stats-table {
+    width:60%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin : 0 auto;
+    background: rgba(0, 0, 0, 0.4); /* 어두운 배경 추가 */
+}
+
+.stats-table th, .stats-table td {
+    border: 1px solid #ccc;
+    padding: 6px; /* 패딩 유지 */
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5); /* 각 셀의 배경색 어둡게 */
+    color: #e0e0e0; /* 텍스트 색상 조정 */
+}
+
+.stats-table th:nth-child(1), .stats-table td:nth-child(1) {
+    width: 150px; /* 종족 칸 크기 증가 */
+}
+
+.stats-table th, .stats-table td {
+    width: 100px; /* 나머지 칸 크기 일정하게 설정 */
+}
+
+.div-box {
+    padding : 10px;
+}
