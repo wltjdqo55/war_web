@@ -28,6 +28,14 @@ public class LegionDTO {
 
   private List<GeneralDTO> generals = new ArrayList<>();
 
+  private Integer totalTroopCount;
+  private Long totalLegionCount;
+  private Integer totalAttackValue;
+  private Integer totalDefenseValue;
+  private Integer totalMovementSpeedValue;
+  private Integer totalMoraleValue;
+  private Long generalCountValue;
+
   public LegionDTO(Legion legion) {
     this.id = legion.getId();
     this.legionName = legion.getLegionName();
@@ -51,5 +59,14 @@ public class LegionDTO {
     this.totalDefense = legion.getTotalDefense();
     this.morale = legion.getMorale();
     this.movementSpeed = legion.getMovementSpeed();
+  }
+
+  public LegionDTO(Integer totalTroopCount, Long totalLegionCount, Integer totalAttackValue, Integer totalDefenseValue, Integer totalMovementSpeedValue, Integer totalMoraleValue){
+    this.totalTroopCount = totalTroopCount;
+    this.totalLegionCount = totalLegionCount;
+    this.totalAttackValue = totalAttackValue;
+    this.totalDefenseValue = totalDefenseValue;
+    this.totalMovementSpeedValue = totalMovementSpeedValue;
+    this.totalMoraleValue = totalMoraleValue;
   }
 }

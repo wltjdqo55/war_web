@@ -35,6 +35,16 @@ public class GeneralDTO {
 
   private List<LegionDTO> legions = new ArrayList<>();
 
+  private Long totalGeneralCount;
+
+  private Integer totalAttackValue;
+
+  private Integer totalDefenseValue;
+
+  private Integer totalMovementSpeedValue;
+
+  private Integer totalMoraleBonusValue;
+
   public GeneralDTO(General general){
     this.id = general.getId();
     this.generalName = general.getGeneralName();
@@ -63,5 +73,13 @@ public class GeneralDTO {
     if(general.getSpecies()!=null){
       this.speciesName = general.getSpecies().getSpeciesName();
     }
+  }
+
+  public GeneralDTO(Long totalGeneralCount, Integer totalAttackValue, Integer totalDefenseValue, Integer totalMovementSpeedValue, Integer totalMoraleBonusValue){
+    this.totalGeneralCount = totalGeneralCount;
+    this.totalAttackValue = totalAttackValue;
+    this.totalDefenseValue = totalDefenseValue;
+    this.totalMovementSpeedValue = totalMovementSpeedValue;
+    this.totalMoraleBonusValue = totalMoraleBonusValue;
   }
 }

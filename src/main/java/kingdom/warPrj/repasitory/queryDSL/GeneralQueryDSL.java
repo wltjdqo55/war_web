@@ -1,11 +1,10 @@
 package kingdom.warPrj.repasitory.queryDSL;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import kingdom.warPrj.entity.entity.General;
-import kingdom.warPrj.entity.entity.QGeneral;
-import kingdom.warPrj.entity.entity.QSkillEntity;
-import kingdom.warPrj.entity.entity.SkillEntity;
+import kingdom.warPrj.entity.dto.GeneralDTO;
+import kingdom.warPrj.entity.entity.*;
 import kingdom.warPrj.entity.vo.GeneralVO;
 import kingdom.warPrj.entity.vo.SkillVO;
 import lombok.RequiredArgsConstructor;
@@ -36,43 +35,20 @@ public class GeneralQueryDSL {
     return QGeneral.general.legions.any().id.eq(Long.valueOf(generalVO.getSearchOption())).and(QGeneral.general.generalName.contains(generalVO.getSearchKeyword()));
   }
 
-//  @Modifying
-//  public boolean skillEdit(SkillVO skillVO){
-//    long affectedRows = jpaQueryFactory.update(QSkillEntity.skillEntity)
-//        .set(QSkillEntity.skillEntity.strengthBonus, skillVO.getStrengthBonus())
-//        .set(QSkillEntity.skillEntity.spellBonus, skillVO.getSpellBonus())
-//        .where(QSkillEntity.skillEntity.id.eq(skillVO.getId()))
-//        .execute();
-//
-//    return affectedRows > 0;
-//  }
-//
-//  public List<SkillEntity> getSkillStateList() {
-//    return jpaQueryFactory
-//        .selectFrom(QSkillEntity.skillEntity)
-//        .where(
-//            skillStateCheck()
-//        )
-//        .fetch();
-//  }
-//
-//  public BooleanExpression skillStateCheck() {
-//    return QSkillEntity.skillEntity.skillState.isFalse();
-//  }
-//
-//  @Transactional
-//  public void updateSkillState(Long id) {
-//    jpaQueryFactory.update(QSkillEntity.skillEntity)
-//        .set(QSkillEntity.skillEntity.skillState, true)
-//        .where(QSkillEntity.skillEntity.id.eq(id))
-//        .execute();
-//  }
-//
-//  @Transactional
-//  public void initSkillState(Long id) {
-//    jpaQueryFactory.update(QSkillEntity.skillEntity)
-//        .set(QSkillEntity.skillEntity.skillState, false)
-//        .where(QSkillEntity.skillEntity.id.eq(id))
-//        .execute();
-//  }
+  public GeneralDTO getTotalGeneral() {
+    QGeneral general = QGeneral.general;
+    QLegion legion = QLegion.legion;
+
+    return jpaQueryFactory
+        .select(Projections.constructor(GeneralDTO.class,
+            general.count(), // 장군 수
+            general.attackBonus.sum(), // 총 공격력
+            general.defenseBonus.sum(), // 총 방어력
+            general.movementSpeed.sum(), // 총 방어력
+            general.moraleBonus.sum() // 총 방어력
+        ))
+        .from(general)
+        .join(general.legions, legion) // Many-to-Many 조인
+        .fetchOne();
+  }
 }

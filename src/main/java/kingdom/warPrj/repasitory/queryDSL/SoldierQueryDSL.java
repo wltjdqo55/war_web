@@ -1,12 +1,10 @@
 package kingdom.warPrj.repasitory.queryDSL;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kingdom.warPrj.entity.dto.SoldierDTO;
-import kingdom.warPrj.entity.entity.QSoldierEntity;
-import kingdom.warPrj.entity.entity.QStorageEntity;
-import kingdom.warPrj.entity.entity.SoldierEntity;
-import kingdom.warPrj.entity.entity.StorageEntity;
+import kingdom.warPrj.entity.entity.*;
 import kingdom.warPrj.entity.vo.SoldierVO;
 import kingdom.warPrj.entity.vo.StorageVO;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +57,37 @@ public class SoldierQueryDSL {
       else{
         return QSoldierEntity.soldierEntity.skill.id.eq(id);
       }
+  }
+
+  public SoldierDTO getTotalSoldier() {
+    return jpaQueryFactory
+        .select(Projections.constructor(SoldierDTO.class,
+            QSoldierEntity.soldierEntity.count(), // 총 용사 수
+            QSoldierEntity.soldierEntity.attack.sum()
+                .add(QSoldierEntity.soldierEntity.species.attackBonus.sum()),
+//                .add(QStorageEntity.storageEntity.attackBonus.sum()), // 총 공격력
+            QSoldierEntity.soldierEntity.defense.sum()
+                .add(QSoldierEntity.soldierEntity.species.defenseBonus.sum()),
+//                .add(QStorageEntity.storageEntity.defenseBonus.sum()), // 총 방어력
+            QSoldierEntity.soldierEntity.strength.sum()
+                .add(QSoldierEntity.soldierEntity.skill.strengthBonus.sum())
+                .add(QSoldierEntity.soldierEntity.species.strengthBonus.sum()), // 총 체력
+            QSoldierEntity.soldierEntity.spell.sum()
+                .add(QSoldierEntity.soldierEntity.skill.spellBonus.sum())
+                .add(QSoldierEntity.soldierEntity.species.spellBonus.sum()),
+//                .add(QStorageEntity.storageEntity.spellBonus.sum()), // 총 마력
+            QSoldierEntity.soldierEntity.force.sum()
+                .add(QSoldierEntity.soldierEntity.species.forceBonus.sum()),
+//                .add(QStorageEntity.storageEntity.forceBonus.sum()), // 총 힘
+            QSoldierEntity.soldierEntity.intelligence.sum()
+                .add(QSoldierEntity.soldierEntity.species.intelligenceBonus.sum())
+        ))
+        .from(QSoldierEntity.soldierEntity)
+        .leftJoin(QSoldierEntity.soldierEntity.skill, QSkillEntity.skillEntity) // 스킬 조인
+        .leftJoin(QSoldierEntity.soldierEntity.species, QSpeciesEntity.speciesEntity) // 종족 조인
+//        .innerJoin(QSoldierEntity.soldierEntity.items, QStorageEntity.storageEntity) // 아이템 조인
+//        .where(QStorageEntity.storageEntity.itemState.eq(true)) // 사용 중인 아이템만 필터링
+        .fetchOne();
   }
 
 }

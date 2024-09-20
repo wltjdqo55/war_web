@@ -1,7 +1,9 @@
 package kingdom.warPrj.repasitory.queryDSL;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import kingdom.warPrj.entity.dto.LegionDTO;
 import kingdom.warPrj.entity.entity.Legion;
 import kingdom.warPrj.entity.entity.QLegion;
 import kingdom.warPrj.entity.entity.QSkillEntity;
@@ -37,43 +39,17 @@ public class LegionQueryDSL {
     return QLegion.legion.generals.any().id.eq(Long.valueOf(legionVO.getSearchOption())).and(QLegion.legion.legionName.contains(legionVO.getSearchKeyword()));
   }
 
-//  @Modifying
-//  public boolean skillEdit(SkillVO skillVO){
-//    long affectedRows = jpaQueryFactory.update(QSkillEntity.skillEntity)
-//        .set(QSkillEntity.skillEntity.strengthBonus, skillVO.getStrengthBonus())
-//        .set(QSkillEntity.skillEntity.spellBonus, skillVO.getSpellBonus())
-//        .where(QSkillEntity.skillEntity.id.eq(skillVO.getId()))
-//        .execute();
-//
-//    return affectedRows > 0;
-//  }
-//
-//  public List<SkillEntity> getSkillStateList() {
-//    return jpaQueryFactory
-//        .selectFrom(QSkillEntity.skillEntity)
-//        .where(
-//            skillStateCheck()
-//        )
-//        .fetch();
-//  }
-//
-//  public BooleanExpression skillStateCheck() {
-//    return QSkillEntity.skillEntity.skillState.isFalse();
-//  }
-//
-//  @Transactional
-//  public void updateSkillState(Long id) {
-//    jpaQueryFactory.update(QSkillEntity.skillEntity)
-//        .set(QSkillEntity.skillEntity.skillState, true)
-//        .where(QSkillEntity.skillEntity.id.eq(id))
-//        .execute();
-//  }
-//
-//  @Transactional
-//  public void initSkillState(Long id) {
-//    jpaQueryFactory.update(QSkillEntity.skillEntity)
-//        .set(QSkillEntity.skillEntity.skillState, false)
-//        .where(QSkillEntity.skillEntity.id.eq(id))
-//        .execute();
-//  }
+  public LegionDTO getTotalLegion() {
+    return jpaQueryFactory
+        .select(Projections.constructor(LegionDTO.class,
+            QLegion.legion.troopCount.sum(),
+            QLegion.legion.count(),
+            QLegion.legion.totalAttack.sum(),
+            QLegion.legion.totalDefense.sum(),
+            QLegion.legion.movementSpeed.sum(),
+            QLegion.legion.morale.sum()
+        ))
+        .from(QLegion.legion)
+        .fetchOne();
+  }
 }

@@ -48,24 +48,27 @@ public class SoldierDTO {
 
   //스킬보정
   private int skillStrength;
-
   private int skillSpell;
 
   //종족보정
   private int speciesAttack;
-
   private int speciesDefense;
-
   private int speciesStrength;
-
   private int speciesSpell;
-
   private int speciesForce;
-
   private int speciesIntelligence;
 
   //아이템보정
   private List<StorageDTO> items = new ArrayList<>();
+
+  //용사통계
+  private Long soldierCount;
+  private Integer totalAttack;
+  private Integer totalDefense;
+  private Integer totalStrength;
+  private Integer totalSpell;
+  private Integer totalForce;
+  private Integer totalIntelligence;
 
   public SoldierDTO(SoldierEntity soldierEntity) {
     this.id = soldierEntity.getId();
@@ -100,4 +103,16 @@ public class SoldierDTO {
       this.items.add(new StorageDTO(storageEntity, null));  // 재귀함수 호출로 인해 생성자 따로 생성
     }
   }
+
+  public SoldierDTO(Long soldierCount, Integer totalAttack, Integer totalDefense, Integer totalStrength,
+                    Integer totalSpell, Integer totalForce, Integer totalIntelligence) {
+    this.soldierCount = soldierCount;
+    this.totalAttack = totalAttack;
+    this.totalDefense = totalDefense;
+    this.totalStrength = totalStrength;
+    this.totalSpell = totalSpell;
+    this.totalForce = totalForce;
+    this.totalIntelligence = totalIntelligence;
+  }
+
 }
