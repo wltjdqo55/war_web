@@ -69,7 +69,12 @@ public class SoldierEntity {
     this.soldierState = false;
     this.strength = soldierVO.getStrength();
     this.spell = soldierVO.getSpell();
-    this.skill = new SkillEntity(skillId);        // 스킬 정보
+    if(skillId!=0) {
+      this.skill = new SkillEntity(skillId);        // 스킬 정보
+    }
+    else{
+      this.skill = null;
+    }
     this.species = new SpeciesEntity(speciesId);  // 종족 정보
   }
 
@@ -88,7 +93,12 @@ public class SoldierEntity {
     this.spell = soldierVO.getSpell();
     this.force = soldierVO.getForce();
     this.intelligence = soldierVO.getIntelligence();
-    this.skill = new SkillEntity(soldierVO.getSkillId());           //스킬 수정
+    if(soldierVO.getSkillId()!=0){
+      this.skill = new SkillEntity(soldierVO.getSkillId());           //스킬 수정
+    }
+    else{
+      this.skill = null;
+    }
     this.species = new SpeciesEntity(soldierVO.getSpeciesId());     //종족 수정
 
   }

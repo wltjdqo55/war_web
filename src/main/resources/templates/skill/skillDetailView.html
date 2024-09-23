@@ -42,7 +42,8 @@
             <div class="form-group">
                 <div class="info-container">
                     <span class="form-label">사용중인 용사</span>
-                    <span id="activeHero" class="form-second">{{soldierInfo.soldierName}}</span>
+                    <span id="activeHero" class="form-second" v-if="soldierInfo">{{soldierInfo.soldierName}}</span>
+                    <span class="form-second" v-else>없음</span>
                 </div>
             </div>
             <div class="button-group">
@@ -95,7 +96,6 @@
                 axios.get('/skill/getSkillInfo/' + vm.id)
                     .then(res => {
                         vm.skillInfo = res.data;
-
                       })
                       .catch(error => {
                         console.error('Error fetching data:', error);
@@ -114,6 +114,7 @@
                 axios.get('/soldier/getActiveSoldier/' + vm.id)
                     .then(res => {
                         vm.soldierInfo = res.data;
+                        console.log(vm.soldierInfo);
                       })
                       .catch(error => {
                         console.error('Error fetching data:', error);

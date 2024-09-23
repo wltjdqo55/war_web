@@ -248,6 +248,10 @@
                 axios.get('/soldier/getSoldierInfo/' + vm.id)
                     .then(res => {
                         vm.soldierInfo = res.data;
+                        console.log(vm.soldierInfo);
+                        if(vm.soldierInfo.skillName == "" || vm.soldierInfo.skillName == null){
+                            vm.soldierInfo.skillName = "없음";
+                        }
                         vm.soldierInfo.beforeSkillId = res.data.skillId;
                         vm.selectedItems = res.data.items.map(item => ({
                             itemName: item.itemName,
@@ -347,7 +351,12 @@
                     vm.soldierInfo.beforeItemIds = vm.beforeItemIds;
 
                     if(vm.soldierInfo.skillId == "교체할 스킬 선택"){
-                        vm.soldierInfo.skillId = vm.soldierInfo.beforeSkillId;
+                        if(vm.soldierInfo.beforeSkillId == 0){
+                            vm.soldierInfo.skillId = 0;
+                        }
+                        else{
+                            vm.soldierInfo.skillId = vm.soldierInfo.beforeSkillId;
+                        }
                     }
 
                     let formData = new FormData();
