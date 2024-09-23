@@ -50,7 +50,12 @@ public class General {
     this.defenseBonus = generalVO.getDefenseBonus();
     this.movementSpeed = generalVO.getMovementSpeed();
     this.moraleBonus = generalVO.getMoraleBonus();
-    this.species = new SpeciesEntity(generalVO.getSpeciesId());
+    if(generalVO.getSpeciesId()!=0){
+      this.species = new SpeciesEntity(generalVO.getSpeciesId());
+    }
+    else{
+      this.species = null;
+    }
   }
 
   public General(long id){
@@ -63,6 +68,11 @@ public class General {
     this.defenseBonus = generalVO.getDefenseBonus();
     this.movementSpeed = generalVO.getMovementSpeed();
     this.moraleBonus = generalVO.getMoraleBonus();
-    this.species = new SpeciesEntity(generalVO.getSpeciesId());
+    if(generalVO.getSpeciesId()!=0){
+      this.species = new SpeciesEntity(generalVO.getSpeciesId());
+    }
+    else{
+      this.species = null;
+    }
   }
 }

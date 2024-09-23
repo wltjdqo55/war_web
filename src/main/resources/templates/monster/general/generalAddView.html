@@ -254,6 +254,10 @@
                         vm.generalInfo.selectedLegionIds[i] = vm.selectedLegions[i].id;
                     }
 
+                    if(vm.generalInfo.speciesId == "선택"){
+                        vm.generalInfo.speciesId = 0;
+                    }
+
                     let formData = new FormData();
                     Object.keys(vm.generalInfo).forEach((key) => {
                         if(vm.generalInfo[key]==null){

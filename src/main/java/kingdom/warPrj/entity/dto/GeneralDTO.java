@@ -53,8 +53,11 @@ public class GeneralDTO {
     this.defenseBonus = general.getDefenseBonus();
     this.movementSpeed = general.getMovementSpeed();
     this.moraleBonus = general.getMoraleBonus();
-    this.speciesName = general.getSpecies().getSpeciesName();
-    this.speciesId = general.getSpecies().getSpeciesId();
+
+    if(general.getSpecies() != null) {
+      this.speciesName = general.getSpecies().getSpeciesName();
+      this.speciesId = general.getSpecies().getSpeciesId();
+    }
 
     for(Legion legion : general.getLegions()){
       this.legions.add(new LegionDTO(legion, null));

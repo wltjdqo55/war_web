@@ -180,6 +180,10 @@
                 axios.get('/general/getGeneralInfo/' + vm.id)
                     .then(res => {
                         vm.generalInfo = res.data;
+                        console.log(vm.generalInfo);
+                        if(vm.generalInfo.speciesId == 0){
+                            vm.generalInfo.speciesId = "선택";
+                        }
                         vm.beforeLegionIds = res.data.legions.map(legion => legion.id);
                         vm.selectedLegions = res.data.legions.map(legion => ({
                             id : legion.id,

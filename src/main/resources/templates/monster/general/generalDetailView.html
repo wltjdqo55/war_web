@@ -24,7 +24,8 @@
             <div class="form-group">
                 <div class="info-container">
                     <span class="form-label">마물군단</span>
-                    <span id="legions" class="form-second" v-html="viewLegions()"></span>
+                    <span id="legions" class="form-second" v-html="viewLegions()" v-if="generalInfo.legions.length > 0"></span>
+                    <span class="form-second" v-else>없음</span>
                 </div>
             </div>
             <div class="form-group">
@@ -60,7 +61,8 @@
             <div class="form-group">
                 <div class="info-container">
                     <span class="form-label">천적 종족</span>
-                    <span id="speciesName" class="form-second">{{generalInfo.speciesName}}</span>
+                    <span id="speciesName" class="form-second" v-if="generalInfo.speciesId!=0">{{generalInfo.speciesName}}</span>
+                    <span class="form-second" v-else>없음</span>
                 </div>
             </div>
 

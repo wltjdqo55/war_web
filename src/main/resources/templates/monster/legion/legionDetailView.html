@@ -24,7 +24,8 @@
             <div class="form-group">
                 <div class="info-container">
                     <span class="form-label">마물장군</span>
-                    <span id="generals" class="form-second" v-html="viewGenerals()"></span>
+                    <span id="generals" class="form-second" v-html="viewGenerals()" v-if="legionInfo.generals.length > 0"></span>
+                    <span class="form-second" v-else>없음</span>
                 </div>
             </div>
             <div class="form-group">
