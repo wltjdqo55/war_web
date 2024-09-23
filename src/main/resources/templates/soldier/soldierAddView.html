@@ -313,6 +313,9 @@
                 if(!vm.soldierIdCheck(vm.soldierInfo.soldierId) && !vm.soldierPasswordCheck(vm.soldierInfo.soldierPassword) && !vm.soldierNameCheck(vm.soldierInfo.soldierName) && !vm.soldierAgeCheck(vm.soldierInfo.soldierAge) && !vm.soldierBirthPlaceCheck(vm.soldierInfo.soldierBirthPlace) && !vm.speciesCheck(vm.soldierInfo.speciesId)){
                     return false;
                 }
+                else if(!vm.speciesCheck(vm.soldierInfo.speciesId)){
+                    return false;
+                }
                 else {
                     if(vm.soldierInfo.soldierAge != 0){
                         vm.soldierInfo.soldierAge = vm.trimNumber(vm.soldierInfo.soldierAge);
@@ -342,6 +345,10 @@
                         vm.soldierInfo.selectedItemId[i] = vm.selectedItems[i].storageId;
                     }
 
+                    if(vm.soldierInfo.skillId === "선택") {
+                        vm.soldierInfo.skillId = 0;
+                    }
+
                     let formData = new FormData();
                     Object.keys(vm.soldierInfo).forEach((key) => {
                         if(vm.soldierInfo[key]==null){
@@ -369,6 +376,14 @@
             cancelButton : function () {
                 let vm = this;
                 location.href = "/account/adminMain/soldier";
+            },
+            speciesCheck : function (keyword) {
+                let vm = this;
+                if(keyword == "선택"){
+                    alert("종족을 선택해주세요.(필수)")
+                    return false;
+                }
+                return true;
             },
             soldierIdCheck : function (keyword) {
                 let vm = this;

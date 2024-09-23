@@ -84,14 +84,16 @@ public class SoldierDTO {
     this.soldierState = soldierEntity.isSoldierState() ? "사망" : "생존";
     this.strength = soldierEntity.getStrength();
     this.spell = soldierEntity.getSpell();
+
     if(soldierEntity.getSkill()!=null){
       this.skillId = soldierEntity.getSkill().getId();  // 스킬 아이디
+      this.skillName = soldierEntity.getSkill().getSkillName();
+      this.skillStrength = soldierEntity.getSkill().getStrengthBonus();
+      this.skillSpell = soldierEntity.getSkill().getSpellBonus();
     }
+
     this.speciesId = soldierEntity.getSpecies().getSpeciesId(); // 종족 아이디
     this.speciesName = soldierEntity.getSpecies().getSpeciesName();
-    this.skillName = soldierEntity.getSkill().getSkillName();
-    this.skillStrength = soldierEntity.getSkill().getStrengthBonus();
-    this.skillSpell = soldierEntity.getSkill().getSpellBonus();
     this.speciesAttack = soldierEntity.getSpecies().getAttackBonus();
     this.speciesDefense = soldierEntity.getSpecies().getDefenseBonus();
     this.speciesSpell = soldierEntity.getSpecies().getSpellBonus();

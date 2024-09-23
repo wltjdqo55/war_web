@@ -55,13 +55,15 @@
             <div class="form-group">
                 <div class="info-container">
                     <span class="form-label">스킬</span>
-                    <span id="skill" class="form-second">{{soldierInfo.skillName}}</span>
+                    <span id="skill" class="form-second" v-if="soldierInfo.skillId!=0">{{soldierInfo.skillName}}</span>
+                    <span class="form-second" v-else>없음</span>
                 </div>
             </div>
             <div class="form-group">
                 <div class="info-container">
                     <span class="form-label">아이템</span>
-                    <span id="item" class="form-second" v-html="viewSelectedItems()"></span>
+                    <span id="item" class="form-second" v-html="viewSelectedItems()" v-if="soldierInfo.items.length>0"></span>
+                    <span class="form-second" v-else>없음</span>
                 </div>
             </div>
 
