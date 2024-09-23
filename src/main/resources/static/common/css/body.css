@@ -36,3 +36,5 @@ a:hover {
 .dp-none {
     display : none;
 }
+
+[v-cloak] {display:none;}
