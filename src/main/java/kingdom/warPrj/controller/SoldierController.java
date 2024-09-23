@@ -76,7 +76,6 @@ public class SoldierController {
   @PostMapping("/soldier/soldierEditOK")
   @ResponseBody
   public boolean soldierEdit(SoldierVO soldierVO) {
-    System.out.println(soldierVO);
     return soldierService.soldierEdit(soldierVO);
   }
 

@@ -57,7 +57,6 @@ public class SpeciesService {
   }
 
   public List<SpeciesDTO> getTotalSpecies() {
-    System.out.println(speciesQueryDSL.getTotalSpecies());
     return speciesQueryDSL.getTotalSpecies();
   }
 }

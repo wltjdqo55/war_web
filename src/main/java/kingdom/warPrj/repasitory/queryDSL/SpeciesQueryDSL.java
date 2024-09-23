@@ -20,33 +20,35 @@ public class SpeciesQueryDSL {
 
   private final JPAQueryFactory jpaQueryFactory;
 
+  QSpeciesEntity species = QSpeciesEntity.speciesEntity;
+  QSoldierEntity soldier = QSoldierEntity.soldierEntity;
+
   public List<SpeciesEntity> getSearchSpecies(SpeciesVO speciesVO){
     return jpaQueryFactory
-        .selectFrom(QSpeciesEntity.speciesEntity)
+        .selectFrom(species)
         .where(
-            QSpeciesEntity.speciesEntity.speciesName.contains(speciesVO.getSearchKeyword())
+            species.speciesName.contains(speciesVO.getSearchKeyword())
         )
         .fetch();
   }
 
   @Modifying
   public boolean speciesEdit(SpeciesVO speciesVO){
-    long affectedRows = jpaQueryFactory.update(QSpeciesEntity.speciesEntity)
-        .set(QSpeciesEntity.speciesEntity.attackBonus, speciesVO.getAttackBonus())
-        .set(QSpeciesEntity.speciesEntity.defenseBonus, speciesVO.getDefenseBonus())
-        .set(QSpeciesEntity.speciesEntity.strengthBonus, speciesVO.getStrengthBonus())
-        .set(QSpeciesEntity.speciesEntity.spellBonus, speciesVO.getSpellBonus())
-        .set(QSpeciesEntity.speciesEntity.forceBonus, speciesVO.getForceBonus())
-        .set(QSpeciesEntity.speciesEntity.intelligenceBonus, speciesVO.getIntelligenceBonus())
-        .where(QSpeciesEntity.speciesEntity.speciesId.eq(speciesVO.getSpeciesId()))
+    long affectedRows = jpaQueryFactory.update(species)
+        .set(species.attackBonus, speciesVO.getAttackBonus())
+        .set(species.defenseBonus, speciesVO.getDefenseBonus())
+        .set(species.strengthBonus, speciesVO.getStrengthBonus())
+        .set(species.spellBonus, speciesVO.getSpellBonus())
+        .set(species.forceBonus, speciesVO.getForceBonus())
+        .set(species.intelligenceBonus, speciesVO.getIntelligenceBonus())
+        .where(species.speciesId.eq(speciesVO.getSpeciesId()))
         .execute();
 
     return affectedRows > 0;
   }
 
   public List<SpeciesDTO> getTotalSpecies() {
-    QSpeciesEntity species = QSpeciesEntity.speciesEntity;
-    QSoldierEntity soldier = QSoldierEntity.soldierEntity;
+
 
     return jpaQueryFactory
         .select(Projections.constructor(SpeciesDTO.class,
@@ -63,6 +65,7 @@ public class SpeciesQueryDSL {
         .from(species)
         .leftJoin(species.soldier, soldier) // 종족과 용사 조인
         .groupBy(species.speciesId, species.speciesName, species.attackBonus, species.defenseBonus, species.strengthBonus, species.spellBonus, species.forceBonus, species.intelligenceBonus) // 종족별로 그룹화
+        .orderBy(soldier.count().desc())
         .fetch();
   }
 }

@@ -254,7 +254,6 @@
                 let vm = this;
                 axios.get('/storage/getItemStateList/' + 0)
                     .then(res => {
-                        console.log(res);
                         vm.itemInfo = res.data;
                     })
                     .catch(error => {
@@ -342,8 +341,6 @@
                     for(let i = 0 ; i < vm.selectedItems.length ; i++){
                         vm.soldierInfo.selectedItemId[i] = vm.selectedItems[i].storageId;
                     }
-
-                    console.log(vm.soldierInfo);
 
                     let formData = new FormData();
                     Object.keys(vm.soldierInfo).forEach((key) => {
