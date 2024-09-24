@@ -91,8 +91,41 @@
             <p id="result-text">선택한 결과가 여기에 표시됩니다.</p>
         </div>
 
+        <div class="battle-result" v-if="!isResultState">
+            <h2>전투 결과</h2>
+            <table style="width:50%; margin:0 auto;">
+                <thead>
+                <tr>
+                    <th style="width:40%;">항목</th>
+                    <th style="width:30%;">용사</th>
+                    <th style="width:30%;">마물군단</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>최종 공격력</td>
+                    <td>{{ soldierTotalFinalAttack }}</td>
+                    <td>{{ legionTotalFinalAttack }}</td>
+                </tr>
+                <tr>
+                    <td>최종 방어력</td>
+                    <td>{{ soldierTotalFinalDefense }}</td>
+                    <td>{{ legionTotalFinalDefense }}</td>
+                </tr>
+                <tr>
+                    <td>전투 승리 여부</td>
+                    <td colspan="2">{{ totalResult }}</td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td colspan="2">{{ totalResultContent }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         <!-- 스탯 상승 결과 및 아이템/스킬 정보 표시 -->
-        <div class="stat-increase" v-else>
+        <div class="stat-increase" v-if="!isResultState">
             <h2>스탯 보정 결과</h2>
 
             <div class="hero-stats">
@@ -163,7 +196,7 @@
                             </ul>
                             <ul v-else>
                                 <li v-for="(general, idx) in selectedLegionInfo.generals" :key="idx">
-                                    {{ general.generalName }} (공격력: {{ general.attackBonus }}, 방어력: {{ general.defenseBonus }})
+                                    {{ general.generalName }} (공격력: {{ general.attackBonus }}, 방어력: {{ general.defenseBonus }}, 천적종족: {{ general.speciesName }})
                                 </li>
                             </ul>
                         </td>
@@ -195,7 +228,13 @@
             selectedLegion : [],        // 선택한 마물군단 값
             selectedSoldierInfo : [],   // 최종 용사 정보 담는 배열
             selectedLegionInfo : [],    // 최종 마물군단 정보 담는 배열
-            isResultState : true
+            isResultState : true,
+            soldierTotalFinalAttack : 0,
+            soldierTotalFinalDefense : 0,
+            legionTotalFinalAttack : 0,
+            legionTotalFinalDefense : 0,
+            totalResult : "",
+            totalResultContent : ""
         },
         methods: {
             getSoldierList : function () {
@@ -228,6 +267,7 @@
                     alert("마물군단을 선택해주세요.");
                     return false;
                 }
+                vm.resetTotalValue();                           // TOTAL VALUE 초기화
 
                 console.log(vm.selectedSoldiers);
                 console.log(vm.selectedLegion);
@@ -235,23 +275,43 @@
                 vm.selectedSoldierInfo = vm.selectedSoldiers;   // 선택된 용사 정보 담기
                 vm.selectedLegionInfo = vm.selectedLegion;      // 선택된 마물 정보 담기
 
-                vm.totalSoldierValue();         // 용사 최종 스탯
-                vm.totalLegionValue();          // 마물군단 최종 스탯
+                vm.totalSoldierValue();         // 용사 최종 합산
+                vm.totalLegionValue();          // 마물군단 최종 합산
 
-
+                if(vm.soldierTotalFinalAttack > vm.legionTotalFinalDefense) {                   // 용사의 공격력 > 마물군단의 방어력
+                    vm.totalResult = "용사의 승리입니다.";
+                    vm.totalResultContent = "용사의 총 공격력이 마물군단의 총 방어력보다 높습니다.";
+                }
+                else if(vm.legionTotalFinalAttack > vm.soldierTotalFinalDefense) {              // 마물군단의 공격력 > 용사의 방어력
+                    vm.totalResult = "마물군단의 승리입니다.";
+                    vm.totalResultContent = "마물군단의 총 공격력이 용사의 총 방어력보다 높습니다.";
+                }
+                else if(vm.soldierTotalFinalAttack < vm.legionTotalFinalDefense && vm.legionTotalFinalAttack < vm.soldierTotalFinalDefense) {       // 양쪽 모두의 공격력 < 양쪽 모두의 방어력
+                    vm.totalResult = "무승부입니다.";
+                    vm.totalResultContent = "양쪽 모두의 공격력이 상대의 방어력보다 낮습니다..";
+                }
+                else if(vm.soldierTotalFinalAttack > vm.legionTotalFinalDefense && vm.legionTotalFinalAttack > vm.soldierTotalFinalDefense) {       // 양쪽 모두의 공격력 > 양쪽 모두의 방어력
+                    vm.totalResult = "양쪽 모두 전멸했습니다..";
+                    vm.totalResultContent = "양쪽 모두의 공격력이 상대의 방어력보다 높습니다.";
+                }
 
                 vm.isResultState = false;
             },
             totalSoldierValue : function () {
                 let vm = this;
                 for(let i = 0 ; i < vm.selectedSoldierInfo.length ; i++) {
-                    vm.selectedSoldierInfo[i].totalAttack = vm.selectedSoldierInfo[i].attack + vm.selectedSoldierInfo[i].speciesAttack;
-                    vm.selectedSoldierInfo[i].totalDefense = vm.selectedSoldierInfo[i].defense + vm.selectedSoldierInfo[i].speciesDefense;
+                    vm.selectedSoldierInfo[i].totalAttack = vm.naturalEnemyCheck(vm.selectedSoldierInfo[i].attack, vm.selectedSoldierInfo[i].speciesName) + vm.selectedSoldierInfo[i].speciesAttack;
+                    vm.selectedSoldierInfo[i].totalDefense = vm.naturalEnemyCheck(vm.selectedSoldierInfo[i].defense, vm.selectedSoldierInfo[i].speciesName) + vm.selectedSoldierInfo[i].speciesDefense;
 
                     for(let j = 0 ; j < vm.selectedSoldierInfo[i].items.length ; j++) {
                         vm.selectedSoldierInfo[i].totalAttack += vm.selectedSoldierInfo[i].items[j].attackBonus;
                         vm.selectedSoldierInfo[i].totalDefense += vm.selectedSoldierInfo[i].items[j].defenseBonus;
                     }
+                }
+
+                for(let i = 0 ; i < vm.selectedSoldierInfo.length ; i++){
+                    vm.soldierTotalFinalAttack += vm.selectedSoldierInfo[i].totalAttack;            // 용사 공격력 합산
+                    vm.soldierTotalFinalDefense += vm.selectedSoldierInfo[i].totalDefense;          // 용사 방어력 합산
                 }
             },
             totalLegionValue : function () {
@@ -263,6 +323,18 @@
                     vm.selectedLegionInfo.totalAttackValue += vm.selectedLegionInfo.generals[i].attackBonus;
                     vm.selectedLegionInfo.totalDefenseValue += vm.selectedLegionInfo.generals[i].defenseBonus;
                 }
+
+                vm.legionTotalFinalAttack += vm.selectedLegionInfo.totalAttackValue;                // 마물군단 공격력 합산
+                vm.legionTotalFinalDefense += vm.selectedLegionInfo.totalDefenseValue;              // 마물군단 방어력 합산
+            },
+            naturalEnemyCheck : function (value, speciesName) {                                     // 천적 여부 체크
+                let vm = this;
+                for(let i = 0 ; i < vm.selectedLegionInfo.generals.length ; i++){
+                    if(vm.selectedLegionInfo.generals[i].speciesName == speciesName){
+                        return value*2;
+                    }
+                }
+                return value;
             },
             cancelButton : function () {
                 let vm = this;
@@ -271,6 +343,15 @@
                 vm.selectedSoldierInfo = [];
                 vm.selectedLegionInfo = [];
                 vm.isResultState = true;
+            },
+            resetTotalValue : function () {
+                let vm = this;
+                vm.soldierTotalFinalAttack = 0;
+                vm.soldierTotalFinalDefense = 0;
+                vm.legionTotalFinalAttack = 0;
+                vm.legionTotalFinalDefense = 0;
+                vm.totalResult = "";
+                vm.totalResultContent = "";
             }
         },
         filters: {},

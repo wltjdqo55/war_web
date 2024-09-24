@@ -83,8 +83,6 @@ public class SoldierQueryDSL {
                 .add(QSoldierEntity.soldierEntity.species.intelligenceBonus.sum())
         ))
         .from(QSoldierEntity.soldierEntity)
-        .leftJoin(QSoldierEntity.soldierEntity.skill, QSkillEntity.skillEntity) // 스킬 조인
-        .leftJoin(QSoldierEntity.soldierEntity.species, QSpeciesEntity.speciesEntity) // 종족 조인
 //        .innerJoin(QSoldierEntity.soldierEntity.items, QStorageEntity.storageEntity) // 아이템 조인
 //        .where(QStorageEntity.storageEntity.itemState.eq(true)) // 사용 중인 아이템만 필터링
         .fetchOne();
