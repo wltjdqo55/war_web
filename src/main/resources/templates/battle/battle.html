@@ -279,21 +279,21 @@
                 vm.totalSoldierValue();         // 용사 최종 합산
                 vm.totalLegionValue();          // 마물군단 최종 합산
 
-                if(vm.soldierTotalFinalAttack > vm.legionTotalFinalDefense) {                   // 용사의 공격력 > 마물군단의 방어력
+                if(vm.soldierTotalFinalAttack < vm.legionTotalFinalDefense && vm.legionTotalFinalAttack < vm.soldierTotalFinalDefense) {       // 양쪽 모두의 공격력 < 양쪽 모두의 방어력
+                    vm.totalResult = "무승부입니다.";
+                    vm.totalResultContent = "양쪽 모두의 공격력이 상대의 방어력보다 낮습니다.";
+                }
+                else if(vm.soldierTotalFinalAttack > vm.legionTotalFinalDefense && vm.legionTotalFinalAttack > vm.soldierTotalFinalDefense) {       // 양쪽 모두의 공격력 > 양쪽 모두의 방어력
+                    vm.totalResult = "양쪽 모두 전멸했습니다.";
+                    vm.totalResultContent = "양쪽 모두의 공격력이 상대의 방어력보다 높습니다.";
+                }
+                else if(vm.soldierTotalFinalAttack > vm.legionTotalFinalDefense) {                   // 용사의 공격력 > 마물군단의 방어력
                     vm.totalResult = "용사의 승리입니다.";
                     vm.totalResultContent = "용사의 총 공격력이 마물군단의 총 방어력보다 높습니다.";
                 }
                 else if(vm.legionTotalFinalAttack > vm.soldierTotalFinalDefense) {              // 마물군단의 공격력 > 용사의 방어력
                     vm.totalResult = "마물군단의 승리입니다.";
                     vm.totalResultContent = "마물군단의 총 공격력이 용사의 총 방어력보다 높습니다.";
-                }
-                else if(vm.soldierTotalFinalAttack < vm.legionTotalFinalDefense && vm.legionTotalFinalAttack < vm.soldierTotalFinalDefense) {       // 양쪽 모두의 공격력 < 양쪽 모두의 방어력
-                    vm.totalResult = "무승부입니다.";
-                    vm.totalResultContent = "양쪽 모두의 공격력이 상대의 방어력보다 낮습니다.";
-                }
-                else if(vm.soldierTotalFinalAttack > vm.legionTotalFinalDefense && vm.legionTotalFinalAttack > vm.soldierTotalFinalDefense) {       // 양쪽 모두의 공격력 > 양쪽 모두의 방어력
-                    vm.totalResult = "양쪽 모두 전멸했습니다..";
-                    vm.totalResultContent = "양쪽 모두의 공격력이 상대의 방어력보다 높습니다.";
                 }
 
                 vm.isResultState = false;
