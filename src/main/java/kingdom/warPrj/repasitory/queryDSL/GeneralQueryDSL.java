@@ -8,6 +8,7 @@ import kingdom.warPrj.entity.entity.*;
 import kingdom.warPrj.entity.vo.GeneralVO;
 import kingdom.warPrj.entity.vo.SkillVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,6 +34,16 @@ public class GeneralQueryDSL {
       return QGeneral.general.generalName.contains(generalVO.getSearchKeyword());
     }
     return QGeneral.general.legions.any().id.eq(Long.valueOf(generalVO.getSearchOption())).and(QGeneral.general.generalName.contains(generalVO.getSearchKeyword()));
+  }
+
+  @Modifying
+  public void initSpeciesId(long id) {
+    jpaQueryFactory.update(QGeneral.general)
+        .set(QGeneral.general.species.speciesId, (Long) null)
+        .where(
+            QGeneral.general.species.speciesId.eq(id)
+        )
+        .execute();
   }
 
   public GeneralDTO getTotalGeneral() {
