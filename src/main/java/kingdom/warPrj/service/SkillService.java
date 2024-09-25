@@ -7,6 +7,7 @@ import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.repasitory.jpa.SkillRepository;
 import kingdom.warPrj.repasitory.queryDSL.SkillQueryDSL;
+import kingdom.warPrj.repasitory.queryDSL.SoldierQueryDSL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ public class SkillService {
 
   private final SkillRepository skillRepository;
   private final SkillQueryDSL skillQueryDSL;
+  private final SoldierQueryDSL soldierQueryDSL;
 
   @Transactional
   public SkillDTO skillAdd(SkillVO skillVO){
@@ -52,7 +54,9 @@ public class SkillService {
     return skillQueryDSL.skillEdit(skillVO);
   }
 
+  @Transactional
   public void skillDelete(long id){
+     soldierQueryDSL.initSkillId(id);
      skillRepository.deleteById(id);
   }
 

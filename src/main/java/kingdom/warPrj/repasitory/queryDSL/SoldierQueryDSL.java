@@ -1,5 +1,6 @@
 package kingdom.warPrj.repasitory.queryDSL;
 
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -59,6 +60,26 @@ public class SoldierQueryDSL {
       }
   }
 
+  @Modifying
+  public void initSkillId(long id) {
+    jpaQueryFactory.update(QSoldierEntity.soldierEntity)
+        .set(QSoldierEntity.soldierEntity.skill.id, (Long) null)
+        .where(
+            QSoldierEntity.soldierEntity.skill.id.eq(id)
+        )
+         .execute();
+  }
+
+  @Modifying
+  public void initSpeciesId(long id) {
+    jpaQueryFactory.update(QSoldierEntity.soldierEntity)
+        .set(QSoldierEntity.soldierEntity.species.speciesId, (Long) null)
+        .where(
+            QSoldierEntity.soldierEntity.species.speciesId.eq(id)
+        )
+        .execute();
+  }
+
   public SoldierDTO getTotalSoldier() {
     return jpaQueryFactory
         .select(Projections.constructor(SoldierDTO.class,
@@ -83,6 +104,8 @@ public class SoldierQueryDSL {
                 .add(QSoldierEntity.soldierEntity.species.intelligenceBonus.sum())
         ))
         .from(QSoldierEntity.soldierEntity)
+        .leftJoin(QSoldierEntity.soldierEntity.skill, QSkillEntity.skillEntity) // 스킬 조인
+        .leftJoin(QSoldierEntity.soldierEntity.species, QSpeciesEntity.speciesEntity) // 종족 조인
 //        .innerJoin(QSoldierEntity.soldierEntity.items, QStorageEntity.storageEntity) // 아이템 조인
 //        .where(QStorageEntity.storageEntity.itemState.eq(true)) // 사용 중인 아이템만 필터링
         .fetchOne();

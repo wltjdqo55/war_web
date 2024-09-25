@@ -37,7 +37,10 @@
                     <tr v-for="(item, index) in soldierInfo">
                         <td><input type="checkbox" :value="item" v-model="selectedSoldiers"></td>
                         <td>{{item.soldierName}}</td>
-                        <td>{{item.speciesName}}</td>
+                        <td>
+                            <span v-if="item.speciesId!=0">{{item.speciesName}}</span>
+                            <span v-else>없음</span>
+                        </td>
                         <td>{{item.attack}}</td>
                         <td>{{item.defense}}</td>
                         <td>{{item.strength}}</td>
@@ -269,9 +272,6 @@
                 }
                 vm.resetTotalValue();                           // TOTAL VALUE 초기화
 
-                console.log(vm.selectedSoldiers);
-                console.log(vm.selectedLegion);
-
                 vm.selectedSoldierInfo = vm.selectedSoldiers;   // 선택된 용사 정보 담기
                 vm.selectedLegionInfo = vm.selectedLegion;      // 선택된 마물 정보 담기
 
@@ -288,7 +288,7 @@
                 }
                 else if(vm.soldierTotalFinalAttack < vm.legionTotalFinalDefense && vm.legionTotalFinalAttack < vm.soldierTotalFinalDefense) {       // 양쪽 모두의 공격력 < 양쪽 모두의 방어력
                     vm.totalResult = "무승부입니다.";
-                    vm.totalResultContent = "양쪽 모두의 공격력이 상대의 방어력보다 낮습니다..";
+                    vm.totalResultContent = "양쪽 모두의 공격력이 상대의 방어력보다 낮습니다.";
                 }
                 else if(vm.soldierTotalFinalAttack > vm.legionTotalFinalDefense && vm.legionTotalFinalAttack > vm.soldierTotalFinalDefense) {       // 양쪽 모두의 공격력 > 양쪽 모두의 방어력
                     vm.totalResult = "양쪽 모두 전멸했습니다..";

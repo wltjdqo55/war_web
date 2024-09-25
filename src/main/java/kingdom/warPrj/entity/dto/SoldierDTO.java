@@ -91,15 +91,16 @@ public class SoldierDTO {
       this.skillStrength = soldierEntity.getSkill().getStrengthBonus();
       this.skillSpell = soldierEntity.getSkill().getSpellBonus();
     }
-
-    this.speciesId = soldierEntity.getSpecies().getSpeciesId(); // 종족 아이디
-    this.speciesName = soldierEntity.getSpecies().getSpeciesName();
-    this.speciesAttack = soldierEntity.getSpecies().getAttackBonus();
-    this.speciesDefense = soldierEntity.getSpecies().getDefenseBonus();
-    this.speciesSpell = soldierEntity.getSpecies().getSpellBonus();
-    this.speciesForce = soldierEntity.getSpecies().getForceBonus();
-    this.speciesIntelligence = soldierEntity.getSpecies().getIntelligenceBonus();
-    this.speciesStrength = soldierEntity.getSpecies().getStrengthBonus();
+    if(soldierEntity.getSpecies()!=null){
+      this.speciesId = soldierEntity.getSpecies().getSpeciesId(); // 종족 아이디
+      this.speciesName = soldierEntity.getSpecies().getSpeciesName();
+      this.speciesAttack = soldierEntity.getSpecies().getAttackBonus();
+      this.speciesDefense = soldierEntity.getSpecies().getDefenseBonus();
+      this.speciesSpell = soldierEntity.getSpecies().getSpellBonus();
+      this.speciesForce = soldierEntity.getSpecies().getForceBonus();
+      this.speciesIntelligence = soldierEntity.getSpecies().getIntelligenceBonus();
+      this.speciesStrength = soldierEntity.getSpecies().getStrengthBonus();
+    }
 
     for (StorageEntity storageEntity : soldierEntity.getItems()) {
       this.items.add(new StorageDTO(storageEntity, null));  // 재귀함수 호출로 인해 생성자 따로 생성
