@@ -111,7 +111,6 @@
                 axios.get('/storage/getItemInfo/' + vm.id)
                     .then(res => {
                         vm.itemInfo = res.data;
-                        console.log(vm.itemInfo);
                       })
                       .catch(error => {
                         console.error('Error fetching data:', error);

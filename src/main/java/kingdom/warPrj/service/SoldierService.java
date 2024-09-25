@@ -108,8 +108,6 @@ public class SoldierService {
     SoldierDTO soldierDTO = soldierQueryDSL.getTotalSoldier();    //용사 총 정보(스킬, 종족 포함)
     StorageDTO storageDTO = storageQueryDSL.getTotalStorage();    //아이템 총 정보
 
-    System.out.println(soldierDTO);
-
     soldierDTO.setTotalAttack(soldierDTO.getTotalAttack()+storageDTO.getTotalAttack());
     soldierDTO.setTotalDefense(soldierDTO.getTotalDefense()+storageDTO.getTotalDefense());
     soldierDTO.setTotalForce(soldierDTO.getTotalForce()+storageDTO.getTotalForce());

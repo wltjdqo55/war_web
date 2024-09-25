@@ -164,7 +164,8 @@
                             <span v-else>없음</span>
                         </td>
                         <td>
-                            {{ soldier.speciesName }}(공격력: {{ soldier.speciesAttack }}, 방어력: {{ soldier.speciesDefense }})
+                            <span v-if="soldier.speciesId!=0">{{ soldier.speciesName }}(공격력: {{ soldier.speciesAttack }}, 방어력: {{ soldier.speciesDefense }})</span>
+                            <span v-else>없음</span>
                         </td>
                     </tr>
                     </tbody>
@@ -199,7 +200,7 @@
                             </ul>
                             <ul v-else>
                                 <li v-for="(general, idx) in selectedLegionInfo.generals" :key="idx">
-                                    {{ general.generalName }} (공격력: {{ general.attackBonus }}, 방어력: {{ general.defenseBonus }}, 천적종족: {{ general.speciesName }})
+                                    {{ general.generalName }} (공격력: {{ general.attackBonus }}, 방어력: {{ general.defenseBonus }}, 천적종족: <span v-if="general.speciesName!=null">{{ general.speciesName }}</span><span v-else>없음</span>)
                                 </li>
                             </ul>
                         </td>
