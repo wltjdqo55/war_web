@@ -319,7 +319,7 @@
             },
             soldierEditButton : function () {
                 let vm = this;
-                if(!vm.soldierIdCheck(vm.soldierInfo.soldierId) && !vm.soldierPasswordCheck(vm.soldierInfo.soldierPassword) && !vm.soldierNameCheck(vm.soldierInfo.soldierName) && !vm.soldierAgeCheck(vm.soldierInfo.soldierAge) && !vm.soldierBirthPlaceCheck(vm.soldierInfo.soldierBirthPlace)){
+                if(!vm.soldierIdCheck(vm.soldierInfo.soldierId) || !vm.soldierPasswordCheck(vm.soldierInfo.soldierPassword) || !vm.soldierNameCheck(vm.soldierInfo.soldierName) || !vm.soldierAgeCheck(vm.soldierInfo.soldierAge) || !vm.soldierBirthPlaceCheck(vm.soldierInfo.soldierBirthPlace)){
                     return false;
                 }
                 else {
