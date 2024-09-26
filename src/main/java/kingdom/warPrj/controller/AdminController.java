@@ -115,4 +115,10 @@ public class AdminController {
     return "";
   }
 
+  @GetMapping("/account/sessionCheck")
+  @ResponseBody
+  public boolean sessionCheck(HttpSession session) {
+    return session.getAttribute("adminInfo") != null;
+  }
+
 }
