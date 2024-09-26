@@ -27,3 +27,23 @@ const vueFilters = {
         return vv;
     }
 };
+
+const vueMethods = {
+    getAdminInfo : function () {
+        let vm = this;
+        axios.get('/account/getAdminInfo')
+            .then(res => {
+                vm.adminInfo = res.data;
+                if(vm.adminInfo.length < 1) {
+                    vm.isAdmin = false;
+                }
+                else{
+                    localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
+                    vm.isAdmin = true;
+                }
+            })
+            .catch(error => {
+              console.error("Error fetching data: ", error);
+            })
+    }
+}

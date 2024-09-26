@@ -21,12 +21,12 @@ public class SpeciesController {
 
   private final SpeciesService speciesService;
 
-  @GetMapping("/account/adminMain/species")
+  @GetMapping("/account/species")
   public String species(){
     return "/species/species.html";
   }
 
-  @GetMapping("/account/adminMain/species/add")
+  @GetMapping("/account/species/add")
   public String speciesAddView() {
     return "/species/speciesAddView";
   }
@@ -55,7 +55,7 @@ public class SpeciesController {
     return speciesService.getSearchSpecies(speciesVO);
   }
 
-  @GetMapping("/account/adminMain/species/detail/{id}")
+  @GetMapping("/account/species/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
     return "/species/speciesDetailView.html";
@@ -67,7 +67,7 @@ public class SpeciesController {
     return speciesService.getSpeciesDetail(id);
   }
 
-  @GetMapping("/account/adminMain/species/edit/{id}")
+  @GetMapping("/account/species/edit/{id}")
   public String editView(@PathVariable long id, Model model){
     model.addAttribute("id", id);
     return "/species/speciesEditView.html";

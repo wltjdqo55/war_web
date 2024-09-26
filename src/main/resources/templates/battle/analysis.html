@@ -87,9 +87,10 @@
         data: {
             totalSoldier : {},
             totalLegion : {},
-            totalSpecies : []
+            totalSpecies : [],
+            isAdmin : false
         },
-        methods: {
+        methods: $.extend({}, vueMethods, {
             getTotalSoldier : function () {
                 let vm = this;
                 axios.get('/analysis/getTotalSoldier')
@@ -120,7 +121,7 @@
                     console.error("Error fetching data: ", error);
                 })
             }
-        },
+        }),
         filters: {},
         computed: {},
         watch: {},

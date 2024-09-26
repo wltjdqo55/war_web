@@ -21,12 +21,12 @@ public class StorageController {
 
   private final StorageService storageService;
 
-  @GetMapping("/account/adminMain/storage")
+  @GetMapping("/account/storage")
   public String storagePage() {
     return "/storage/storage.html";
   }
 
-  @GetMapping("/account/adminMain/storage/add")
+  @GetMapping("/account/storage/add")
   public String storageAddView() {
     return "/storage/storageAddView";
   }
@@ -55,7 +55,7 @@ public class StorageController {
     return storageService.getSearchItem(storageVO);
   }
 
-  @GetMapping("/account/adminMain/storage/detail/{id}")
+  @GetMapping("/account/storage/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
     return "/storage/storageDetailView.html";
@@ -67,7 +67,7 @@ public class StorageController {
     return storageService.getItemDetail(id);
   }
 
-  @GetMapping("/account/adminMain/storage/edit/{id}")
+  @GetMapping("/account/storage/edit/{id}")
   public String editView(@PathVariable long id, Model model){
     model.addAttribute("id", id);
     return "/storage/storageEditView.html";

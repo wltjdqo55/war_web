@@ -23,7 +23,7 @@ public class AnalysisController {
   private final LegionService legionService;
   private final SpeciesService speciesService;
 
-  @GetMapping("/account/adminMain/analysis")
+  @GetMapping("/account/analysis")
   public String analysis(){
     return "/battle/analysis.html";
   }

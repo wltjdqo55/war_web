@@ -34,26 +34,9 @@
         el : "#app",
         data : {
             adminInfo : {},
-            isAdmin : true
+            isAdmin : false
         },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        if(vm.adminInfo.length < 1) {
-                            vm.isAdmin = false;
-                        }
-                        else{
-                            localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                            vm.isAdmin = true;
-                        }
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
+        methods : $.extend({}, vueMethods, {
             search_button : function () {
 
             },
@@ -63,7 +46,7 @@
                 vm.search.whetherToRent = "all";
                 vm.search.searchKeyword = "";
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

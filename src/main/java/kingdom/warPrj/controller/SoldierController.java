@@ -21,12 +21,12 @@ public class SoldierController {
 
   private final SoldierService soldierService;
 
-  @GetMapping("/account/adminMain/soldier")
+  @GetMapping("/account/soldier")
   public String soldierPage() {
     return "/soldier/soldier.html";
   }
 
-  @GetMapping("/account/adminMain/soldier/add")
+  @GetMapping("/account/soldier/add")
   public String soldierAddView() {
     return "/soldier/soldierAddView";
   }
@@ -55,7 +55,7 @@ public class SoldierController {
     return soldierService.getSearchSoldier(soldierVO);
   }
 
-  @GetMapping("/account/adminMain/soldier/detail/{id}")
+  @GetMapping("/account/soldier/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
     return "/soldier/soldierDetailView.html";
@@ -67,7 +67,7 @@ public class SoldierController {
     return soldierService.getSoldierDetail(id);
   }
 
-  @GetMapping("/account/adminMain/soldier/edit/{id}")
+  @GetMapping("/account/soldier/edit/{id}")
   public String editView(@PathVariable long id, Model model){
     model.addAttribute("id", id);
     return "/soldier/soldierEditView.html";

@@ -1,22 +1,23 @@
 <div id="headerApp" v-cloak>
     <nav class="navbar">
-        <div class="logo" v-if="isAdmin">관리자 대시보드</div>
-        <div class="logo" v-if="!isAdmin">사용자 대시보드</div>
+        <div class="logo" v-if="isAdmin==''"></div>
+        <div class="logo" v-else-if="isAdmin=='관리자'">관리자 대시보드</div>
+        <div class="logo" v-else>사용자 대시보드</div>
         <ul class="nav-links">
-            <li><a href="/account/adminMain/soldier">용사 정보</a></li>
-            <li><a href="/account/adminMain/skill">스킬 정보</a></li>
-            <li><a href="/account/adminMain/species">종족 정보</a></li>
-            <li><a href="/account/adminMain/storage">아이템 정보</a></li>
-            <li><a href="/account/adminMain/legion">마물군단 정보</a></li>
-            <li><a href="/account/adminMain/general">마물장군 정보</a></li>
-            <li v-if="isAdmin"><a href="/account/adminMain/admin">관리자 정보</a></li> <!-- optional -->
-            <li v-if="isAdmin"><a href="/account/adminMain/analysis">통계</a></li>
-            <li v-if="isAdmin"><a href="/account/adminMain/battle">모의 전투</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/soldier">용사 관리</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/skill">스킬 관리</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/species">종족 관리</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/storage">아이템 관리</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/legion">마물군단 관리</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/general">마물장군 관리</a></li>
+            <li v-if="isAdmin=='관리자'"><a href="/account/admin">관리자 관리</a></li> <!-- optional -->
+            <li v-if="isAdmin=='관리자'"><a href="/account/analysis">통계</a></li>
+            <li v-if="isAdmin=='관리자'"><a href="/account/battle">모의 전투</a></li>
         </ul>
-        <div class="logout" v-if="!isAdmin">
+        <div class="logout" v-if="isAdmin=='사용자'">
             <button class="admin-login-btn" @click="adminLoginButton()">관리자 로그인</button>
         </div>
-        <div class="logout" v-if="isAdmin">
+        <div class="logout" v-if="isAdmin=='관리자'">
             <span class="admin-name-span">{{adminInfo.adminName}} 님</span>
             <a href="/account/logout">로그아웃</a>
         </div>
@@ -29,7 +30,7 @@
         el: '#headerApp',
         data: {
             adminInfo: {},
-            isAdmin : true
+            isAdmin : ''
         },
         methods : {
             sessionCheck : function () {
@@ -37,10 +38,10 @@
                 axios.get('/account/sessionCheck')
                     .then(res => {
                         if(res.data){
-                            vm.isAdmin = true;
+                            vm.isAdmin = "관리자";
                         }
                         else{
-                            vm.isAdmin = false;
+                            vm.isAdmin = "사용자";
                         }
                     })
                     .catch(error => {

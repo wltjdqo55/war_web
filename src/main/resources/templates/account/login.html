@@ -21,7 +21,7 @@
             </div>
             <div class="button-group">
                 <button type="button" class="btn-login" @click="loginButton()">로그인</button>
-                <button type="button" class="btn-cancel" @click="cancelButton()">취소</button>
+                <button type="button" class="btn-cancel" @click="cancelButton()">목록</button>
             </div>
         </form>
     </div>
@@ -58,7 +58,7 @@
                 axios.post('/account/loginCheck', formData)
                     .then(res => {
                         if(res.data){
-                            location.href = "/account/adminMain"
+                            location.href = "/account"
                          }else{
                             alert("아이디 또는 비밀번호가 일치하지 않습니다.");
                             return false;
@@ -70,7 +70,7 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain";
+                location.href = "/account";
             }
         },
        filters: $.extend({}, vueFilters, {}),

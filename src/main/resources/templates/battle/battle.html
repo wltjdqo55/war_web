@@ -238,9 +238,10 @@
             legionTotalFinalAttack : 0,
             legionTotalFinalDefense : 0,
             totalResult : "",
-            totalResultContent : ""
+            totalResultContent : "",
+            isAdmin : false
         },
-        methods: {
+        methods: $.extend({}, vueMethods, {
             getSoldierList : function () {
                 let vm = this;
                 axios.get('/soldier/getSoldierList')
@@ -354,7 +355,7 @@
                 vm.totalResult = "";
                 vm.totalResultContent = "";
             }
-        },
+        }),
         filters: {},
         computed: {},
         watch: {},

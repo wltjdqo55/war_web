@@ -21,12 +21,12 @@ public class GeneralController {
 
   private final GeneralService generalService;
 
-  @GetMapping("/account/adminMain/general")
+  @GetMapping("/account/general")
   public String generalPage() {
     return "/monster/general/general.html";
   }
 
-  @GetMapping("/account/adminMain/general/add")
+  @GetMapping("/account/general/add")
   public String generalAddView() {
     return "/monster/general/generalAddView";
   }
@@ -55,7 +55,7 @@ public class GeneralController {
     return generalService.getSearchGeneral(generalVO);
   }
 
-  @GetMapping("/account/adminMain/general/detail/{id}")
+  @GetMapping("/account/general/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
     return "/monster/general/generalDetailView.html";
@@ -67,7 +67,7 @@ public class GeneralController {
     return generalService.getGeneralDetail(id);
   }
 
-  @GetMapping("/account/adminMain/general/edit/{id}")
+  @GetMapping("/account/general/edit/{id}")
   public String editView(@PathVariable long id, Model model){
     model.addAttribute("id", id);
     return "/monster/general/generalEditView.html";

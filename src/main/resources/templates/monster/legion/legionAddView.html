@@ -154,20 +154,10 @@
                 isNameCheck : false,
                 legionName : ""
             },
-            selectedGenerals : []
+            selectedGenerals : [],
+            isAdmin : false
         },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
+        methods : $.extend({}, vueMethods, {
             getGeneralInfo : function () {
                 let vm = this;
                 axios.get('/general/getGeneralList')
@@ -244,7 +234,7 @@
                         .then(res => {
                             if(res.data != null){
                                 alert("마물군단이 등록되었습니다.");
-                                location.href = "/account/adminMain/legion";
+                                location.href = "/account/legion";
                             }
                             else{
                                 alert("로그요청에 실패하였습니다.");
@@ -257,7 +247,7 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/legion";
+                location.href = "/account/legion";
             },
             legionNameCheck : function (keyword) {
                 let vm = this;
@@ -295,7 +285,7 @@
             confirmSelection : function () {
                 document.getElementsByClassName("modal-overlay")[0].style.display = "none";
             },
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

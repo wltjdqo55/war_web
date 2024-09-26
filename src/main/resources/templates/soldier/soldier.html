@@ -29,7 +29,7 @@
                 </div>
 
                 <!-- 용사 등록 버튼 -->
-                <div class="skill-actions">
+                <div class="skill-actions" style="display:none;" :style="{ display: isAdmin ? 'block' : 'none'}">
                     <button class="register-skill-btn" @click="openAddView()">용사 등록</button>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <tbody>
                 <tr v-for="(item, index) in soldierInfo">
                     <td>{{index + 1}}</td>
-                    <td><a :href="'/account/adminMain/soldier/detail/' + item.id">{{item.soldierName}}</a></td>
+                    <td><a :href="'/account/soldier/detail/' + item.id">{{item.soldierName}}</a></td>
                     <td>{{item.soldierId}}</td>
                     <td>{{item.soldierAge}}</td>
                     <td>{{item.soldierBirthPlace}}</td>
@@ -86,9 +86,10 @@
             search : {
                 searchOption : "all",
                 searchKeyword : ""
-            }
+            },
+            isAdmin : false
         },
-        methods : {
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 axios.get('/soldier/getSoldierList')
@@ -99,19 +100,8 @@
                       console.error("Error fetching data: ", error);
                     })
             },
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
             openAddView : function () {
-                location.href = "/account/adminMain/soldier/add";
+                location.href = "/account/soldier/add";
             },
             searchButton : function () {
                 let vm = this;
@@ -128,7 +118,7 @@
                     console.error("Error fetching data: ", error);
                 })
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

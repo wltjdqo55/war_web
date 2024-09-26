@@ -13,10 +13,10 @@ public class SessionCheckInterceptor implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     HttpSession session = request.getSession(false);
 
-//    if (session == null || session.getAttribute("adminInfo") == null) {
-//      response.sendRedirect("/account/login");
-//      return false; // 요청을 중단
-//    }
+    if (session == null || session.getAttribute("adminInfo") == null) {
+        response.setContentType("text/html; charset=UTF-8");
+        response.getWriter().write("<script>alert('접근권한이 없습니다.'); window.location='/account/login';</script>");
+    }
     return true; // 요청을 계속 진행
   }
 }

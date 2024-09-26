@@ -37,7 +37,7 @@
                 <tbody>
                 <tr v-for="(item, index) in accountInfo">
                     <td>{{index + 1}}</td>
-                    <td><a :href="'/account/adminMain/admin/detail/' + item.id">{{item.adminId}}</a></td>
+                    <td><a :href="'/account/admin/detail/' + item.id">{{item.adminId}}</a></td>
                     <td>{{item.adminName}}</td>
                     <td>{{item.adminPhoneNumber | tel}}</td>
                 </tr>
@@ -67,9 +67,10 @@
             accountInfo : {},
             search : {
                 searchKeyword : ""
-            }
+            },
+            isAdmin : false
         },
-        methods : {
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 axios.get('/admin/getAccountList')
@@ -80,21 +81,10 @@
                       console.error("Error fetching data: ", error);
                     })
             },
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.checkAdmin = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.checkAdmin));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
             openAddView : function () {
-                location.href = "/account/adminMain/admin/add";
+                location.href = "/account/admin/add";
             }
-        },
+        }),
        filters:  $.extend({}, vueFilters, {}),
        computed: {},
        watch: {},

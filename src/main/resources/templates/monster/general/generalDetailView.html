@@ -67,7 +67,7 @@
             </div>
 
             <div class="button-group">
-                <button type="button" class="btn-primary" @click="editButton()">수정</button>
+                <button type="button" class="btn-primary" @click="editButton()" style="display:none;" :style="{ display: isAdmin ? 'block' : 'none'}">수정</button>
                 <button type="button" class="btn-primary" @click="listButton()">목록</button>
             </div>
         </div>
@@ -92,20 +92,10 @@
         data : {
             adminInfo : {},
             generalInfo : {legions:[]},
-            id : 0
+            id : 0,
+            isAdmin : false
         },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 vm.id = [[${id}]];
@@ -120,11 +110,11 @@
             },
             listButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/general";
+                location.href = "/account/general";
             },
             editButton : function () {
                 let vm = this;
-                location.href = '/account/adminMain/general/edit/' + vm.id;
+                location.href = '/account/general/edit/' + vm.id;
             },
             viewLegions : function () {
                 let vm = this;
@@ -137,7 +127,7 @@
                 }
                 return names;
             }
-       },
+       }),
        filters: {},
        computed: {},
        watch: {},
