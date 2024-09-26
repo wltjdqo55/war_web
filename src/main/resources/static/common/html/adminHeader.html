@@ -4,13 +4,13 @@
         <div class="logo" v-else-if="isAdmin=='관리자'">관리자 대시보드</div>
         <div class="logo" v-else>사용자 대시보드</div>
         <ul class="nav-links">
-            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/soldier">용사 관리</a></li>
-            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/skill">스킬 관리</a></li>
-            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/species">종족 관리</a></li>
-            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/storage">아이템 관리</a></li>
-            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/legion">마물군단 관리</a></li>
-            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/general">마물장군 관리</a></li>
-            <li v-if="isAdmin=='관리자'"><a href="/account/admin">관리자 관리</a></li> <!-- optional -->
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/soldier">용사 정보</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/skill">스킬 정보</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/species">종족 정보</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/storage">아이템 정보</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/legion">마물군단 정보</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/general">마물장군 정보</a></li>
+            <li v-if="isAdmin=='관리자'"><a href="/account/admin">관리자 정보</a></li> <!-- optional -->
             <li v-if="isAdmin=='관리자'"><a href="/account/analysis">통계</a></li>
             <li v-if="isAdmin=='관리자'"><a href="/account/battle">모의 전투</a></li>
         </ul>
