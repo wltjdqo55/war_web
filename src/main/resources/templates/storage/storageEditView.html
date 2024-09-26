@@ -89,20 +89,10 @@
         data : {
             adminInfo : {},
             itemInfo : {},
-            id : 0
+            id : 0,
+            isAdmin : false
         },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 vm.id = [[${id}]];
@@ -116,7 +106,7 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/storage/detail/" + vm.id;
+                location.href = "/account/storage/detail/" + vm.id;
             },
             itemEditButton : function () {
                 let vm = this;
@@ -146,7 +136,7 @@
                     .then(res => {
                         if(res.data){
                             alert("아이템이 수정되었습니다.");
-                            location.href = "/account/adminMain/storage";
+                            location.href = "/account/storage";
                         }
                         else{
                             alert("로그요청에 실패하였습니다.");
@@ -165,13 +155,13 @@
                 axios.get('/storage/itemDelete/' + vm.id)
                     .then(res => {
                         alert("아이템이 삭제되었습니다.");
-                        location.href = "/account/adminMain/storage";
+                        location.href = "/account/storage";
                     })
                     .catch(error => {
                         console.error("Error fetching data : ", error);
                     })
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

@@ -75,20 +75,10 @@
             check : {
                 isNameCheck : false,
                 skillName : ""
-            }
-        },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
             },
+            isAdmin : false
+        },
+        methods : $.extend({}, vueMethods, {
             skillNameDup : function () {
                 let vm = this;
                 if(vm.skillInfo.skillName == "" || vm.skillInfo.skillName == null) {
@@ -142,7 +132,7 @@
                         .then(res => {
                             if(res.data != null){
                                 alert("스킬이 등록되었습니다.");
-                                location.href = "/account/adminMain/skill";
+                                location.href = "/account/skill";
                             }
                             else{
                                 alert("로그요청에 실패하였습니다.");
@@ -155,7 +145,7 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/skill";
+                location.href = "/account/skill";
             },
             skillNameCheck : function (keyword) {
                 let vm = this;
@@ -173,7 +163,7 @@
                 let number = parseInt(keyword, 10);
                 return number;
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

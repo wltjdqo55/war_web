@@ -95,20 +95,10 @@
         data : {
             adminInfo : {},
             speciesInfo : {},
-            id : 0
+            id : 0,
+            isAdmin : false
         },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 vm.id = [[${id}]];
@@ -122,7 +112,7 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/species/detail/" + vm.id;
+                location.href = "/account/species/detail/" + vm.id;
             },
             speciesEditButton : function () {
                 let vm = this;
@@ -160,7 +150,7 @@
                     .then(res => {
                         if(res.data){
                             alert("종족이 수정되었습니다.");
-                            location.href = "/account/adminMain/species";
+                            location.href = "/account/species";
                         }
                         else{
                             alert("로그요청에 실패하였습니다.");
@@ -179,13 +169,13 @@
                 axios.get('/species/speciesDelete/' + vm.id)
                     .then(res => {
                         alert("종족이 삭제되었습니다.");
-                        location.href = "/account/adminMain/species";
+                        location.href = "/account/species";
                     })
                     .catch(error => {
                         console.error("Error fetching data : ", error);
                     })
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

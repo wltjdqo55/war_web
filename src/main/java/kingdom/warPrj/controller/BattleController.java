@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class BattleController {
 
-  @GetMapping("/account/adminMain/battle")
+  @GetMapping("/account/battle")
   public String battlePage() {
     return "/battle/battle.html";
   }

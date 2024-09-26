@@ -23,12 +23,12 @@ public class AdminController {
   @GetMapping("/account/login")
   public String loginPage() {return "/account/login.html";}
 
-  @GetMapping("/account/adminMain/admin")
+  @GetMapping("/account/admin")
   public String adminPage() {
     return "/account/admin.html";
   }
 
-  @GetMapping("/account/adminMain/admin/add")
+  @GetMapping("/account/admin/add")
   public String adminAddPage() {
     return "/account/adminAdd.html";
   }
@@ -39,8 +39,11 @@ public class AdminController {
       return adminService.adminAdd(adminVO);
   }
 
-  @GetMapping("/account/adminMain")
-  public String adminMainPage() {
+  @GetMapping("/account")
+  public String adminMainPage(HttpSession session) {
+//    if(session.getAttribute("adminInfo") != null){
+//      AdminSession.closeSession(session);
+//    }
     return "/account/adminMain.html";
   }
 
@@ -84,7 +87,7 @@ public class AdminController {
     return adminService.getAccountList();
   }
 
-  @GetMapping("/account/adminMain/admin/detail/{id}")
+  @GetMapping("/account/admin/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
     return "/account/adminDetailView.html";
@@ -96,7 +99,7 @@ public class AdminController {
     return adminService.getAccountDetail(id);
   }
 
-  @GetMapping("/account/adminMain/admin/edit/{id}")
+  @GetMapping("/account/admin/edit/{id}")
   public String editView(@PathVariable long id, Model model){
     model.addAttribute("id", id);
     return "/account/adminEditView.html";

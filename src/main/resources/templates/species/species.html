@@ -22,7 +22,7 @@
                     <button id="search-btn" @click="searchButton()">검색</button>
                 </div>
 
-                <div class="skill-actions">
+                <div class="skill-actions" style="display:none;" :style="{ display: isAdmin ? 'block' : 'none'}">
                     <button class="register-skill-btn" @click="openAddView()">종족 등록</button>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <tbody>
                 <tr v-for="(item, index) in speciesInfo">
                     <td>{{index + 1}}</td>
-                    <td><a :href="'/account/adminMain/species/detail/' + item.speciesId">{{item.speciesName}}</a></td>
+                    <td><a :href="'/account/species/detail/' + item.speciesId">{{item.speciesName}}</a></td>
                     <td>{{item.attackBonus}}</td>
                     <td>{{item.defenseBonus}}</td>
                     <td>{{item.strengthBonus}}</td>
@@ -77,9 +77,10 @@
             speciesInfo : {},
             search : {
                 searchKeyword : ""
-            }
+            },
+            isAdmin : false
         },
-        methods : {
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 axios.get('/species/getSpeciesList')
@@ -90,19 +91,8 @@
                       console.error("Error fetching data: ", error);
                     })
             },
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
             openAddView : function () {
-                location.href = "/account/adminMain/species/add";
+                location.href = "/account/species/add";
             },
             searchButton : function () {
                 let vm = this;
@@ -118,7 +108,7 @@
                     console.error("Error fetching data: ", error);
                 })
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

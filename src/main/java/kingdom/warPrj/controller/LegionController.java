@@ -21,12 +21,12 @@ public class LegionController {
 
   private final LegionService legionService;
 
-  @GetMapping("/account/adminMain/legion")
+  @GetMapping("/account/legion")
   public String legionPage() {
     return "/monster/legion/legion.html";
   }
 
-  @GetMapping("/account/adminMain/legion/add")
+  @GetMapping("/account/legion/add")
   public String legionAddView() {
     return "/monster/legion/legionAddView";
   }
@@ -55,7 +55,7 @@ public class LegionController {
     return legionService.getSearchLegion(legionVO);
   }
 
-  @GetMapping("/account/adminMain/legion/detail/{id}")
+  @GetMapping("/account/legion/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
     return "/monster/legion/legionDetailView.html";
@@ -67,7 +67,7 @@ public class LegionController {
     return legionService.getLegionDetail(id);
   }
 
-  @GetMapping("/account/adminMain/legion/edit/{id}")
+  @GetMapping("/account/legion/edit/{id}")
   public String editView(@PathVariable long id, Model model){
     model.addAttribute("id", id);
     return "/monster/legion/legionEditView.html";

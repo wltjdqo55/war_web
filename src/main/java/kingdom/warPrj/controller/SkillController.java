@@ -22,12 +22,12 @@ public class SkillController {
 
   private final SkillService skillService;
 
-  @GetMapping("/account/adminMain/skill")
+  @GetMapping("/account/skill")
   public String skillPage() {
     return "/skill/skill.html";
   }
 
-  @GetMapping("/account/adminMain/skill/add")
+  @GetMapping("/account/skill/add")
   public String skillAddView() {
     return "/skill/skillAddView";
   }
@@ -56,7 +56,7 @@ public class SkillController {
     return skillService.getSearchSkill(skillVO);
   }
 
-  @GetMapping("/account/adminMain/skill/detail/{id}")
+  @GetMapping("/account/skill/detail/{id}")
   public String detailView(@PathVariable("id") long id, Model model){
     model.addAttribute("id", id);
     return "/skill/skillDetailView.html";
@@ -68,7 +68,7 @@ public class SkillController {
     return skillService.getSkillDetail(id);
   }
 
-  @GetMapping("/account/adminMain/skill/edit/{id}")
+  @GetMapping("/account/skill/edit/{id}")
   public String editView(@PathVariable long id, Model model){
     model.addAttribute("id", id);
     return "/skill/skillEditView.html";

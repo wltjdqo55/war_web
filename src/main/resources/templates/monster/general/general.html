@@ -29,7 +29,7 @@
                 </div>
 
                 <!-- 마물 등록 버튼 -->
-                <div class="skill-actions">
+                <div class="skill-actions" style="display:none;" :style="{ display: isAdmin ? 'block' : 'none'}">
                     <button class="register-skill-btn" @click="openAddView()">마물장군 등록</button>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <tbody>
                 <tr v-for="(item, index) in generalInfo">
                     <td>{{index + 1}}</td>
-                    <td><a :href="'/account/adminMain/general/detail/' + item.id">{{item.generalName}}</a></td>
+                    <td><a :href="'/account/general/detail/' + item.id">{{item.generalName}}</a></td>
                     <td>{{item.generalAge}}</td>
                     <td>{{item.attackBonus}}</td>
                     <td>{{item.defenseBonus}}</td>
@@ -90,25 +90,15 @@
                 searchOption : "all",
                 searchKeyword : ""
             },
-            legionInfo : {}
+            legionInfo : {},
+            isAdmin : false
         },
-        methods : {
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 axios.get('/general/getGeneralList')
                     .then(res => {
                         vm.generalInfo = res.data;
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
                     })
                     .catch(error => {
                       console.error("Error fetching data: ", error);
@@ -125,7 +115,7 @@
                     })
             },
             openAddView : function () {
-                location.href = "/account/adminMain/general/add";
+                location.href = "/account/general/add";
             },
             searchButton : function () {
                 let vm = this;
@@ -142,7 +132,7 @@
                     console.error("Error fetching data: ", error);
                 })
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

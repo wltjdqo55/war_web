@@ -74,20 +74,10 @@
             check : {
                 isIdCheck : false,
                 adminId : ""
-            }
-        },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.checkAdmin = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.checkAdmin));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
             },
+            isAdmin : false
+        },
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 vm.id = [[${id}]];
@@ -121,7 +111,7 @@
                         .then(res => {
                             if(res.data != null){
                                 alert("관리자 수정이 완료되었습니다.");
-                                location.href = "/account/adminMain/admin";
+                                location.href = "/account/admin";
                             }
                             else{
                                 alert("로그요청에 실패하였습니다.");
@@ -134,7 +124,7 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/admin/detail/" + vm.id;
+                location.href = "/account/admin/detail/" + vm.id;
             },
             adminIdCheck : function (keyword) {
                 let vm = this;
@@ -177,13 +167,13 @@
                 axios.get('/account/adminDelete/' + vm.id)
                     .then(res => {
                         alert("관리자가 삭제되었습니다.");
-                        location.href = "/account/adminMain/admin";
+                        location.href = "/account/admin";
                     })
                     .catch(error => {
                         console.error("Error fetching data : ", error);
                     })
             }
-        },
+        }),
        filters: $.extend({}, vueFilters, {}),
        computed: {},
        watch: {},

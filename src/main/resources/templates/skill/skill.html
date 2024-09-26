@@ -30,7 +30,7 @@
                 </div>
 
                 <!-- 스킬 등록 버튼 -->
-                <div class="skill-actions">
+                <div class="skill-actions" style="display:none;" :style="{ display: isAdmin ? 'block' : 'none'}">
                     <button class="register-skill-btn" @click="openAddView()">스킬 등록</button>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <tbody>
                 <tr v-for="(item, index) in skillInfo">
                     <td>{{index + 1}}</td>
-                    <td><a :href="'/account/adminMain/skill/detail/' + item.id">{{item.skillName}}</a></td>
+                    <td><a :href="'/account/skill/detail/' + item.id">{{item.skillName}}</a></td>
                     <td>{{item.strengthBonus}}</td>
                     <td>{{item.spellBonus}}</td>
                     <td>{{item.skillState}}</td>
@@ -81,9 +81,10 @@
             search : {
                 searchOption : "all",
                 searchKeyword : ""
-            }
+            },
+            isAdmin : false
         },
-        methods : {
+        methods : $.extend({}, vueMethods,{
             loadData : function () {
                 let vm = this;
                 axios.get('/skill/getSkillList')
@@ -94,19 +95,8 @@
                       console.error("Error fetching data: ", error);
                     })
             },
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
             openAddView : function () {
-                location.href = "/account/adminMain/skill/add";
+                location.href = "/account/skill/add";
             },
             searchButton : function () {
                 let vm = this;
@@ -123,7 +113,7 @@
                     console.error("Error fetching data: ", error);
                 })
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

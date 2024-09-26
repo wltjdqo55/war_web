@@ -216,20 +216,10 @@
                 isIdCheck : false,
                 soldierId : ""
             },
-            selectedItems : []
+            selectedItems : [],
+            isAdmin : false
         },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
+        methods : $.extend({}, vueMethods, {
             getSpeciesInfo : function () {
                 let vm = this;
                 axios.get('/species/getSpeciesList')
@@ -362,7 +352,7 @@
                         .then(res => {
                             if(res.data != null){
                                 alert("용사가 등록되었습니다.");
-                                location.href = "/account/adminMain/soldier";
+                                location.href = "/account/soldier";
                             }
                             else{
                                 alert("로그요청에 실패하였습니다.");
@@ -375,7 +365,7 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/soldier";
+                location.href = "/account/soldier";
             },
             speciesCheck : function (keyword) {
                 let vm = this;
@@ -440,7 +430,7 @@
                 let number = parseInt(keyword, 10);
                 return number;
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},

@@ -229,19 +229,9 @@
             },
             beforeItemIds : [],
             selectedItems : [{storageId:0, itemName:""}],
+            isAdmin: false
         },
-        methods : {
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
+        methods : $.extend({}, vueMethods,{
             loadData : function () {
                 let vm = this;
                 vm.id = [[${id}]];
@@ -371,7 +361,7 @@
                         .then(res => {
                             if(res.data != null){
                                 alert("용사가 수정되었습니다.");
-                                location.href = "/account/adminMain/soldier";
+                                location.href = "/account/soldier";
                             }
                             else{
                                 alert("로그요청에 실패하였습니다.");
@@ -384,7 +374,7 @@
             },
             cancelButton : function () {
                 let vm = this;
-                location.href = "/account/adminMain/soldier/detail/" + vm.soldierInfo.id;
+                location.href = "/account/soldier/detail/" + vm.soldierInfo.id;
             },
             soldierIdCheck : function (keyword) {
                 let vm = this;
@@ -440,13 +430,13 @@
                     })
                     .then(res => {
                         alert("용사가 삭제되었습니다.");
-                        location.href = "/account/adminMain/soldier";
+                        location.href = "/account/soldier";
                     })
                     .catch(error => {
                         console.error("Error fetching data : ", error);
                     })
             }
-        },
+        }),
        filters: {},
        computed: {
        },

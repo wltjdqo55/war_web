@@ -30,7 +30,7 @@
 
                 <!-- 마물 등록 버튼 -->
                 <div class="skill-actions">
-                    <button class="register-skill-btn" @click="openAddView()">마물군단 등록</button>
+                    <button class="register-skill-btn" @click="openAddView()" style="display:none;" :style="{ display: isAdmin ? 'block' : 'none'}">마물군단 등록</button>
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                 <tbody>
                 <tr v-for="(item, index) in legionInfo">
                     <td>{{index + 1}}</td>
-                    <td><a :href="'/account/adminMain/legion/detail/' + item.id">{{item.legionName}}</a></td>
+                    <td><a :href="'/account/legion/detail/' + item.id">{{item.legionName}}</a></td>
                     <td>{{item.troopCount}}</td>
                     <td>{{item.totalAttack}}</td>
                     <td>{{item.totalDefense}}</td>
@@ -85,9 +85,10 @@
                 searchOption : "all",
                 searchKeyword : ""
             },
-            generalInfo : {}
+            generalInfo : {},
+            isAdmin : false
         },
-        methods : {
+        methods : $.extend({}, vueMethods, {
             loadData : function () {
                 let vm = this;
                 axios.get('/legion/getLegionList')
@@ -108,19 +109,8 @@
                       console.error("Error fetching data: ", error);
                     })
             },
-            getAdminInfo : function () {
-                let vm = this;
-                axios.get('/account/getAdminInfo')
-                    .then(res => {
-                        vm.adminInfo = res.data;
-                        localStorage.setItem('adminInfo', JSON.stringify(vm.adminInfo));
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data: ", error);
-                    })
-            },
             openAddView : function () {
-                location.href = "/account/adminMain/legion/add";
+                location.href = "/account/legion/add";
             },
             searchButton : function () {
                 let vm = this;
@@ -137,7 +127,7 @@
                     console.error("Error fetching data: ", error);
                 })
             }
-        },
+        }),
        filters: {},
        computed: {},
        watch: {},
