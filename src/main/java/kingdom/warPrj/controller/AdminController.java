@@ -21,7 +21,12 @@ public class AdminController {
   private final AdminService adminService;
 
   @GetMapping("/account/login")
-  public String loginPage() {return "/account/login.html";}
+  public String loginPage(HttpSession session) {
+    if(session.getAttribute("adminInfo") != null) {
+      AdminSession.removeSession("adminInfo", session);
+    }
+    return "/account/login.html";
+  }
 
   @GetMapping("/account/admin")
   public String adminPage() {
@@ -41,9 +46,6 @@ public class AdminController {
 
   @GetMapping("/account")
   public String adminMainPage(HttpSession session) {
-//    if(session.getAttribute("adminInfo") != null){
-//      AdminSession.closeSession(session);
-//    }
     return "/account/adminMain.html";
   }
 
