@@ -39,10 +39,10 @@ public class StorageQueryDSL {
       return QStorageEntity.storageEntity.itemName.contains(storageVO.getSearchKeyword());
     }
     else if(storageVO.getSearchOption().equals("available")){
-      return QStorageEntity.storageEntity.itemState.eq(true).and(QStorageEntity.storageEntity.itemName.contains(storageVO.getSearchKeyword()));
+      return QStorageEntity.storageEntity.itemState.eq(false).and(QStorageEntity.storageEntity.itemName.contains(storageVO.getSearchKeyword()));
     }
     else if(storageVO.getSearchOption().equals("notAvailable")){
-      return QStorageEntity.storageEntity.itemState.eq(false).and(QStorageEntity.storageEntity.itemName.contains(storageVO.getSearchKeyword()));
+      return QStorageEntity.storageEntity.itemState.eq(true).and(QStorageEntity.storageEntity.itemName.contains(storageVO.getSearchKeyword()));
     }
     return null;
   }
