@@ -34,10 +34,10 @@ public class SkillQueryDSL {
       return QSkillEntity.skillEntity.skillName.contains(skillVO.getSearchKeyword());
     }
     else if(skillVO.getSearchOption().equals("available")){
-      return QSkillEntity.skillEntity.skillState.eq(true).and(QSkillEntity.skillEntity.skillName.contains(skillVO.getSearchKeyword()));
+      return QSkillEntity.skillEntity.skillState.eq(false).and(QSkillEntity.skillEntity.skillName.contains(skillVO.getSearchKeyword()));
     }
     else if(skillVO.getSearchOption().equals("notAvailable")){
-      return QSkillEntity.skillEntity.skillState.eq(false).and(QSkillEntity.skillEntity.skillName.contains(skillVO.getSearchKeyword()));
+      return QSkillEntity.skillEntity.skillState.eq(true).and(QSkillEntity.skillEntity.skillName.contains(skillVO.getSearchKeyword()));
     }
     return null;
   }
