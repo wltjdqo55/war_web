@@ -40,7 +40,7 @@ public class StorageController {
   @GetMapping("/storage/itemNameCheck")
   @ResponseBody
   public boolean itemNameCheck(StorageVO storageVO){
-    return storageService.itemNameCheck(storageVO.getItem());
+    return storageService.itemNameCheck(storageVO.getItemName());
   }
 
   @GetMapping("/storage/getItemList")
