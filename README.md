@@ -88,6 +88,6 @@
 
 
 ## **🔷 ERD**
-![ERD](https://github.com/user-attachments/assets/fe124fcf-e27e-49e1-8423-818bf47b73d9)
+![ERD](https://github.com/user-attachments/assets/81aa1245-097f-405d-926f-35873c9fe67c)
 
 ## **👨🏻‍💻 프로젝트 구조**
