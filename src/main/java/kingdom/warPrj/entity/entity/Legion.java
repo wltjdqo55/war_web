@@ -1,11 +1,9 @@
 package kingdom.warPrj.entity.entity;
 
 import jakarta.persistence.*;
-import kingdom.warPrj.entity.vo.GeneralVO;
 import kingdom.warPrj.entity.vo.LegionVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.util.Lazy;
 
 import java.util.ArrayList;
 import java.util.List;
