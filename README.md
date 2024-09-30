@@ -88,6 +88,6 @@
 
 
 ## **🔷 ERD**
-<img src="C:\warPrj\src\main\resources\static\dist\image\ERD.png", height="100x", width="100px">
+![ERD](https://github.com/user-attachments/assets/fe124fcf-e27e-49e1-8423-818bf47b73d9)
 
 ## **👨🏻‍💻 프로젝트 구조**
