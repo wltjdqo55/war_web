@@ -192,7 +192,9 @@
 
 - 각각의 목록은 테이블 형태의 동일한 UI로 구현하였고, 관리자일 시 용사 등록 버튼이 보이게 됩니다.
 
-<h3 style="margin-top: 150px;">[상세화면]</h3>
+&nbsp;
+
+<h3>[상세화면]</h3>
 <img src="https://github.com/user-attachments/assets/dd4d3cdf-b373-41e8-a7dd-7e688b5e49b4" alt="상세화면" style="display:inline-block; width:100%;"/>
 <img src="https://github.com/user-attachments/assets/0a2819ba-7216-4f04-bd00-937ac1889dd9" alt="상세화면모달" style="display:inline-block; width:100%;"/>
 
