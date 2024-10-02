@@ -159,6 +159,6 @@
 - 사용자 화면과 관리자 화면을 분리하였습니다.
 - 사용자는 검색기능과 상세정보, 모의전투기능을 제공하며, 등록,수정,삭제, 통계확인은 할 수 없습니다.
 - 사용자가 관리자만 볼 수 있는 화면을 API를 입력해서 접속시도시, Interceptor를 통해 세션을 체크한 후 세션이 존재하지 않으면 관리자 로그인 화면으로 이동합니다.
-  <img src="https://github.com/user-attachments/assets/0c96c4f9-a5ce-4459-beb4-e4c5e5ae5525" alt="인터셉터GIF" style="display:inline-block; width:100%;"/> 
+  <img src="https://github.com/user-attachments/assets/0c96c4f9-a5ce-4459-beb4-e4c5e5ae5525" alt="인터셉터GIF" style="display:inline-block; width:1000px;"/> 
 <h4 style="margin-top: 60px;">[목록화면]</h4>
 
