@@ -5,16 +5,12 @@
 
 &nbsp;
 
-&nbsp;
-
 ## **📗 목차**  
 
 - ### 포트폴리오 개요
 - ### 개발 환경
 - ### 주요 기능
 - ### 프로젝트 구조
-
-&nbsp;
 
 &nbsp;
 
@@ -30,8 +26,6 @@
 
 &nbsp;
 
-&nbsp;
-
 ## **🔲 개발 환경**
 
 > **형상관리:** <img src="https://img.shields.io/badge/GITHUB-181717?style=flat-square&logo=github&logoColor=white"/>, <img src="https://img.shields.io/badge/NOTION-000000?style=flat-square&logo=notion&logoColor=white"/>
@@ -43,6 +37,9 @@
 > **데이터베이스:** <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=white"/>
 
 &nbsp;
+
+## **🔲 목표**
+이번 프로젝트의 주된 목표는 데이터 모델링입니다.<br>직접 데이터베이스를 설계하여 용사, 스킬, 아이템, 종족, 마물 군단, 마물 장군 등 다양한 엔티티 간의 복잡한 관계를 정의하고, OneToOne, OneToMany, ManyToOne, ManyToMany와 같은 다양한 관계형 데이터베이스 모델을 실제 코드로 구현하며, ERD를 시각적으로 표현하는데 의미를 두었습니다.
 
 &nbsp;
 
@@ -103,8 +100,6 @@
 
 &nbsp;
 
-&nbsp;
-
 ## **🔲 ERD**
 ![ERD](https://github.com/user-attachments/assets/81aa1245-097f-405d-926f-35873c9fe67c)
 
@@ -115,8 +110,6 @@
 | 3  | 용사           | 종족    | ManyToOne    |
 | 4  | 마물군단       | 마물장군  | ManyToMany   |
 | 5  | 마물장군       | 종족    | ManyToOne    |
-
-&nbsp;
 
 &nbsp;
 
