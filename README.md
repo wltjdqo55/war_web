@@ -154,7 +154,8 @@
 ````
 ## **🔲 주요 화면**
 <h3>[시작화면 - 사용자, 관리자]</h4>
-![main](https://github.com/user-attachments/assets/040dad36-f896-4172-972d-2aafae4e420b)
+![localhost_8080_account - Chrome 2024-10-02 11-24-43](https://github.com/user-attachments/assets/040dad36-f896-4172-972d-2aafae4e420b)
+
 - 사용자 화면과 관리자 화면을 분리하였습니다.
 - 사용자는 검색기능과 상세정보, 모의전투기능을 제공하며, 등록,수정,삭제, 통계확인의 기능을 사용할 수 없습니다.
 - 사용자가 관리자만 볼 수 있는 화면을 API를 입력해서 접속시도시, Interceptor를 통해 세션을 체크한 후 세션이 존재하지 않으면 관리자 로그인 화면으로 이동합니다.
