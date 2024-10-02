@@ -153,22 +153,23 @@
             └─warPrj
 ````
 ## **🔲 주요 화면**
-<h4>[시작화면 - 사용자, 관리자]</h4>
-<img src="https://github.com/user-attachments/assets/a4c2df0a-ebe3-4710-8972-2772c312e54e" alt="사용자 시작화면" style="display:inline-block; width:48%; margin-right: 10px;"/>
-<img src="https://github.com/user-attachments/assets/4b4c1d23-e4d2-4eb3-a6aa-c14727c09dcf" alt="관리자 시작화면" style="display:inline-block; width:48%;"/>
+<h3>[시작화면 - 사용자, 관리자]</h4>
+<img src="https://github.com/user-attachments/assets/a4c2df0a-ebe3-4710-8972-2772c312e54e" alt="사용자 시작화면" style="display:inline-block; width:100%; margin-right: 10px;"/>
+<img src="https://github.com/user-attachments/assets/4b4c1d23-e4d2-4eb3-a6aa-c14727c09dcf" alt="관리자 시작화면" style="display:inline-block; width:100%;"/>
 
 - 사용자 화면과 관리자 화면을 분리하였습니다.
 - 사용자는 검색기능과 상세정보, 모의전투기능을 제공하며, 등록,수정,삭제, 통계확인의 기능을 사용할 수 없습니다.
 - 사용자가 관리자만 볼 수 있는 화면을 API를 입력해서 접속시도시, Interceptor를 통해 세션을 체크한 후 세션이 존재하지 않으면 관리자 로그인 화면으로 이동합니다.
 
-<h4 style="margin-top: 60px;">[목록화면]</h4>
+<h3 style="margin-top: 60px;">[목록화면]</h4>
 <img src="https://github.com/user-attachments/assets/efe475b3-bda9-4032-8966-f34510d19a85" alt="목록화면" style="display:inline-block; width:100%;"/>
 
 - 검색기능을 수행할 수 있습니다.
 - 각각의 목록은 테이블 형태의 동일한 UI로 구현하였고, 관리자일 시 용사 등록 버튼이 보이게 됩니다.
   
-<h4 style="margin-top: 60px;">[상세화면]</h4>
-<img src="https://github.com/user-attachments/assets/2735eb83-8333-4005-8d18-1c0a6827977d" alt="상세화면" style="display:inline-block; width:48%; margin-right: 10px;"/>
-<img src="https://github.com/user-attachments/assets/fea12416-0147-497c-b0e5-b95dd09cb1e3" alt="상세화면모달" style="display:inline-block; width:48%;"/>
+<h3 style="margin-top: 60px;">[상세화면]</h4>
+<img src="https://github.com/user-attachments/assets/2735eb83-8333-4005-8d18-1c0a6827977d" alt="상세화면" style="display:inline-block; width:100%; margin-right: 10px;"/>
+<img src="https://github.com/user-attachments/assets/fea12416-0147-497c-b0e5-b95dd09cb1e3" alt="상세화면모달" style="display:inline-block; width:100%;"/>
+
 - 상세정보에는 용사의 정보, 스탯과 연결되어 있는 종족, 스킬, 아이템을 확인 할 수 있습니다.
 - 스탯을 보여주는 각각의 내용을 클릭시 모달화면을 보여주고, 기본 스탯과 보정(아이템, 스킬, 종족) 스탯을 같이 보여줍니다.
