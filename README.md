@@ -154,7 +154,7 @@
 ````
 ## **🔲 주요 화면**
 <h3>[시작화면 - 사용자, 관리자]</h4>
-<img src="https://github.com/user-attachments/assets/040dad36-f896-4172-972d-2aafae4e420b" alt="GIF 설명" style="max-width:100%;"/>
+<img src="https://github.com/user-attachments/assets/040dad36-f896-4172-972d-2aafae4e420b" alt="GIF 설명"/>
 
 - 사용자 화면과 관리자 화면을 분리하였습니다.
 - 사용자는 검색기능과 상세정보, 모의전투기능을 제공하며, 등록,수정,삭제, 통계확인의 기능을 사용할 수 없습니다.
