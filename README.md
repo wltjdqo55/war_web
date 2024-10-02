@@ -4,14 +4,15 @@
 </div>
 
 
-## **📗 목차**
+<h2 style="margin-top:150px"> 📗 목차 </h2>
+
 - ### 포트폴리오 개요
 - ### 개발 환경
 - ### 주요 기능
 - ### 프로젝트 구조
 
 
-## **🔲 포트폴리오 개요**
+<h2 style="margin-top:150px"> 🔲 포트폴리오 개요 </h2>
 
 > **기획 및 제작:** 지성배
 >
@@ -21,7 +22,7 @@
 > 
 > **문의:** wltjdqo55@gmail.com
 
-## **🔲 개발 환경**
+<h2 style="margin-top:150px">  🔲 개발 환경 </h2>
 
 > **형상관리:** <img src="https://img.shields.io/badge/GITHUB-181717?style=flat-square&logo=github&logoColor=white"/>, <img src="https://img.shields.io/badge/NOTION-000000?style=flat-square&logo=notion&logoColor=white"/>
 >
@@ -32,7 +33,7 @@
 > **데이터베이스:** <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=white"/>
 
 
-## **🔲 주요 기능**
+<h2 style="margin-top:150px">  🔲 주요 기능 </h2>
 
 #### 1. 사용자 인터페이스 및 프론트엔드 개발(Vue,js, HTML, CSS 사용)
 
@@ -88,7 +89,7 @@
     - (Optional) 선택한 마물 군단과 천적 용사에 대한 버프 적용
 
 
-## **🔲 ERD**
+<h2 style="margin-top:150px">  🔲 ERD </h2>
 ![ERD](https://github.com/user-attachments/assets/81aa1245-097f-405d-926f-35873c9fe67c)
 
 | 번호 | 엔티티 A       | 엔티티 B | 관계 유형    |
@@ -99,7 +100,8 @@
 | 4  | 마물군단       | 마물장군  | ManyToMany   |
 | 5  | 마물장군       | 종족    | ManyToOne    |
 
-## **🔲 프로젝트 구조 - MVC2 디자인 패턴**
+<h2 style="margin-top:150px">  🔲 프로젝트 구조 - MVC2 디자인 패턴 </h2>
+
 ````
 ├─main
 │  ├─generated
