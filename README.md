@@ -181,8 +181,10 @@
 
 
 - 사용자가 관리자만 볼 수 있는 화면을 API를 입력해서 접속시도시, Interceptor를 통해 세션을 체크한 후 세션이 존재하지 않으면 관리자 로그인 화면으로 이동합니다.
+  
+&nbsp;
 
-<h3 style="margin-top: 150px;">[목록화면]</h3>
+<h3>[목록화면]</h3>
 <img src="https://github.com/user-attachments/assets/efe475b3-bda9-4032-8966-f34510d19a85" alt="목록화면" style="display:inline-block; width:100%;"/>
 
 - 검색기능을 수행할 수 있습니다.
@@ -199,7 +201,9 @@
 
 - 능력치를 보여주는 각각의 내용을 클릭시 모달화면을 보여주고, 기본 능력치와 보정(아이템, 스킬, 종족) 능력치를 같이 보여줍니다.
 
-<h3 style="margin-top: 150px;">[등록화면]</h3>
+&nbsp;
+
+<h3>[등록화면]</h3>
 <img src="https://github.com/user-attachments/assets/4c544b43-e3c0-4d37-81d9-83d0c15efaa0" alt="등록화면" style="display:inline-block; width:100%;"/>
 <img src="https://github.com/user-attachments/assets/318ec493-0220-4cf0-9b41-43fd2aa046a0" alt="등록-아이템추가" style="display:inline-block; width:100%;"/>
 
@@ -208,7 +212,9 @@
 
 - 아이템 선택 -> 용사는 여러개의 아이템을 장착할 수 있으므로 Check Box로 구현했고, 다른 용사가 착용중인 아이템을 제외한 나머지를 리스트로 가져왔습니다.
 
-<h3 style="margin-top: 150px;">[통계화면]</h3>
+&nbsp;
+
+<h3>[통계화면]</h3>
 <img src="https://github.com/user-attachments/assets/88ffd5c1-26e3-49bd-ad15-f7d6a4524cd1" alt="통계화면" style="display:inline-block; width:100%;"/>
 
 - 용사 통계 -> 용사의 총 인원수의 능력치를 모두 합친 결과를 보여줍니다.<br>(용사의 능력치 + 용사가 착용하고 있는 아이템,스킬 능력치 + 종족 능력치)
@@ -219,7 +225,9 @@
 
 - 종족 통계 -> 종족별로 소속된 용사의 수에 따른 총 능력치를 보여줍니다.<br>(종족에 해당하는 용사의 수 * 종족 기본 능력치)
 
-<h3 style="margin-top: 150px;">[모의전투화면]</h4>
+&nbsp;
+
+<h3>[모의전투화면]</h3>
 <img src="https://github.com/user-attachments/assets/2b97f566-9475-40c6-8503-e56833dd495a" alt="모의전투1" style="display:inline-block; width:100%;"/>
 <img src="https://github.com/user-attachments/assets/7ddf3770-f4c8-4260-87d7-c44eae64a57d" alt="모의전투2" style="display:inline-block; width:100%;"/>
 
