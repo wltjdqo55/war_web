@@ -12,7 +12,7 @@
             <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/general">마물장군 정보</a></li>
             <li v-if="isAdmin=='관리자'"><a href="/account/admin">관리자 정보</a></li> <!-- optional -->
             <li v-if="isAdmin=='관리자'"><a href="/account/analysis">통계</a></li>
-            <li v-if="isAdmin=='관리자'"><a href="/account/battle">모의 전투</a></li>
+            <li v-if="isAdmin=='사용자' || isAdmin=='관리자'"><a href="/account/battle">모의 전투</a></li>
         </ul>
         <div class="logout" v-if="isAdmin=='사용자'">
             <button class="admin-login-btn" @click="adminLoginButton()">관리자 로그인</button>

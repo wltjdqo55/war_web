@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
 
-    String[] interceptorPath = new String[]{"/account/admin/**", "/account/analysis", "/account/battle"
+    String[] interceptorPath = new String[]{"/account/admin/**", "/account/analysis"
         , "/account/soldier/add", "/account/soldier/edit/**", "/account/skill/add", "/account/skill/edit/**"
         , "/account/species/add", "/account/species/edit/**", "/account/storage/add", "/account/storage/edit/**"
         , "/account/legion/add", "/account/legion/edit/**", "/account/general/add", "/account/general/edit/*"};
