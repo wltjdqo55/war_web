@@ -7,7 +7,6 @@
 
 &nbsp;
 
-&nbsp;
 ## **📗 목차**  
 
 - ### 포트폴리오 개요
@@ -19,7 +18,6 @@
 
 &nbsp;
 
-&nbsp;
 ## **🔲 포트폴리오 개요**
 
 > **기획 및 제작:** 지성배
@@ -34,8 +32,6 @@
 
 &nbsp;
 
-&nbsp;
-
 ## **🔲 개발 환경**
 
 > **형상관리:** <img src="https://img.shields.io/badge/GITHUB-181717?style=flat-square&logo=github&logoColor=white"/>, <img src="https://img.shields.io/badge/NOTION-000000?style=flat-square&logo=notion&logoColor=white"/>
@@ -45,8 +41,6 @@
 > **백엔드:** <img src="https://img.shields.io/badge/JAVA-1572B6?style=flat-square&logo=JAVA&logoColor=white"/> <img src="https://img.shields.io/badge/JPA-1572B6?style=flat-square&logo=JPA&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat-square&logo=Spring Securit&logoColor=white"/> <img src="https://img.shields.io/badge/INTELLIJ IDEA-000000?style=flat-square&logo=intellijidea&logoColor=white"/> <img src="https://img.shields.io/badge/POSTMAN-FF6C37?style=flat-square&logo=postman&logoColor=white"/> <img src="https://img.shields.io/badge/DBeaver-382923?style=flat-square&logo=dbeaver&logoColor=white"/> <img src="https://img.shields.io/badge/GRADLE-02303A?style=flat-square&logo=gradle&logoColor=white"/>
 >    
 > **데이터베이스:** <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=white"/>
-
-&nbsp;
 
 &nbsp;
 
@@ -111,8 +105,6 @@
 
 &nbsp;
 
-&nbsp;
-
 ## **🔲 ERD**
 ![ERD](https://github.com/user-attachments/assets/81aa1245-097f-405d-926f-35873c9fe67c)
 
@@ -128,7 +120,6 @@
 
 &nbsp;
 
-&nbsp;
 ## **🔲 프로젝트 구조 - MVC2 디자인 패턴**
 ````
 ├─main
