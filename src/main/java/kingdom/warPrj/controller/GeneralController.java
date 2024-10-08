@@ -1,9 +1,7 @@
 package kingdom.warPrj.controller;
 
 import kingdom.warPrj.entity.dto.GeneralDTO;
-import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.vo.GeneralVO;
-import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.service.GeneralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

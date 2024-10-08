@@ -1,8 +1,6 @@
 package kingdom.warPrj.repasitory.jpa;
 
-import kingdom.warPrj.entity.dto.AdminDTO;
 import kingdom.warPrj.entity.entity.AdminEntity;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

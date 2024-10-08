@@ -1,8 +1,6 @@
 package kingdom.warPrj.controller;
 
-import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.dto.StorageDTO;
-import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.entity.vo.StorageVO;
 import kingdom.warPrj.service.StorageService;
 import lombok.RequiredArgsConstructor;

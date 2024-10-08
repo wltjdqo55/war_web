@@ -6,14 +6,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import kingdom.warPrj.entity.dto.LegionDTO;
 import kingdom.warPrj.entity.entity.Legion;
 import kingdom.warPrj.entity.entity.QLegion;
-import kingdom.warPrj.entity.entity.QSkillEntity;
-import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.LegionVO;
-import kingdom.warPrj.entity.vo.SkillVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

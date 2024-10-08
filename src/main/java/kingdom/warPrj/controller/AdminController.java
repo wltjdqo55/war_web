@@ -3,14 +3,15 @@ package kingdom.warPrj.controller;
 import jakarta.servlet.http.HttpSession;
 import kingdom.warPrj.account.AdminSession;
 import kingdom.warPrj.entity.dto.AdminDTO;
-import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.vo.AdminVO;
-import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 

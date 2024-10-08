@@ -1,8 +1,6 @@
 package kingdom.warPrj.service;
 
-import kingdom.warPrj.entity.dto.AdminDTO;
 import kingdom.warPrj.entity.dto.SkillDTO;
-import kingdom.warPrj.entity.entity.AdminEntity;
 import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.repasitory.jpa.SkillRepository;

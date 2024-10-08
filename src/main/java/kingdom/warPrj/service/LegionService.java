@@ -2,12 +2,9 @@ package kingdom.warPrj.service;
 
 import kingdom.warPrj.entity.dto.GeneralDTO;
 import kingdom.warPrj.entity.dto.LegionDTO;
-import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.entity.General;
 import kingdom.warPrj.entity.entity.Legion;
-import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.LegionVO;
-import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.repasitory.jpa.GeneralRepository;
 import kingdom.warPrj.repasitory.jpa.LegionRepository;
 import kingdom.warPrj.repasitory.queryDSL.GeneralQueryDSL;

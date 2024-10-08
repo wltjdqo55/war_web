@@ -1,13 +1,14 @@
 package kingdom.warPrj.repasitory.queryDSL;
 
-import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kingdom.warPrj.entity.dto.SoldierDTO;
-import kingdom.warPrj.entity.entity.*;
+import kingdom.warPrj.entity.entity.QSkillEntity;
+import kingdom.warPrj.entity.entity.QSoldierEntity;
+import kingdom.warPrj.entity.entity.QSpeciesEntity;
+import kingdom.warPrj.entity.entity.SoldierEntity;
 import kingdom.warPrj.entity.vo.SoldierVO;
-import kingdom.warPrj.entity.vo.StorageVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;

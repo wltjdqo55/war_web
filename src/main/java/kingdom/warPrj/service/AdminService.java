@@ -1,11 +1,8 @@
 package kingdom.warPrj.service;
 
 import kingdom.warPrj.entity.dto.AdminDTO;
-import kingdom.warPrj.entity.dto.SkillDTO;
 import kingdom.warPrj.entity.entity.AdminEntity;
-import kingdom.warPrj.entity.entity.SkillEntity;
 import kingdom.warPrj.entity.vo.AdminVO;
-import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.repasitory.jpa.AdminRepository;
 import kingdom.warPrj.repasitory.queryDSL.AdminQueryDSL;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

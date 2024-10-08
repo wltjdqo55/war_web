@@ -1,7 +1,5 @@
 package kingdom.warPrj.entity.dto;
 
-import kingdom.warPrj.entity.entity.SkillEntity;
-import kingdom.warPrj.entity.entity.SoldierEntity;
 import kingdom.warPrj.entity.entity.StorageEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;

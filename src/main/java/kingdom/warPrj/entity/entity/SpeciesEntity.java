@@ -1,7 +1,6 @@
 package kingdom.warPrj.entity.entity;
 
 import jakarta.persistence.*;
-import kingdom.warPrj.entity.vo.SkillVO;
 import kingdom.warPrj.entity.vo.SpeciesVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
