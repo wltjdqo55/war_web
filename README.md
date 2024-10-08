@@ -174,8 +174,8 @@
 
 ## **🔲 주요 화면**
 <h3>[시작화면 - 사용자, 관리자]</h3>
-<img src="https://github.com/user-attachments/assets/a4c2df0a-ebe3-4710-8972-2772c312e54e" alt="사용자 시작화면" style="display:inline-block; width:95%; margin:0 auto;"/>
-<img src="https://github.com/user-attachments/assets/4b4c1d23-e4d2-4eb3-a6aa-c14727c09dcf" alt="관리자 시작화면" style="display:inline-block; width:95%; margin:0 auto;"/>
+<img src="https://github.com/user-attachments/assets/00e782d5-27e9-4094-ac22-03bc79fff7b2" alt="사용자 시작화면" style="display:inline-block; width:100%;"/>
+<img src="https://github.com/user-attachments/assets/9610a373-2441-45fb-90be-6e2b9c2c23d7" alt="관리자 시작화면" style="display:inline-block; width:100%;"/>
 
 - 사용자 화면과 관리자 화면을 분리하였습니다.
 
