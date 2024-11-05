@@ -37,5 +37,11 @@ public class AdminEntity {
     this.adminPhoneNumber = adminVO.getAdminPhoneNumber();
   }
 
+  public AdminEntity (String adminId, String adminPassword, String adminName) {
+    this.adminId = adminId;
+    this.adminPassword = adminPassword;
+    this.adminName = adminName;
+  }
+
 
 }

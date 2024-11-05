@@ -1,5 +1,6 @@
 package kingdom.warPrj.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kingdom.warPrj.account.AdminSession;
 import kingdom.warPrj.entity.dto.AdminDTO;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @Controller
@@ -127,4 +130,22 @@ public class AdminController {
     return session.getAttribute("adminInfo") != null;
   }
 
+  @GetMapping("/account/testAdminAdd")
+  public String testAdminAdd(HttpServletResponse response) throws IOException {
+    AdminDTO adminDTO = adminService.testAdminAdd();
+
+    response.setContentType("text/html; charset=UTF-8");
+    PrintWriter out = response.getWriter();
+
+    if (adminDTO != null) {
+      // 테스트 아이디 생성 성공 시 알림 창에서 줄 바꿈과 ID 표시
+      out.println("<script>alert('테스트 아이디가 생성되었습니다.\\n아이디: " + adminDTO.getAdminId() + "');</script>");
+    } else {
+      // 생성 실패 시 알림 메시지
+      out.println("<script>alert('테스트 아이디 생성에 실패했습니다.');</script>");
+    }
+    out.flush();
+
+    return "/account/login.html";
+  }
 }
