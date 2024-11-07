@@ -6,7 +6,6 @@ import kingdom.warPrj.entity.vo.AdminVO;
 import kingdom.warPrj.repasitory.jpa.AdminRepository;
 import kingdom.warPrj.repasitory.queryDSL.AdminQueryDSL;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
