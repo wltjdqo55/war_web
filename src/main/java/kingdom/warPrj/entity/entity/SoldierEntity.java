@@ -53,7 +53,7 @@ public class SoldierEntity {
   @JoinColumn(name = "species_id")
   private SpeciesEntity species;
 
-  public SoldierEntity(SoldierVO soldierVO, Long skillId, Long speciesId){
+  public SoldierEntity(SoldierVO soldierVO){
     this.id = soldierVO.getId();
     this.attack = soldierVO.getAttack();
     this.defense = soldierVO.getDefense();
@@ -67,13 +67,13 @@ public class SoldierEntity {
     this.soldierState = false;
     this.strength = soldierVO.getStrength();
     this.spell = soldierVO.getSpell();
-    if(skillId!=0) {
-      this.skill = new SkillEntity(skillId);        // 스킬 정보
+    if(soldierVO.getSkillId()!=0) {
+      this.skill = new SkillEntity(soldierVO.getSkillId());        // 스킬 정보
     }
     else{
       this.skill = null;
     }
-    this.species = new SpeciesEntity(speciesId);  // 종족 정보
+    this.species = new SpeciesEntity(soldierVO.getSpeciesId());  // 종족 정보
   }
 
   public SoldierEntity(Long id){

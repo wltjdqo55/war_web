@@ -12,8 +12,6 @@ public class AdminDTO {
 
   private String adminId;
 
-  private String adminPassword;
-
   private String adminName;
 
   private String adminPhoneNumber;
@@ -21,7 +19,6 @@ public class AdminDTO {
   public AdminDTO(AdminEntity adminEntity) {
     this.id = adminEntity.getId();
     this.adminId = adminEntity.getAdminId();
-    this.adminPassword = adminEntity.getAdminPassword();
     this.adminName = adminEntity.getAdminName();
     this.adminPhoneNumber = adminEntity.getAdminPhoneNumber();
   }
