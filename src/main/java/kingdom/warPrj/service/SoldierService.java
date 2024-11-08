@@ -27,7 +27,7 @@ public class SoldierService {
 
   @Transactional
   public SoldierDTO soldierAdd(SoldierVO soldierVO){
-    SoldierDTO soldierDTO = new SoldierDTO(soldierRepository.save(new SoldierEntity(soldierVO, soldierVO.getSkillId(), soldierVO.getSpeciesId())));
+    SoldierDTO soldierDTO = new SoldierDTO(soldierRepository.save(new SoldierEntity(soldierVO)));
 
     //스킬 상태 변경
     skillQueryDSL.updateSkillState(soldierVO.getSkillId());
